@@ -76,6 +76,7 @@ function func5() {
 }
 
 function main() {
+    parse_options;
     func1;
     log_separater;
     func2 1 2 3;

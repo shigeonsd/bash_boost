@@ -22,11 +22,11 @@ usage_description="
     最新のログファイルに対して newest が symlink される。
 	${log_dir}/$(today)/プログラム名/newest
 ";
-case "${1}" in
--v|--verbose) shift; ;;
-*) exec 1>>/dev/null; ;;
-esac
-source "${modules_dir}/usage.sh";
+#case "${1}" in
+#-v|--verbose) shift; ;;
+#*) exec 1>>/dev/null; ;;
+#esac
+#source "${modules_dir}/usage.sh";
 
 progname=$(basename ${1});
 __log_dir="${log_dir}/$(today)/${progname}";

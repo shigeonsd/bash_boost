@@ -9,7 +9,10 @@ function _msg() {
 function error() { _msg "ERROR:" $@; }
 function warn()  { _msg "WARN:"  $@; }
 function info()  { _msg "INFO:"  $@; }
-function debug() { _msg "DEBUG:" $@; }
+function debug() { 
+    if_debug || return;
+    _msg "DEBUG:" $@; 
+}
 
 function die() {
     local msg=$1;

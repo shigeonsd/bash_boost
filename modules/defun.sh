@@ -23,3 +23,12 @@ function copy_function() {
     declare -F $1 > /dev/null || return 1
     eval "$(echo "${2}()"; declare -f ${1} | tail -n +2)"
 }
+
+function if_debug() {
+    [[ -v DEBUG ]] || return 1;
+    case $DEBUG in
+    0|true)  return 0; ;;
+    1|false) return 1; ;;
+    esac
+    return 1;
+}

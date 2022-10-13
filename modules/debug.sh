@@ -7,6 +7,7 @@ function _mod_debug() {
 }
 
 function stacktrace() {
+    if_debug || return;
     local index=0;
     local frame="";
     _mod_debug "stacktrace {"
@@ -25,6 +26,7 @@ function _var_dump() {
 }
 
 function var_dump() {
+    if_debug || return;
     _mod_debug "var_dump {";
     for var in $@; do
         _var_dump "${var}";
@@ -33,30 +35,39 @@ function var_dump() {
 }
 
 function enter() {
+    if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
     _mod_debug "enter ${funcname}() {";
 }
 
 function leave() {
+    if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
     _mod_debug "leave ${funcname}() }";
 }
 
 function stacktrace_before() {
+    if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
     stacktrace;
 }
 
 function debug_before() {
+    if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
     enter ${funcname};
 }
 
 function debug_after() {
+    if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
     leave ${funcname};
 }
 
 function debug_around() {
+    if_debug || {
+	$@;
+	return $?;
+    }
     aop_around_template debug $@;
 }

@@ -17,3 +17,4 @@ function _usage() {
 #esac
 
 def_option "-h|-help|--help|help" _usage;
+parse_options;

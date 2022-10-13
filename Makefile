@@ -9,7 +9,8 @@ doc:
 clean:
 	rm -rf $(log_dir)
 
-commit:
+commit: clean
 	EDITOR=vi git commit -a
 
 push:
+	git push -u origin main
