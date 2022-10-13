@@ -20,7 +20,24 @@ usage_description="
 ";
 
 source "${modules_dir}/setup.sh";
-load usage tmpdir laptime;
+
+
+# コマンドラインオプションの定義
+#
+function opt_x() { echo $FUNCNAME; }
+function opt_y() { echo $FUNCNAME; }
+function opt_z() { echo $FUNCNAME; }
+function opt_q() { echo $FUNCNAME; exit; }
+def_option "-x|--exclude" opt_x;
+def_option "-y" opt_y;
+def_option "-z" opt_z;
+def_option "-q" opt_q;
+
+# コマンドラインオプションの定義
+#
+parse_option;
+
+load runtime tmpdir laptime;
 
 function foo_aaa() { info $FUNCNAME; };
 function foo_bbb() { info $FUNCNAME; };
@@ -76,7 +93,6 @@ function func5() {
 }
 
 function main() {
-    parse_options;
     func1;
     log_separater;
     func2 1 2 3;

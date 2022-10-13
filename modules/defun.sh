@@ -10,6 +10,16 @@ function exist_file() {
     test -f $1;
 }
 
+function array_exists() {
+    local val="$1";
+    local array="$2";
+    var_dump val array;
+    for v in $array; do
+	[ "${v}" == "${val}" ] && { return 0; }
+    done
+    return 1;
+}
+
 function sec2hms() {
     local t="$1";
     local s=0;
@@ -32,3 +42,4 @@ function if_debug() {
     esac
     return 1;
 }
+

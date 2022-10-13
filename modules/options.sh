@@ -6,7 +6,6 @@ function __options_info() {
     mod_info "${BASH_SOURCE[0]}" $@;
 }
 
-#__options=();
 declare -A __options;
 function def_option() {
     local opts=$1;
@@ -16,9 +15,11 @@ function def_option() {
     done;
 }
 
-function parse_options() {
-    if_debug && {
-	echo "${!__options[@]}";
-	echo "${__options[@]}";
-    }
+function parse_option() {
+    local array_keys="${!__options[@]}";
+    for arg in ${progargs}; do
+	[ "$arg" = "--" ] && break;
+	array_exists ${arg} "${array_keys}" || die "Known option $arg.";
+	"${__options[$arg]}";
+    done
 }

@@ -26,13 +26,12 @@ usage_description="
 #-v|--verbose) shift; ;;
 #*) exec 1>>/dev/null; ;;
 #esac
-#source "${modules_dir}/usage.sh";
+source "${modules_dir}/usage.sh";
 
 progname=$(basename ${1});
 __log_dir="${log_dir}/$(today)/${progname}";
 __log_file="${__log_dir}/$(now_ymd_hms).log";
 __log_symlnk="${__log_dir}/newest";
-
 
 function __log_dir_setup() {
     mkdir -p "${__log_dir}";

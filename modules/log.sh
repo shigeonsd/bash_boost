@@ -44,18 +44,3 @@ function log_end_block()   { info "}"; }
 function __log_info() {
     mod_info "${BASH_SOURCE[0]}" $@;
 }
-
-function __log_init() {
-    _lap_time=0;
-
-    __log_info "Runtime infomation {";
-    __log_info "progname=$0";
-    __log_info "args=${progargs}";
-    __log_info "hostname=${hostname}";
-    __log_info "user=${USER}";
-    __log_info "now=$(now)";
-    __log_info "PID=$$";
-    __log_info "}";
-}
-
-__log_init;

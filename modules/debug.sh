@@ -19,17 +19,11 @@ function stacktrace() {
     _mod_debug "}"
 }
 
-function _var_dump() {
-    local var="$1";
-    local val="$(eval "$(printf 'echo ${%s}\n' ${var})")";
-    _mod_debug "${var}=${val}";
-}
-
 function var_dump() {
     if_debug || return;
     _mod_debug "var_dump {";
     for var in $@; do
-        _var_dump "${var}";
+        _mod_debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
     done;
     _mod_debug "}";
 }
