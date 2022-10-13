@@ -1,0 +1,23 @@
+{
+"variables" : [
+{
+"name" : "today"
+,"description" : "今日の日付を保持(yyyymmdd)。"
+}
+,{
+"name" : "yesterday"
+,"description" : "昨日の日付を保持(yyyymmdd)。"
+}
+]
+,"functions" : [
+{
+"name" : "now"
+,"description" : "現在の日時を取得(yyyy/mm/dd"
+}
+,{
+"name" : "difftime"
+,"args" : "time1"
+,"description" : "時間差を算出する。"
+}
+]
+}
