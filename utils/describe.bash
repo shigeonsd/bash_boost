@@ -20,6 +20,7 @@ usage_description="
     Private function:  関数名が '__' で始まる関数
     
 ";
+source "${modules_dir}/options.sh"
 source "${modules_dir}/usage.sh"
 
 function _indent() {

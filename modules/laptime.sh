@@ -2,10 +2,6 @@
 #
 # laptime.sh -- ログに関する定義
 #
-# Export functions:
-#	laptime
-#       _laptime_init, _laptime_cleanup
-#
 #
 function __laptime_info() {
     mod_info "${BASH_SOURCE[0]}" $@;
@@ -47,12 +43,10 @@ function _laptime_init() {
     _lap_time_started="${now_sec}";
     _lap_time="${now_sec}";
 
-    echo "";
     __laptime_debug "elapsed(sec), elapsed(hms), diff(sec), diff(hms), checkpoint";
     laptime ${FUNCNAME};
 }
 
 function _laptime_cleanup() {
-    echo "";
     laptime ${FUNCNAME};
 }

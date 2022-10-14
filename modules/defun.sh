@@ -13,7 +13,6 @@ function exist_file() {
 function array_exists() {
     local val="$1";
     local array="$2";
-    var_dump val array;
     for v in $array; do
 	[ "${v}" == "${val}" ] && { return 0; }
     done

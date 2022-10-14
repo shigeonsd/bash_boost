@@ -28,6 +28,10 @@ function var_dump() {
     _mod_debug "}";
 }
 
+function check_point() {
+    if_debug || return;
+}
+
 function enter() {
     if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
@@ -64,4 +68,11 @@ function debug_around() {
 	return $?;
     }
     aop_around_template debug $@;
+}
+
+function debug_on_around() {
+    local _debug="${DEBUG}";
+    DEBUG="true";
+    aop_around_template debug $@;
+    DEBUG=${_debug};
 }

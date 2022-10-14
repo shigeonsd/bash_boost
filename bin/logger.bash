@@ -12,20 +12,16 @@ top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
 log_dir="${top_dir}/log";
 
-source "${modules_dir}/date.sh";
-
 usage_options="[-v|--verbose] command args...";
 usage_description="
     \"command args...\" で指定したコマンドを実行し、画面出力をログファイルに記録する。
     記録されるログディレクトリは以下の通り。
-	${log_dir}/$(today)/プログラム名/YYYYMMDD_HHMMSS.log
+	${log_dir}/YYYYMMDD/プログラム名/YYYYMMDD_HHMMSS.log
     最新のログファイルに対して newest が symlink される。
-	${log_dir}/$(today)/プログラム名/newest
+	${log_dir}/YYYYMMDD/プログラム名/newest
 ";
-#case "${1}" in
-#-v|--verbose) shift; ;;
-#*) exec 1>>/dev/null; ;;
-#esac
+source "${modules_dir}/date.sh";
+source "${modules_dir}/options.sh"
 source "${modules_dir}/usage.sh";
 
 progname=$(basename ${1});

@@ -46,14 +46,10 @@ load foo;
 
 var_dump progname progdir progargs TMPDIR;
 
-aop_before stacktrace;
+#aop_before stacktrace;
 #aop_after  laptime foo;
 #aop_around laptime;
-aop_around foo laptime debug;
-
-var_dump __aop_before_handlers;
-var_dump __aop_after_handlers;
-var_dump __aop_around_handlers;
+#aop_around foo laptime debug;
 
 function func1() {
     #log_begin_block;
@@ -74,7 +70,7 @@ function func2() {
 function func3() {
     error "ggg hhh iii";
     sleep 4;
-    func4
+    func4 128 256 512;
 }
 
 function func4() {
@@ -88,9 +84,20 @@ function func4() {
 }
 
 function func5() {
-    stacktrace;
-    func1;
+    echo XXX;
+    true;
 }
+
+#aop_func func4;
+#aop_cut_point func4 before foo stacktrace;
+#aop_cut_point func4 around laptime debug;
+aop_cut_point func1 before foo stacktrace;
+aop_cut_point func1 around debug;
+aop_cut_point func4 around foo laptime debug;
+
+var_dump __aop_before_handlers;
+var_dump __aop_after_handlers;
+var_dump __aop_around_handlers;
 
 function main() {
     func1;
@@ -103,7 +110,5 @@ function main() {
     tmpdir;
     foo;
 }
-
-aop_func func4;
 
 main;
