@@ -32,9 +32,6 @@ def_option "-x|--exclude" opt_x;
 def_option "-y" opt_y;
 def_option "-z" opt_z;
 def_option "-q" opt_q;
-
-# コマンドラインオプションの定義
-#
 parse_option;
 
 load runtime tmpdir laptime;

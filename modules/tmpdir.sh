@@ -12,7 +12,6 @@ function tmpdir() {
 }
 
 function _tmpdir_init() {
-    echo "";
     export TMPDIR=$(mktemp -d);
     __tmpdir_info "Created ${TMPDIR}";
 }

@@ -18,7 +18,8 @@ function def_option() {
 function parse_option() {
     local array_keys="${!__options[@]}";
     for arg in ${progargs}; do
-	[ "$arg" = "--" ] && break;
+	[ "$arg" = "--"  ] && break;
+	[[ "$arg" =~ ^- ]] || break;
 	array_exists ${arg} "${array_keys}" || die "Known option $arg.";
 	"${__options[$arg]}";
     done

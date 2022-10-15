@@ -10,10 +10,8 @@ function usage() {
     exit 0;
 }
 
-[ $# -eq 0 ] && { usage; }
-#case $1 in
-#-h|-help|--help|help) _usage; ;;
-#*)       ;;
-#esac
+function usage_if_no_option() {
+    [ "${progargs}" = "" ] && { usage; }
+}
 
 def_option "-h|-help|--help|help" usage;
