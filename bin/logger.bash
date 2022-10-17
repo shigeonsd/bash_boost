@@ -12,19 +12,19 @@ top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
 log_dir="${top_dir}/log";
 
-usage_options="command args...";
-usage_description="
-    \"command args...\" で指定したコマンドを実行し、画面出力をログファイルに記録する。
-    記録されるログディレクトリは以下の通り。
-	${log_dir}/YYYYMMDD/プログラム名/YYYYMMDD_HHMMSS.log
-    最新のログファイルに対して newest が symlink される。
-	${log_dir}/YYYYMMDD/プログラム名/newest
-";
 source "${modules_dir}/defun.sh";
 source "${modules_dir}/date.sh";
-source "${modules_dir}/options.sh";
 source "${modules_dir}/log.sh";
-source "${modules_dir}/usage.sh";
+source "${modules_dir}/options.sh";
+
+def_option "command args...";
+def_description '
+    "command args..." で指定したコマンドを実行し、画面出力をログファイルに記録する。
+    記録されるログディレクトリは以下の通り。
+        /home/nishida/src/shell_toolkit/log/YYYYMMDD/プログラム名/YYYYMMDD_HHMMSS.log
+    最新のログファイルに対して newest が symlink される。
+        /home/nishida/src/shell_toolkit/log/YYYYMMDD/プログラム名/newest
+';
 usage_if_no_option;
 parse_option;
 

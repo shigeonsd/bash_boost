@@ -7,23 +7,12 @@ progname=$(basename ${0});
 progdir=$(cd "`dirname $0`"; pwd);
 progargs=$@
 
+# モジュールの初期化
 top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
-
-# 使用方法を記載する。
-# usage() で使用する。
-usage_options="[lock|unlock]";
-usage_description="
-    ここに使い方の詳細を書くこと。
-    複数行記載できる。
-    さらに詳しく.
-";
-
 source "${modules_dir}/setup.sh";
 
-
 # コマンドラインオプションの定義
-#
 function opt_x() { echo $FUNCNAME; }
 function opt_y() { echo $FUNCNAME; }
 function opt_z() { echo $FUNCNAME; }
@@ -32,8 +21,17 @@ def_option "-x|--exclude" opt_x;
 def_option "-y" opt_y;
 def_option "-z" opt_z;
 def_option "-q" opt_q;
-parse_option;
+def_description "
+    ここに使い方の詳細を書くこと。
+    複数行記載できる。
+    さらに詳しく.
+";
 
+# コマンドラインオプションの定義
+usage_if_no_option;  # オプションが指定されていなければ usage を表示する
+parse_option;        # コマンドラインオプションの解析
+
+# 使用するモジュールのロード
 load runtime tmpdir laptime;
 
 function foo_aaa() { info $FUNCNAME; };
@@ -85,6 +83,7 @@ function func5() {
     true;
 }
 
+# AOP のテストコード
 #aop_func func4;
 #aop_cut_point func4 before foo stacktrace;
 #aop_cut_point func4 around laptime debug;
