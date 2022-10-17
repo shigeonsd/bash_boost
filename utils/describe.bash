@@ -9,19 +9,21 @@ progargs=$@
 
 top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
+source "${modules_dir}/options.sh"
 
 # 使用方法を記載する。
 # usage() で使用する。
-usage_options="bashfile";
-usage_description="
+usage_option "bashfile";
+usage_description "
     引数で指定された bash ファイルから関数定義を抽出する。
     Public function:  関数名が '_' 以外で始まる関数
     Protected function:  関数名が '_' で始まる関数
     Private function:  関数名が '__' で始まる関数
-    
 ";
-source "${modules_dir}/options.sh"
-source "${modules_dir}/usage.sh"
+
+# コマンドラインオプションの定義
+usage_if_no_option;  # オプションが指定されていなければ usage を表示する
+parse_option;        # コマンドラインオプションの解析
 
 function _indent() {
     sed -e 's/^/    /';

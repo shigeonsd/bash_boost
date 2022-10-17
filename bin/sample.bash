@@ -17,11 +17,11 @@ function opt_x() { echo $FUNCNAME; }
 function opt_y() { echo $FUNCNAME; }
 function opt_z() { echo $FUNCNAME; }
 function opt_q() { echo $FUNCNAME; exit; }
-def_option "-x|--exclude" opt_x;
-def_option "-y" opt_y;
-def_option "-z" opt_z;
-def_option "-q" opt_q;
-def_description "
+usage_option "-x|--exclude" opt_x;
+usage_option "-y" opt_y;
+usage_option "-z" opt_z;
+usage_option "-q" opt_q;
+usage_description "
     ここに使い方の詳細を書くこと。
     複数行記載できる。
     さらに詳しく.

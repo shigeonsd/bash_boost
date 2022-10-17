@@ -17,8 +17,8 @@ source "${modules_dir}/date.sh";
 source "${modules_dir}/log.sh";
 source "${modules_dir}/options.sh";
 
-def_option "command args...";
-def_description '
+usage_option "command args...";
+usage_description '
     "command args..." で指定したコマンドを実行し、画面出力をログファイルに記録する。
     記録されるログディレクトリは以下の通り。
         /home/nishida/src/shell_toolkit/log/YYYYMMDD/プログラム名/YYYYMMDD_HHMMSS.log

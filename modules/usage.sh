@@ -8,7 +8,7 @@ function __options_info() {
 
 declare -A __options;
 __usage_options_2="";
-function __def_option_2() {
+function __usage_option_2() {
     local opts=$1;
     local func=$2;
 
@@ -17,17 +17,18 @@ function __def_option_2() {
 	__options["${opt}"]="${func}";
     done;
 }
+
 __usage_options_1="";
-function __def_option_1() {
+function __usage_option_1() {
     __usage_options_1="${__usage_options_1} $@";
 }
 
-function def_option() {
+function usage_option() {
     local num=2;
     [ $# -eq 1 ] && {
 	num=1;
     }
-    __def_option_${num} $@;
+    __usage_option_${num} $@;
 }
 
 __usage_description="
@@ -35,7 +36,7 @@ __usage_description="
     複数行記載できる。
     さらに詳しく.
 ";
-function def_description() {
+function usage_description() {
     local desc="${1}";
     __usage_description="${desc}";
 }
@@ -60,4 +61,4 @@ function usage_if_no_option() {
     [ "${progargs}" = "" ] && { usage; }
 }
 
-def_option "-h|-help|--help" usage;
+usage_option "-h|-help|--help" usage;
