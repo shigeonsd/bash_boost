@@ -3,7 +3,7 @@
 # log.sh -- ログに関する定義
 #
 function _msg() {
-    echo "$(now)" $@;
+    echo "$(now)" $@; >&2;
 }
 
 function error() { _msg "ERROR:" $@; }

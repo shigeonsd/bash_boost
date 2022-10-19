@@ -8,7 +8,11 @@ function __tmpdir_info() {
 }
 
 function tmpdir() {
-    echo "$TMPDIR";
+    echo "${TMPDIR}";
+}
+
+function create_tmpfile() {
+    mktemp;
 }
 
 function _tmpdir_init() {
@@ -17,6 +21,8 @@ function _tmpdir_init() {
 }
 
 function _tmpdir_cleanup() {
+    # デバッグモードの時はテンポラリファイルは削除しない。
+    if_debug  && return;
     rm -rf  ${TMPDIR};
     __tmpdir_info "Removed ${TMPDIR}";
 }

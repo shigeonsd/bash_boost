@@ -12,43 +12,48 @@ function __lock_debug() {
     mod_debug "${BASH_SOURCE[0]}" $@;
 }
 
+declare -A __lock_fds;
+__lock_fds=();
 function lock_create() {
-    local lock_file="${LOCKDIR}/${1}";
-    local fd=0;
-    exec {fd}>${lockfile};
-    echo  ${fd};
+    local file="${LOCKDIR}/${1}";
+    local key=$(basename ${1} | sed -e 's/\.//g');
+    local keys=${!__lock_fds[@]};
+    array_exists "$key" "$keys" && return;
+    create_fd "${file}";
+    local fd=$?;
+    set +u
+    __lock_fds["${key}"]="${fd}";
+    set -u;
+    return ${fd};
+}
+
+function __get_lock_fd() {
+    return ${__lock_fds["${1}"]};
 }
 
 function lock() {
-    local lock_fd="${1}";
-    flock -x "${lock_fd}";
+    local fd=${1-$lock_fd};
+    flock -x "${fd}";
 }
 
 function unlock() {
-    local lock_fd="${1}";
-    flock -u "${lock_fd}";
-}
-
-function synchronized() {
-    local lock_file="${1}";
-    shift;
-    
-    flock -x ${lock_file} $@;
+    local fd=${1-$lock_fd};
+    flock -u "${fd}";
 }
 
 function try_lock() {
-    local lock_fd="${1}";
-    flock -x --timeout=0 "${lock_fd}" || {
-	warn "Already locked"
+    local fd=${1-$lock_fd};
+    flock -x --timeout=0 "${fd}" || {
+	warn "Already locked."
 	return 1;
     };
     return 0;
 }
 
 function lock_or_die() {
-    local lock_fd="${1}";
-    flock -x --timeout=0 "${lock_fd}" || {
-	die "Already locked";
+    local fd=${1-$lock_fd};
+    flock -x --timeout=0 "${fd}" || {
+	die "Already locked.";
     }
     return 0;
 }

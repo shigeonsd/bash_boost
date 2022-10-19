@@ -20,7 +20,6 @@ function aop_before() {
     for h in $@; do
 	handlers+=("${h}_before");
     done;
-    echo ${handlers[@]};
     __aop_before_handlers["${func}"]+=${handlers[@]};
 }
 

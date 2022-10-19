@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 #
 # sample.bash -- toolkit.sh の使用例
 #
@@ -32,7 +32,7 @@ usage_if_no_option;  # オプションが指定されていなければ usage �
 parse_option;        # コマンドラインオプションの解析
 
 # 使用するモジュールのロード
-load runtime tmpdir laptime;
+load runtime proc_lock tmpdir laptime;
 
 function foo_aaa() { info $FUNCNAME; };
 function foo_bbb() { info $FUNCNAME; };
@@ -96,6 +96,9 @@ var_dump __aop_after_handlers;
 var_dump __aop_around_handlers;
 
 function main() {
+    local tmpfile="$(create_tmpfile)";
+    echo "XXX ${tmpfile}";
+    cat ${0} >&${tmpfile};
     func1;
     log_separater;
     func2 1 2 3;
