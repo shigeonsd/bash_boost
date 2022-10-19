@@ -32,17 +32,17 @@ function __get_lock_fd() {
 }
 
 function lock() {
-    local fd=${1-$lock_fd};
+    local fd=${1-$___lock_fd};
     flock -x "${fd}";
 }
 
 function unlock() {
-    local fd=${1-$lock_fd};
+    local fd=${1-$___lock_fd};
     flock -u "${fd}";
 }
 
 function try_lock() {
-    local fd=${1-$lock_fd};
+    local fd=${1-$___lock_fd};
     flock -x --timeout=0 "${fd}" || {
 	warn "Already locked."
 	return 1;
@@ -51,7 +51,7 @@ function try_lock() {
 }
 
 function lock_or_die() {
-    local fd=${1-$lock_fd};
+    local fd=${1-$___lock_fd};
     flock -x --timeout=0 "${fd}" || {
 	die "Already locked.";
     }

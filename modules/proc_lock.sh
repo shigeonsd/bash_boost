@@ -12,7 +12,7 @@ function __proc_lock_info() {
 
 function _proc_lock_init() {
     lock_create ${progname};
-    local lock_fd=$?;
+    local ___lock_fd=$?;
     lock_or_die;
 }
 
