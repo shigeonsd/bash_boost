@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# options.sh -- コマンドラインオプションに関する定義
+# usage.sh -- コマンドラインオプションに関する定義
 #
 function __options_info() {
     mod_info "${BASH_SOURCE[0]}" $@;

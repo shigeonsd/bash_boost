@@ -15,7 +15,7 @@ log_dir="${top_dir}/log";
 source "${modules_dir}/defun.sh";
 source "${modules_dir}/date.sh";
 source "${modules_dir}/log.sh";
-source "${modules_dir}/options.sh";
+source "${modules_dir}/usage.sh";
 
 usage_option "command args...";
 usage_description '

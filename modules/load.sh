@@ -3,6 +3,7 @@
 # load.sh -- モジュールに関する定義
 #
 function __load_info() {
+    if_load_silence_true && return;
     mod_info "${BASH_SOURCE[0]}" $@;
 }
 
@@ -36,8 +37,8 @@ function _load() {
 
     __load_info "Loading ${module_name}... ";
     __load_if_exist    "${progdir}/${module_name}.sh" \
-    || __load_if_exist "${modules_dir}/${module_name}.sh" \
-    || die "Module not found. '${module_name}'";
+	|| __load_if_exist "${modules_dir}/${module_name}.sh" \
+	    || die "Module not found. '${module_name}'";
     __load_info "done";
 
     __add_cleanup "${module_name}";
@@ -45,7 +46,22 @@ function _load() {
     eval "__${module_name}_loaded=1";
 }
 
+__load_silence=false;
+function if_load_silence_true() {
+    if_true __load_silence
+}
+
 function load() {
+    case $1 in
+    -s) __load_silence=true;  shift; ;;
+    -v) __load_silence=false; shift; ;;
+    esac
+    for mod in $@; do
+	_load $mod;
+    done;
+}
+
+function load_silent() {
     for mod in $@; do
 	_load $mod;
     done;

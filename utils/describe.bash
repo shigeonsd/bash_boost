@@ -9,7 +9,7 @@ progargs=$@
 
 top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
-source "${modules_dir}/options.sh"
+source "${modules_dir}/usage.sh"
 
 # 使用方法を記載する。
 # usage() で使用する。
