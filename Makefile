@@ -13,4 +13,5 @@ commit: clean
 	EDITOR=vi git commit -a
 
 push:
+	cat ~/.git_token
 	git push -u origin main
