@@ -75,7 +75,6 @@ function Array.length() {
 function Array.foreach() {
     local func="${1}";
     local e;
-    echo ${THIS[@]};
     for e in ${THIS[@]}; do
 	${func} $e || return $?;
     done;

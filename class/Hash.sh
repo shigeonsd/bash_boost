@@ -3,55 +3,42 @@
 # Hash.sh -- Hash クラス
 #
 #
+
+# use Object;
+
+# Hash_props[obj_name,property_name]
+# public      varname
+# protected  _varname
+# private   __varname
+#
+declare -g -A Hash_props=();
+
+# Constructor
 function Hash() {
-#    _extends Object $@;
-    local ___this="$1";
+    local ___this="${1}";
     local ___class=${FUNCNAME};
-    local ___props=(
-	aaa
-	bbb
-	ccc
-    );
-    local ___methods=(
-	push
-	pop
-	length
-	foreach
-	shift
-	unshift
-	exists
-	key_exists
-	keys
-	clear
-	reverse
-    );
     shift;
+
     _new;
+
     eval "${___this}=($@)";
 }
 
-function Hash.push() {
-    THIS+=($1);
+function Hash.set() {
+    local key="$1";
+    local val="$2";
+    THIS[$n]=${val};
 }
 
-function Hash.pop() {
-    local len=${#THIS[@]};
-    local n=$((len -1));
+function Hash.get() {
+    local n="$1";
+    echo ${THIS[$n]};
+}
+
+function Hash.unset() {
+    local n=$1;
     echo  ${THIS[$n]};
     unset THIS[$n];
-    THIS=(${THIS[@]});
-}
-
-function Hash.unshift() {
-    local _array=($1);
-    _array+=(${THIS[@]});
-    THIS=(${_array[@]});
-}
-
-function Hash.shift() {
-    local len=${#THIS[@]};
-    echo  ${THIS[0]};
-    unset THIS[0];
     THIS=(${THIS[@]});
 }
 
@@ -61,9 +48,9 @@ function Hash.length() {
 
 function Hash.foreach() {
     local func="${1}";
-    echo ${THIS[@]};
-    for e in ${THIS[@]}; do
-	${func} $e || return $?;
+    local k;
+    for k in ${!THIS[@]}; do
+	${func} ${k} ${THIS[$k]} || return $?;
     done;
     return 0;
 }
@@ -72,32 +59,25 @@ function Hash.keys() {
     echo ${!THIS[@]};
 }
 
-function Hash.clear() {
-    THIS=();
-}
-
 function Hash.exists() {
     local val="$1";
-    for e in ${THIS[@]}; do
-        [ "${e}" == "${val}" ] && return 0;
+    local k;
+    for k in ${!THIS[@]}; do
+        [ "${THIS[${k}]}" == "${val}" ] && return 0;
     done;
     return 1;
 }
 
 function Hash.key_exists() {
-    local key="$1";
-    for e in ${!THIS[@]}; do
-        [ "${e}" == "${key}" ] &&  return 0;
+    local val="$1";
+    local k;
+    for k in ${!THIS[@]}; do
+        [ "${k}" == "${val}" ] && return 0;
     done;
     return 1;
 }
 
-function Hash.reverse() {
-    for e in ${THIS[@]}; do
-        echo "${e}";
-    done \
-    | tac \
-    | while read elm ; do
-	echo "${elm}";
-    done
+function Hash.clear() {
+    THIS=();
 }
+
