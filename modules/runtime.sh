@@ -2,13 +2,15 @@
 #
 # runtime.sh -- ログに関する定義
 #
+defun __runtime_info mod_info;
+
 function _runtime_init() {
-    __log_info "Runtime infomation {";
-    __log_info "progname=$0";
-    __log_info "args=${progargs}";
-    __log_info "hostname=${hostname}";
-    __log_info "user=${USER}";
-    __log_info "now=$(now)";
-    __log_info "PID=$$";
-    __log_info "}";
+    __runtime_info "Runtime infomation {";
+    __runtime_info "progname=$0";
+    __runtime_info "args=${progargs}";
+    __runtime_info "hostname=${hostname}";
+    __runtime_info "user=${USER}";
+    __runtime_info "now=$(now)";
+    __runtime_info "PID=$$";
+    __runtime_info "}";
 }

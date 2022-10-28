@@ -3,13 +3,8 @@
 # foo.sh -- 
 #
 #
-function __foo_info() {
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
-
-function __foo_debug() {
-    mod_debug "${BASH_SOURCE[0]}" $@;
-}
+defun __foo_info  mod_info;
+defun __foo_debug mod_debug;
 
 interface \
     foo_aaa \

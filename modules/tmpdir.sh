@@ -3,15 +3,14 @@
 # tmpdir.sh -- テンポラリディレクトリの自動生成と自動削除
 #
 #
-function __tmpdir_info() {
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
+defun_load_info  __tmpdir_info;
+defun_load_debug __tmpdir_debug; 
 
 function tmpdir() {
     echo "${TMPDIR}";
 }
 
-function create_tmpfile() {
+function tmpdir_create_tmpfile() {
     mktemp;
 }
 

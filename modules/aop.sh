@@ -3,13 +3,8 @@
 # aop.sh -- 
 #
 #
-function __aop_info() {
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
-
-function __aop_debug() {
-    mod_debug "${BASH_SOURCE[0]}" $@;
-}
+defun __aop_info  mod_info;
+defun __aop_debug mod_debug;
 
 declare -A __aop_before_handlers;
 __aop_before_handlers=();

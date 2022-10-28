@@ -2,30 +2,29 @@
 #
 # debug.sh -- デバッグ支援
 #
-function _mod_debug() {
-    mod_debug "${BASH_SOURCE[0]}" $@;
-}
+defun __debug_info  mod_info;
+defun __debug_debug mod_debug;
 
 function stacktrace() {
     if_debug || return;
     local index=0;
     local frame="";
-    _mod_debug "stacktrace {"
+    __debug_debug "stacktrace {"
     while frame=($(caller "${index}")); do
 	((index++))
 	# at function <function name> (<file name>:<line no>)
-	_mod_debug "at function ${frame[1]} (${frame[2]}:${frame[0]})";
+	__debug_debug "at function ${frame[1]} (${frame[2]}:${frame[0]})";
     done
-    _mod_debug "}"
+    __debug_debug "}"
 }
 
 function var_dump() {
     if_debug || return;
-    _mod_debug "var_dump {";
+    __debug_debug "var_dump {";
     for var in $@; do
-        _mod_debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
+        __debug_debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
     done;
-    _mod_debug "}";
+    __debug_debug "}";
 }
 
 function check_point() {
@@ -35,13 +34,13 @@ function check_point() {
 function enter() {
     if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
-    _mod_debug "enter ${funcname}() {";
+    __debug_debug "enter ${funcname}() {";
 }
 
 function leave() {
     if_debug || return;
     local funcname=${1-${FUNCNAME[1]}}
-    _mod_debug "leave ${funcname}() }";
+    __debug_debug "leave ${funcname}() }";
 }
 
 function stacktrace_before() {
@@ -71,8 +70,8 @@ function debug_around() {
 }
 
 function debug_on_around() {
-    local _debug="${DEBUG}";
+    local __debug="${DEBUG}";
     DEBUG="true";
     aop_around_template debug $@;
-    DEBUG=${_debug};
+    DEBUG=${__debug};
 }

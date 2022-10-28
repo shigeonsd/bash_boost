@@ -29,8 +29,8 @@ function sec2hms() {
 }
 
 function copy_function() {
-    declare -F $1 > /dev/null || return 1
-    eval "$(echo "${2}()"; declare -f ${1} | tail -n +2)"
+    declare -F $1 > /dev/null || return 1;
+    eval "$(echo "${2}()"; declare -f ${1} | tail -n +2)";
 }
 
 function if_debug() {
@@ -64,4 +64,18 @@ function create_file() {
     local file="${1}";
     touch "${file}";
     echo ${file};
+}
+
+function defun() {
+    local funcname="${1}";
+    local tmplfunc="${2}";
+    copy_function "${tmplfunc}" "${funcname}";
+}
+
+function nop() {
+    return 0;
+}
+
+function get_module_name() {
+    echo $1 | sed -e 's/^__//' -e 's/_.*$//';
 }

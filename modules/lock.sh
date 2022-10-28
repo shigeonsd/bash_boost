@@ -3,14 +3,8 @@
 # lock.sh -- ロックに関する定義
 #
 #
-function __lock_info() {
-    if_load_silence_true && return;
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
-
-function __lock_debug() {
-    mod_debug "${BASH_SOURCE[0]}" $@;
-}
+defun_load_info  __lock_info;
+defun_load_debug __lock_debug; 
 
 declare -A __lock_fds;
 __lock_fds=();

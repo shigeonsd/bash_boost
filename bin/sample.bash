@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 #
 # sample.bash -- toolkit.sh の使用例
 #
@@ -11,6 +11,7 @@ progargs=$@
 top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
 source "${modules_dir}/setup.sh";
+echo XXX;
 
 # コマンドラインオプションの定義
 function opt_x() { echo $FUNCNAME; }
@@ -31,6 +32,7 @@ usage_description "
 usage_if_no_option;  # オプションが指定されていなければ usage を表示する
 parse_option;        # コマンドラインオプションの解析
 
+echo XXX;
 # 使用するモジュールのロード
 load runtime proc_lock tmpdir laptime;
 
@@ -38,6 +40,8 @@ function foo_aaa() { info $FUNCNAME; };
 function foo_bbb() { info $FUNCNAME; };
 function foo_ccc() { info $FUNCNAME; };
 load foo;
+
+require Array;
 
 var_dump progname progdir progargs TMPDIR;
 
@@ -96,9 +100,9 @@ var_dump __aop_after_handlers;
 var_dump __aop_around_handlers;
 
 function main() {
-    local tmpfile="$(create_tmpfile)";
+    local tmpfile="$(tmpdir_create_tmpfile)";
     echo "XXX ${tmpfile}";
-    cat ${0} >&${tmpfile};
+    cat ${0} >${tmpfile};
     func1;
     log_separater;
     func2 1 2 3;

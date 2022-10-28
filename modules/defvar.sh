@@ -8,6 +8,7 @@ progargs=$@;
 
 top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";
+class_dir="${top_dir}/class";
 
 log_dir="${top_dir}/log";
 doc_dir="${top_dir}/doc";

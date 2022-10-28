@@ -2,10 +2,29 @@
 #
 # load.sh -- モジュールに関する定義
 #
-function __load_info() {
-    if_load_silence_true && return;
-    mod_info "${BASH_SOURCE[0]}" $@;
+__load_silence=false;
+function if_load_silence_true() {
+    if_true __load_silence
 }
+
+function __defun_load_func() {
+    local funcname="$1";
+    local tmplfunc="$2";
+    if_load_silence_true && tmplfunc=mod_nop;
+    defun "${funcname}" "${tmplfunc}";
+}
+
+function defun_load_info() {
+    __defun_load_func $1 mod_info;
+}
+
+function defun_load_debug() {
+    __defun_load_func $1 mod_debug;
+}
+
+defun_load_info  __load_info;
+defun_load_debug __load_debug;
+#declare -f __load_info;
 
 function __invoke_init() {
     local module_name="$1";
@@ -36,7 +55,7 @@ function _load() {
     [ -v "__${module_name}_loaded" ] && return ;
 
     __load_info "Loading ${module_name}... ";
-    __load_if_exist    "${progdir}/${module_name}.sh" \
+    __load_if_exist "${progdir}/${module_name}.sh" \
 	|| __load_if_exist "${modules_dir}/${module_name}.sh" \
 	    || die "Module not found. '${module_name}'";
     __load_info "done";
@@ -46,24 +65,19 @@ function _load() {
     eval "__${module_name}_loaded=1";
 }
 
-__load_silence=false;
-function if_load_silence_true() {
-    if_true __load_silence
-}
-
 function load() {
     case $1 in
     -s) __load_silence=true;  shift; ;;
     -v) __load_silence=false; shift; ;;
     esac
     for mod in $@; do
-	_load $mod;
+	_load "${mod}";
     done;
 }
 
 function load_silent() {
     for mod in $@; do
-	_load $mod;
+	_load "${mod}";
     done;
 }
 
@@ -74,7 +88,7 @@ function _interface() {
 
 function interface() {
     for f in $@; do
-	_interface $f;
+	_interface "${f}";
     done;
 }
 

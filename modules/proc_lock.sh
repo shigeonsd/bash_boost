@@ -5,10 +5,8 @@
 #
 load lock;
 
-function __proc_lock_info() {
-    if_load_silence_true && return;
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
+defun_load_info  __proc_lock_info;
+defun_load_debug __proc_lock_debug; 
 
 function _proc_lock_init() {
     lock_create ${progname};

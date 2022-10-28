@@ -3,13 +3,12 @@
 # laptime.sh -- ログに関する定義
 #
 #
-function __laptime_info() {
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
+defun_load_info  __laptime_info;
+defun_load_debug __laptime_debug;
 
-function __laptime_debug() {
-    mod_debug "${BASH_SOURCE[0]}" $@;
-}
+#function __laptime_debug() {
+#    mod_debug "${BASH_SOURCE[0]}" $@;
+#}
 
 function laptime() {
     local now_sec=$(date '+%s');

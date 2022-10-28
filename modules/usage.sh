@@ -2,9 +2,8 @@
 #
 # usage.sh -- コマンドラインオプションに関する定義
 #
-function __options_info() {
-    mod_info "${BASH_SOURCE[0]}" $@;
-}
+defun __usage_info  mod_info;
+defun __usage_debug mod_debug;
 
 declare -A __options;
 __usage_options_2="";

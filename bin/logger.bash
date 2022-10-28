@@ -42,11 +42,10 @@ function __setup_log_dir() {
 }
 
 function __setup_verbose() {
-    [ "${VERBOSE}" = "true" ] || {
-	exec 1> "${__log_file}";
-    }
+    [ "${VERBOSE}" = "true" ] && return;
+    #exec 1>"${__log_file}";
 }
 
 __setup_log_dir;
-__setup_verbose;
-exec script -c "$*" -a "${__log_file}" 2>&1
+#__setup_verbose;
+script -c "$*" -a "${__log_file}" > /dev/null 2>&1;
