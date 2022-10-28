@@ -1,90 +1,63 @@
 #! /bin/bash
 #
-# array.sh -- Array クラス
+# Date.sh -- Date クラス
 #
 #
-function Array() {
-#    _extends Object $@;
-    local ___this="$1";
+
+# use Object;
+
+# Date_props[obj_name,property_name]
+# public      varname
+# protected  _varname
+# private   __varname
+#
+declare -g -A Date_props=();
+
+# Constructor
+function Date() {
+    local ___this="${1}";
     local ___class=${FUNCNAME};
-    local ___props=(
-	aaa
-	bbb
-	ccc
-    );
-    local ___methods=(
-	push
-	pop
-	length
-	foreach
-#	shift
-#	unshift
-	exists
-	key_exists
-	keys
-	clear
-	reverse
-    );
     shift;
-    declare -a ${___this};
+    local val=${1-$(date '+%Y/%m/%d')};
+
+    public fmt '+%Y/%m/%d';
+
     _new;
-    eval "${___this}=($@)";
+
+    eval "${___this}='${val}'";
 }
 
-function Array.push() {
-    THIS+=($1);
+function Date.set() {
+    THIS=${1};
 }
 
-function Array.pop() {
-    local len=${#THIS[@]};
-    local n=$((len -1));
-    echo  ${THIS[$n]};
-    unset THIS[$n];
-    THIS=(${THIS[@]});
+function Date.get() {
+    local fmt=$(Date.fmt);
+    echo $(date --date "${THIS}" ${fmt});
 }
 
-function Array.length() {
-    echo ${#THIS[@]};
+function Date.n_days() {
+    local fmt=$(Date.fmt);
+    local n="$1";
+    date --date "${THIS} ${n} days" "${fmt}";
 }
 
-function Array.foreach() {
-    local func="${1}";
-    for e in ${THIS[@]}; do
-	${func} $e || return $?;
-    done;
-    return 0;
+function Date.yesterday() {
+    Date.n_days -1;
 }
 
-function Array.keys() {
-    echo ${!THIS[@]};
+function Date.tomorrow() {
+    Date.n_days 1;
 }
 
-function Array.clear() {
-    unset THIS[@];
+function Date.end_of_month() {
+    local fmt=$(Date.fmt);
+    local n=$((${1-0}+1));
+    date "${fmt}" --date "1 days ago $(date '+%Y/%m/01' --date "${THIS} ${n} months")"
 }
 
-function Array.exists() {
-    local val="$1";
-    for e in ${THIS[@]}; do
-        [ "${e}" == "${val}" ] && return 0;
-    done;
-    return 1;
-}
-
-function Array.key_exists() {
-    local key="$1";
-    for e in ${!THIS[@]}; do
-        [ "${e}" == "${key}" ] &&  return 0;
-    done;
-    return 1;
-}
-
-function Array.reverse() {
-    for e in ${THIS[@]}; do
-        echo "${e}";
-    done \
-    | tac \
-    | while read elm ; do
-	echo "${elm}";
-    done
+function Date.begin_of_month() {
+    local fmt=$(Date.fmt);
+    local n=${1-0};
+    date "${fmt}" --date "${THIS} ${n} months";
 }
