@@ -30,8 +30,8 @@ foo.ddd
 echo foo.class
 foo.class
 
-echo ${!Array_props[@]};
-echo ${Array_props[@]};
+echo foo.dump;
+foo.dump;
 
 echo foo.foreach echo ;
 foo.foreach echo ;

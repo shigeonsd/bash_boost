@@ -3,6 +3,12 @@
 # class.sh -- 
 #
 #
+function __macroexpand() {
+    local var=${1};
+    local val=$2;
+    sed -e "s/${var}/${val}/g" 
+}
+
 function __prop() {
     [ $# -eq 0 ] && {
 	echo "${CLASS_props[THIS,PROP]}";
@@ -15,29 +21,102 @@ function __prop() {
     CLASS_props[THIS,PROP]=$@;
 }
 
-function __macroexpand() {
-    local var=${1};
-    local val=$2;
-    sed -e "s/${var}/${val}/g" 
+function __dump_this() {
+    echo "echo \$(declare -p ${___this} | sed -e 's/^declare -. //');"
+}
+
+function __dump_prop() {
+    local props="\${!${___class}_props[@]}";
+    local prop;
+    local pname;
+    for prop in $(eval echo  ${props}); do
+	[[ ${prop} =~ ^${___this}, ]] && {
+	    pname=${prop/,/.};
+	    echo "echo ${pname}=\${${___class}_props[${prop}]};";
+	}
+    done;
+}
+
+function __defdump() {
+     eval "$(echo "${___this}.dump() {";
+	    __dump_this;
+	    __dump_prop;
+	    echo "}")";
+}
+
+function __undefdump() {
+    echo "unset -f ${___this}.dump;";
 }
 
 function __defprop() {
     local prop="$1";
     local value=null;
-    local array_props="${___class}_props[${___this},${prop}]";
+    local props="${___class}_props[${___this},${prop}]";
     shift;
 
+    # 値の初期化
     [ $# -ne 0 ] && {
 	value="$@";
     }
-    eval $(echo "${array_props}='${value}'");
+    eval $(echo "${props}='${value}'");
 
+    # アクセサ関数の追加
     eval "$(echo "${___this}.${prop}()";
 	    declare -f __prop \
 		|  tail -n +2 \
 		| __macroexpand CLASS ${___class} \
 		| __macroexpand PROP ${prop} \
 		| __macroexpand THIS ${___this} )";
+}
+
+function __undefprops() {
+    local props="\${!${___class}_props[@]}";
+    local prop;
+    for prop in $(eval echo  ${props}); do
+	[[ ${prop} =~ ^${___this}, ]] && {
+	    echo "unset ${___class}_props[${prop}];";
+	}
+    done;
+}
+
+
+function __defmethods() {
+    local method;
+    for method in $(declare -f | grep "^${___class}\." | sed -e 's/ () //g'); do
+	eval "$(declare -f ${method} \
+		| __macroexpand ${___class} ${___this} \
+		| __macroexpand THIS ${___this}; )";
+    done
+}
+
+function __undefmethods() {
+    local method;
+    for method in $(declare -f | grep "^${___this}\." | sed -e 's/ () //g'); do
+	echo "unset -f ${method};";
+    done;
+}
+
+function __defdestructor() {
+     eval "$(echo "~${___this}() {";
+	    __undef;
+	    echo "}")";
+}
+function __undefdestructor() {
+    echo "unset -f ~${___this};";
+}
+
+function _new() {
+    public class "${___class}";
+    __defdump;
+    __defmethods;
+    __defdestructor;
+}
+
+function __undef() {
+    __undefprops;
+    __undefdump;
+    __undefmethods;
+    __undefdestructor;
 }
 
 function public() {
@@ -51,54 +130,6 @@ function public() {
 #function private() {
 #    __defprop $@;
 #}
-
-function __defmethods() {
-    local method;
-    for method in $(declare -f | grep "^${___class}\." | sed -e 's/ () //g'); do
-	eval "$(declare -f ${method} \
-		| __macroexpand ${___class} ${___this} \
-		| __macroexpand THIS ${___this}; )";
-    done
-}
-
-function __undefprops() {
-    local props="\${!${___class}_props[@]}";
-    local prop;
-    for prop in $(eval echo  ${props}); do
-	[[ ${prop} =~ ^${___this}, ]] && {
-	    echo "unset ${___class}_props[${prop}];";
-	}
-    done;
-}
-
-function __undefmethods() {
-    local method;
-    for method in $(declare -f | grep "^${___this}\." | sed -e 's/ () //g'); do
-	echo "unset -f ${method};";
-    done;
-}
-
-function __undefdestructor() {
-    echo "unset -f ~${___this};";
-}
-
-function __undef() {
-    __undefprops;
-    __undefmethods;
-    __undefdestructor;
-}
-
-function __defdestructor() {
-     eval "$(echo "~${___this}() {";
-	    __undef;
-	    echo "}")";
-}
-
-function _new() {
-    public class "${___class}";
-    __defmethods;
-    __defdestructor;
-}
 
 function delete() {
     local obj;
