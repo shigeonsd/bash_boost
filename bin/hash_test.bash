@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash 
 #
 # hash_test.bash -- 
 #
@@ -6,7 +6,7 @@
 set -u;
 progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
-progargs=$@
+progargs=$@;
 
 # モジュールの初期化
 top_dir=$(dirname ${progdir});
@@ -14,23 +14,39 @@ modules_dir="${top_dir}/modules";
 source "${modules_dir}/setup.sh";
 
 # 使用クラスの宣言
-use Hash;
+use -s Hash;
 
 echo Hash h;
 echo Hash h2;
-declare -A h;
-Hash h;
-Hash h2;
-
-h=(
- ["name"]="Shigeo NISHIDA"
+declare -A h=(
+ ["name"]='Shigeo NISHIDA'
  ["age"]=51
  ["Country"]=Japan
  ["pref"]=Kochi
  ["sex"]=male
 );
+declare -A h2;
+declare -A h3;
+Hash h;
+h.foo foo;
+h.bar bar;
+h.baz baz;
+Hash h2;
+Hash h3;
+
+h2 = @h;
+
+h3 = [ \
+ ["name"]='Shigeo NISHIDA' \
+ ["age"]=51 \
+ ["Country"]=Japan \
+ ["pref"]=Kochi \
+ ["sex"]=male \
+];
 
 dump h;
+dump h2;
+dump h3
 
 echo h.length;
 h.length;
@@ -57,4 +73,4 @@ echo h.key_exists xname;
 h.key_exists xname;
 echo $?
 
-delete h h2;
+delete h h2 h3;

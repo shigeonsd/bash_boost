@@ -105,16 +105,86 @@ function __undefdestructor() {
     echo "unset -f ~${___this};";
 }
 
+function __this() {
+    local operator="operator_${1}";
+    shift;
+    "THIS.${operator}" $@;
+}
+
+function __defthis() {
+    eval "$(echo "${___this}()";
+	    declare -f __this \
+		|  tail -n +2 \
+		| __macroexpand CLASS ${___class} \
+		| __macroexpand THIS ${___this} )";
+}
+
+function __undefthis() {
+    echo "unset -f ${___this};";
+}
+
 
 function __super() {
+    [ ${___super} = null ] && return;
     ${___super} ${___this};
 }
 
 function _new() {
     __super;
     public class "${___class}";
+    __defthis;
     __defmethods;
     __defdestructor;
+}
+
+function __clone_prop() {
+    local props="\${!__object_props__[@]}";
+    local src_prop;
+    local dst_prop;
+    for src_prop in $(eval echo  ${props}); do
+	[[ ${src_prop} =~ ^${___src}, ]] || continue;
+	dst_prop="$(echo ${src_prop} | sed -e "s/${___src}/${___dst}/")";
+	__object_props__[${dst_prop}]="${__object_props__[${src_prop}]}";
+    done;
+}
+
+function __copy_value() {
+    eval "${___src}=${___dst};";
+}
+
+function __copy_array() {
+    eval "${___dst}=(); ${___dst}+=(\${${___src}[@]}); "; 
+}
+
+function __copy_hash_elements() {
+    local keys=$(eval "echo \${!${___src}[@]}");
+    local key;
+    for key in ${keys}; do
+	echo "${___dst}['${key}']=\${${___src}['${key}']};";
+    done
+}
+
+function __copy_hash() {
+    eval "$(
+	__copy_hash_elements;
+    )";
+}
+
+function __clone_value() {
+    local type="$(declare -p ${___dst}| awk '{print $2;}')";
+    case "${type}" in
+    --) __copy_value; ;;
+    -a) __copy_array; ;;
+    -A) __copy_hash; ;;
+    esac
+}
+
+function clone() {
+    local ___src="${1}";
+    local ___dst="${2}";
+
+    __clone_prop;
+    __clone_value;
 }
 
 function __undef() {
@@ -147,7 +217,7 @@ function _use() {
 
     [ -v "__${class_name}_loaded" ] && return ;
 
-declare -f __load_info;
+#declare -f __load_info;
     __load_info " use ${class_name}. ";
     __load_if_exist    "${progdir}/${class_name}.sh" \
         || __load_if_exist "${class_dir}/${class_name}.sh" \

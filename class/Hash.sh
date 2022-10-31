@@ -17,8 +17,6 @@ function Hash() {
     public baz 512;
 
     _new;
-
-    eval "${___this}=($@)";
 }
 
 function Hash.set() {
