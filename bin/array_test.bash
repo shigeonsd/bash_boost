@@ -16,22 +16,29 @@ source "${modules_dir}/setup.sh";
 # 使用クラスの宣言
 use Array;
 
-echo Array foo 1 2 3 4 5 6;
-Array foo 1 2 3 4 5 6;
+declare -a foo=(a b c d e);
+declare -a bar=();
+declare -a baz=();
 
-echo foo.aaa
-foo.aaa
-echo foo.bbb
-foo.bbb
-echo foo.ccc
-foo.ccc
-echo foo.ddd
-foo.ddd
+echo Array foo
+Array foo = [ a b c "d e f" ];
+declare -q foo;
+
+echo Array bar
+Array bar = foo;
+
+echo Array baz
+Array baz 
+
+bar = foo;
+baz = bar;
+
+dump foo;
+dump bar;
+dump baz;
+
 echo foo.class
 foo.class
-
-echo foo.dump;
-foo.dump;
 
 echo foo.foreach echo ;
 foo.foreach echo ;
@@ -93,31 +100,7 @@ echo foo.exists "512";
 foo.exists "512";
 echo $?;
 
-echo foo.aaa 123;
-foo.aaa 123;
-
-echo foo.aaa;
-foo.aaa;
-
-echo foo.bbb "bash tk";
-foo.bbb "bash tk";
-
-echo foo.bbb;
-foo.bbb;
-
-arg=(1 2 3);
-echo foo.ccc ${arg[@]}
-foo.ccc ${arg[@]}
-echo foo.ccc
-foo.ccc
-
-echo ${!Array_props[@]};
-echo ${Array_props[@]};
-
 echo delete foo bar;
-delete foo bar;
-
-echo ${!Array_props[@]};
-echo ${Array_props[@]};
+delete foo bar baz;
 
 

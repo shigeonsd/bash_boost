@@ -3,23 +3,24 @@
 # Array.sh -- Array クラス
 #
 #
+use Object;
 
 # Constructor
 function Array() {
     local ___super="Object";
     local ___class=${FUNCNAME};
     local ___this="${1}";
+    local ___args
     shift;
-    #_extends Object $@;
-
-    public aaa 123;
-    public bbb "xyz";
-    public ccc "$(date)";
-    public ddd ;
 
     _new;
 
-    eval "${___this}=($@)";
+    [ $# -eq 0 ] && return;
+    [ ! "${1}" = "=" ] && error_invalid_argument $@;
+    shift;
+    [ ! "${1}" = "[" ] && {
+	clone $1 ${___this};
+    }
 }
 
 function Array.set() {

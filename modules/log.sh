@@ -47,3 +47,7 @@ function mod_debug() {
 function log_separater()   { info "----"; }
 function log_begin_block() { info "${FUNCNAME[1]} {"; }
 function log_end_block()   { info "}"; }
+
+function error_invalid_argument() {
+    error "Invalid arguments '$@'.";
+}

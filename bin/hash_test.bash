@@ -1,4 +1,4 @@
-#! /bin/bash 
+#! /bin/bash
 #
 # hash_test.bash -- 
 #
@@ -34,19 +34,19 @@ h.baz baz;
 Hash h2;
 Hash h3;
 
-h2 = @h;
+h2 = h;
 
-h3 = [ \
- ["name"]='Shigeo NISHIDA' \
- ["age"]=51 \
- ["Country"]=Japan \
- ["pref"]=Kochi \
- ["sex"]=male \
-];
+h3=(
+ ["name"]='Shigeo NISHIDA'
+ ["age"]=51
+ ["Country"]=Japan
+ ["pref"]=Kochi
+ ["sex"]=male
+);
 
 dump h;
 dump h2;
-dump h3
+dump h3;
 
 echo h.length;
 h.length;

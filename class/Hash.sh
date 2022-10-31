@@ -12,10 +12,6 @@ function Hash() {
     local ___this="${1}";
     shift;
 
-    public foo 128;
-    public bar 256;
-    public baz 512;
-
     _new;
 }
 
