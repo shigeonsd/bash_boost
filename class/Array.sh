@@ -4,19 +4,11 @@
 #
 #
 
-# use Object;
-
-# Array_props[obj_name,property_name]
-# public      varname
-# protected  _varname
-# private   __varname
-#
-declare -g -A Array_props=();
-
 # Constructor
 function Array() {
-    local ___this="${1}";
+    local ___super="Object";
     local ___class=${FUNCNAME};
+    local ___this="${1}";
     shift;
     #_extends Object $@;
 

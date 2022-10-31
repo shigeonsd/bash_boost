@@ -24,7 +24,6 @@ function defun_load_debug() {
 
 defun_load_info  __load_info;
 defun_load_debug __load_debug;
-#declare -f __load_info;
 
 function __invoke_init() {
     local module_name="$1";
@@ -67,15 +66,17 @@ function _load() {
 
 function load() {
     case $1 in
-    -s) __load_silence=true;  shift; ;;
-    -v) __load_silence=false; shift; ;;
+    -s) __load_silence=true; 
+	defun_load_info  __load_info;
+	defun_load_debug __load_debug;
+	shift; ;;
+    -v) __load_silence=false;
+	defun_load_info  __load_info;
+	defun_load_debug __load_debug;
+	shift; ;;
     esac
-    for mod in $@; do
-	_load "${mod}";
-    done;
-}
 
-function load_silent() {
+    loca lmod;
     for mod in $@; do
 	_load "${mod}";
     done;

@@ -3,21 +3,18 @@
 # Hash.sh -- Hash クラス
 #
 #
-
-# use Object;
-
-# Hash_props[obj_name,property_name]
-# public      varname
-# protected  _varname
-# private   __varname
-#
-declare -g -A Hash_props=();
+use Object;
 
 # Constructor
 function Hash() {
-    local ___this="${1}";
+    local ___super=Object;
     local ___class=${FUNCNAME};
+    local ___this="${1}";
     shift;
+
+    public foo 128;
+    public bar 256;
+    public baz 512;
 
     _new;
 

@@ -4,7 +4,7 @@
 #
 set -u;
 progname=$(basename ${0});
-progdir=$(cd "`dirname $0`"; pwd);
+progdir=$(cd "`dirname $0`" && pwd);
 progargs=$@
 
 # モジュールの初期化

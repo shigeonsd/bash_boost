@@ -3,6 +3,10 @@
 # class.sh -- 
 #
 #
+
+declare -A __object_props__=();
+
+
 function __macroexpand() {
     local var=${1};
     local val=$2;
@@ -11,47 +15,42 @@ function __macroexpand() {
 
 function __prop() {
     [ $# -eq 0 ] && {
-	echo "${CLASS_props[THIS,PROP]}";
+	echo "${__object_props__[THIS,PROP]}";
 	return;
     }
     [ $# -eq 1 ] && {
-	CLASS_props[THIS,PROP]=$1;
+	__object_props__[THIS,PROP]=$1;
 	return;
     }
-    CLASS_props[THIS,PROP]=$@;
+    __object_props__[THIS,PROP]=$@;
 }
 
 function __dump_this() {
-    echo "echo \$(declare -p ${___this} | sed -e 's/^declare -. //');"
+    declare -p ${___this} | sed -e 's/^declare -. //';
 }
 
-function __dump_prop() {
-    local props="\${!${___class}_props[@]}";
+function __dump_props() {
+    local props=${!__object_props__[@]};
     local prop;
     local pname;
-    for prop in $(eval echo  ${props}); do
+    for prop in ${props}; do
 	[[ ${prop} =~ ^${___this}, ]] && {
 	    pname=${prop/,/.};
-	    echo "echo ${pname}=\${${___class}_props[${prop}]};";
+	    echo "${pname}=${__object_props__[${prop}]};";
 	}
     done;
 }
 
-function __defdump() {
-     eval "$(echo "${___this}.dump() {";
-	    __dump_this;
-	    __dump_prop;
-	    echo "}")";
-}
-
-function __undefdump() {
-    echo "unset -f ${___this}.dump;";
+function dump() {
+    local ___this="${1}";
+    __dump_this;
+    __dump_props;
 }
 
 function __defprop() {
     local prop="$1";
     local value=null;
-    local props="${___class}_props[${___this},${prop}]";
+    local props="__object_props__[${___this},${prop}]";
     shift;
 
     # 値の初期化
@@ -70,11 +69,11 @@ function __defprop() {
 }
 
 function __undefprops() {
-    local props="\${!${___class}_props[@]}";
+    local props="\${!__object_props__[@]}";
     local prop;
     for prop in $(eval echo  ${props}); do
 	[[ ${prop} =~ ^${___this}, ]] && {
-	    echo "unset ${___class}_props[${prop}];";
+	    echo "unset __object_props__[${prop}];";
 	}
     done;
 }
@@ -101,20 +100,25 @@ function __defdestructor() {
 	    __undef;
 	    echo "}")";
 }
+
 function __undefdestructor() {
     echo "unset -f ~${___this};";
 }
 
+
+function __super() {
+    ${___super} ${___this};
+}
+
 function _new() {
+    __super;
     public class "${___class}";
-    __defdump;
     __defmethods;
     __defdestructor;
 }
 
 function __undef() {
     __undefprops;
-    __undefdump;
     __undefmethods;
     __undefdestructor;
 }
@@ -143,6 +147,7 @@ function _use() {
 
     [ -v "__${class_name}_loaded" ] && return ;
 
+declare -f __load_info;
     __load_info " use ${class_name}. ";
     __load_if_exist    "${progdir}/${class_name}.sh" \
         || __load_if_exist "${class_dir}/${class_name}.sh" \
@@ -155,6 +160,17 @@ function _use() {
 }
 
 function use() {
+    case $1 in
+    -s) __load_silence=true;
+        defun_load_info  __load_info;
+        defun_load_debug __load_debug;
+        shift; ;;
+    -v) __load_silence=false;
+        defun_load_info  __load_info;
+        defun_load_debug __load_debug;
+        shift; ;;
+    esac
+
     local class;
     for class in $@; do
 	_use ${class};

@@ -1,11 +1,11 @@
-#! /bin/bash
+#! /bin/bash -x
 #
 # hash_test.bash -- 
 #
 #
 set -u;
 progname=$(basename ${0});
-progdir=$(cd "`dirname $0`"; pwd);
+progdir=$(cd "`dirname $0`" && pwd);
 progargs=$@
 
 # モジュールの初期化
@@ -17,16 +17,20 @@ source "${modules_dir}/setup.sh";
 use Hash;
 
 echo Hash h;
-declare -A h=();
+echo Hash h2;
+declare -A h;
 Hash h;
+Hash h2;
+
 h=(
  ["name"]="Shigeo NISHIDA"
  ["age"]=51
+ ["Country"]=Japan
  ["pref"]=Kochi
  ["sex"]=male
 );
 
-h.dump;
+dump h;
 
 echo h.length;
 h.length;
@@ -53,5 +57,4 @@ echo h.key_exists xname;
 h.key_exists xname;
 echo $?
 
-echo delete h;
-delete h;
+delete h h2;

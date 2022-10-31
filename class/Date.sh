@@ -4,15 +4,6 @@
 #
 #
 
-# use Object;
-
-# Date_props[obj_name,property_name]
-# public      varname
-# protected  _varname
-# private   __varname
-#
-declare -g -A Date_props=();
-
 # Constructor
 function Date() {
     local ___this="${1}";

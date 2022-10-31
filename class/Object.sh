@@ -4,26 +4,20 @@
 #
 #
 
-# Object_props[obj_name,property_name]
-# public      varname
-# protected  _varname
-# private   __varname
-#
-declare -g -A Object_props=();
-
 # Constructor
 function Object() {
-    local ___this="$1";
+    local ___super=null;
     local ___class=${FUNCNAME};
+    local ___this="$1";
     shift;
+
+    public aaa a;
+    public bbb b;
+    public ccc c;
+
     _new;
 }
 
-function Object.set() {
-    THIS=${1};
+function Object.test() {
+    true;
 }
-
-function Object.get() {
-    echo ${THIS};
-}
-
