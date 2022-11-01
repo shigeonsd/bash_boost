@@ -1,4 +1,4 @@
-#! /bin/bash  -x
+#! /bin/bash 
 #
 # datetime_test.bash -- 
 #
@@ -33,7 +33,7 @@ dt.fmt '+%Y-%m-%d %T'
 
 echo DateTime d2; 
 DateTime dt2; 
-dt2=$(today);
+dt2 = $(now);
 
 echo dump dt2;
 dump dt2;

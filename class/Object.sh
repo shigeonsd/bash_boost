@@ -30,5 +30,4 @@ function Object.operator_=() {
     unset -v THIS;
     declare -g THIS;
     THIS="$@";
-    #eval "THIS='$@';";
 }
