@@ -16,26 +16,36 @@ source "${modules_dir}/setup.sh";
 # 使用クラスの宣言
 use Array;
 
-declare -a foo=(a b c d e);
+declare -a foo=(a b 'c d e');
 declare -a bar=();
 declare -a baz=();
 
-echo Array foo
-Array foo = [ a b c "d e f" ];
-declare -q foo;
+echo  declare -p foo;
+declare -p foo;
 
-echo Array bar
-Array bar = foo;
+echo Array foo
+Array foo;
+declare -p foo;
+
+echo Array bar := foo;
+Array bar := foo;
 
 echo Array baz
-Array baz 
+Array baz = foo;
+echo baz = bar;
+#baz = foo;
 
-bar = foo;
-baz = bar;
+echo Array afo;
+Array afo;
 
+echo afo = foo;
+afo = foo;
+
+echo dump foo bar baz
 dump foo;
 dump bar;
 dump baz;
+dump afo;
 
 echo foo.class
 foo.class
@@ -71,8 +81,12 @@ foo.get 1;
 echo foo.reverse;
 foo.reverse;
 
-echo Array bar;
-Array bar $(foo.reverse)
+declare -a rfoo=($(foo.reverse));
+echo Array hoge = rfoo;
+Array hoge = rfoo;
+
+echo dump hoge;
+dump hoge;
 
 echo bar.foreach echo
 bar.foreach echo

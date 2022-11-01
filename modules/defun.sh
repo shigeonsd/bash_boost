@@ -79,3 +79,30 @@ function nop() {
 function get_module_name() {
     echo $1 | sed -e 's/^__//' -e 's/_.*$//';
 }
+
+#
+# 関数引数チェック
+#
+function error_if_noargs() {
+    [ $# -eq 0 ] && error "No argument.";
+}
+
+function __required_n_args() {
+    [ $# -ne ${___n} ] && error "Invalid arguments '$@'.";
+}
+
+function required_1_args() {
+    local ___n=1;
+    __required_n_args $@;
+}
+
+function required_2_args() {
+    local ___n=2;
+    __required_n_args $@;
+}
+
+function required_3_args() {
+    local ___n=3;
+    __required_n_args $@;
+}
+

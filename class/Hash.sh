@@ -12,7 +12,14 @@ function Hash() {
     local ___this="${1}";
     shift;
 
-    _new;
+    _new $@;
+}
+
+function Hash.operator_=() {
+    required_1_args $@;
+    declare -n  _array="${1}"
+    unset THIS;
+    declare -g -A THIS=$(declare -p ${!_array} | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/)$/\n)/');
 }
 
 function Hash.set() {
@@ -72,3 +79,6 @@ function Hash.clear() {
     THIS=();
 }
 
+function Hash.serialize() {
+    declare -p THIS | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/ )$/\n)/';
+}

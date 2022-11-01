@@ -6,7 +6,6 @@
 
 declare -A __object_props__=();
 
-
 function __macroexpand() {
     local var=${1};
     local val=$2;
@@ -84,6 +83,7 @@ function __defmethods() {
     for method in $(declare -f | grep "^${___class}\." | sed -e 's/ () //g'); do
 	eval "$(declare -f ${method} \
 		| __macroexpand ${___class} ${___this} \
+		| __macroexpand CLASS ${___class} \
 		| __macroexpand THIS ${___this}; )";
     done
 }
@@ -129,62 +129,35 @@ function __super() {
     ${___super} ${___this};
 }
 
+function __init() {
+    [ $# -eq 0 ] && return;
+
+    local operator="${1}"
+    shift;
+    error_if_noargs $@;
+
+    eval "${___this} ${operator} $@;";
+}
+
 function _new() {
     __super;
     public class "${___class}";
     __defthis;
     __defmethods;
     __defdestructor;
+    __init $@;
 }
 
-function __clone_prop() {
+function copy_props() {
+    local ___src="${1}";
+    local ___dst="${2}";
     local props="\${!__object_props__[@]}";
     local src_prop;
     local dst_prop;
-    for src_prop in $(eval echo  ${props}); do
-	[[ ${src_prop} =~ ^${___src}, ]] || continue;
+    for src_prop in $(eval echo  ${props} | sed -e 's/ /\n/g'| grep "^${___src},"); do
 	dst_prop="$(echo ${src_prop} | sed -e "s/${___src}/${___dst}/")";
 	__object_props__[${dst_prop}]="${__object_props__[${src_prop}]}";
     done;
-}
-
-function __copy_value() {
-    eval "${___src}=${___dst};";
-}
-
-function __copy_array() {
-    eval "${___dst}=(); ${___dst}+=(\${${___src}[@]}); "; 
-}
-
-function __copy_hash_elements() {
-    local keys=$(eval "echo \${!${___src}[@]}");
-    local key;
-    for key in ${keys}; do
-	echo "${___dst}['${key}']=\${${___src}['${key}']};";
-    done
-}
-
-function __copy_hash() {
-    eval "$(
-	__copy_hash_elements;
-    )";
-}
-
-function __clone_value() {
-    local type="$(declare -p ${___dst}| awk '{print $2;}')";
-    case "${type}" in
-    --) __copy_value; ;;
-    -a) __copy_array; ;;
-    -A) __copy_hash; ;;
-    esac
-}
-
-function clone() {
-    local ___src="${1}";
-    local ___dst="${2}";
-
-    __clone_prop;
-    __clone_value;
 }
 
 function __undef() {

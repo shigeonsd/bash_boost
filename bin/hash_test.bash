@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash 
 #
 # hash_test.bash -- 
 #
@@ -25,28 +25,31 @@ declare -A h=(
  ["pref"]=Kochi
  ["sex"]=male
 );
+
+declare -p h;
 declare -A h2;
 declare -A h3;
 Hash h;
-h.foo foo;
-h.bar bar;
-h.baz baz;
 Hash h2;
-Hash h3;
 
-h2 = h;
 
-h3=(
- ["name"]='Shigeo NISHIDA'
- ["age"]=51
- ["Country"]=Japan
- ["pref"]=Kochi
- ["sex"]=male
-);
+declare -p h | sed -e 's/^[^=].=//';
+
+echo h.serialize;
+h.serialize;
+
+h2 := h;
+
+echo Hash h3;
+Hash h3 := h;
+
+echo Hash h3;
+Hash h4 = h;
 
 dump h;
 dump h2;
 dump h3;
+dump h4;
 
 echo h.length;
 h.length;

@@ -3,19 +3,19 @@
 # Date.sh -- Date クラス
 #
 #
+use Object;
 
 # Constructor
 function Date() {
-    local ___this="${1}";
+    local ___super="Object";
     local ___class=${FUNCNAME};
+    local ___this="${1}";
     shift;
-    local val=${1-$(date '+%Y/%m/%d')};
+   # local val=${1-$(date '+%Y/%m/%d')};
 
     public fmt '+%Y/%m/%d';
 
-    _new;
-
-    eval "${___this}='${val}'";
+    _new $@;
 }
 
 function Date.set() {
@@ -48,7 +48,7 @@ function Date.end_of_month() {
 }
 
 function Date.begin_of_month() {
-    local fmt=$(Date.fmt);
+    local fmt=$(Date.fmt | sed -e 's/..$/01/');
     local n=${1-0};
     date "${fmt}" --date "${THIS} ${n} months";
 }

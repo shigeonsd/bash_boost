@@ -15,13 +15,19 @@ function Object() {
     public bbb b;
     public ccc c;
 
-    _new;
+    _new $@;
+}
+
+function Object.operator_:=() {
+    required_1_args $@;
+    local obj="${1}";
+    copy_props ${obj} THIS;
+    THIS = ${obj};
 }
 
 function Object.operator_=() {
-    [ $# -eq 0 ] && return;
-
-    local varname="${1}";
-    clone ${varname} THIS;
-    return;
+    error_if_noargs $@;
+    unset THIS;
+    declare -g THIS;
+    eval "THIS=$@;";
 }

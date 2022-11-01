@@ -13,14 +13,14 @@ function Array() {
     local ___args
     shift;
 
-    _new;
+    _new $@;
+}
 
-    [ $# -eq 0 ] && return;
-    [ ! "${1}" = "=" ] && error_invalid_argument $@;
-    shift;
-    [ ! "${1}" = "[" ] && {
-	clone $1 ${___this};
-    }
+function Array.operator_=() {
+    required_1_args $@;
+    declare -n  _array="${1}"
+    unset THIS
+    declare -g -a THIS=$(declare -p ${!_array} | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/)$/\n)/');
 }
 
 function Array.set() {
@@ -101,4 +101,8 @@ function Array.reverse() {
     | while read elm ; do
 	echo "${elm}";
     done
+}
+
+function Array.serialize() {
+    declare -p THIS | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/ )$/\n)/';
 }
