@@ -15,19 +15,20 @@ function Object() {
     public bbb b;
     public ccc c;
 
-    _new $@;
+    _new "$@";
 }
 
 function Object.operator_:=() {
-    required_1_args $@;
+    required_1_args "$@";
     local obj="${1}";
     copy_props ${obj} THIS;
-    THIS = ${obj};
+    eval "THIS = \${${obj}}";
 }
 
 function Object.operator_=() {
-    error_if_noargs $@;
-    unset THIS;
+    error_if_noargs "$@";
+    unset -v THIS;
     declare -g THIS;
-    eval "THIS=$@;";
+    THIS="$@";
+    #eval "THIS='$@';";
 }

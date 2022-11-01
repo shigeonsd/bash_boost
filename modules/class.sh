@@ -3,7 +3,6 @@
 # class.sh -- 
 #
 #
-
 declare -A __object_props__=();
 
 function __macroexpand() {
@@ -18,10 +17,10 @@ function __prop() {
 	return;
     }
     [ $# -eq 1 ] && {
-	__object_props__[THIS,PROP]=$1;
+	__object_props__[THIS,PROP]="${1}";
 	return;
     }
-    __object_props__[THIS,PROP]=$@;
+    __object_props__[THIS,PROP]="$@";
 }
 
 function __dump_this() {
@@ -77,7 +76,6 @@ function __undefprops() {
     done;
 }
 
-
 function __defmethods() {
     local method;
     for method in $(declare -f | grep "^${___class}\." | sed -e 's/ () //g'); do
@@ -108,7 +106,7 @@ function __undefdestructor() {
 function __this() {
     local operator="operator_${1}";
     shift;
-    "THIS.${operator}" $@;
+    "THIS.${operator}" "$@";
 }
 
 function __defthis() {
@@ -134,9 +132,9 @@ function __init() {
 
     local operator="${1}"
     shift;
-    error_if_noargs $@;
+    error_if_noargs "$@";
 
-    eval "${___this} ${operator} $@;";
+    eval "${___this} ${operator} \"$@\";";
 }
 
 function _new() {
@@ -145,7 +143,7 @@ function _new() {
     __defthis;
     __defmethods;
     __defdestructor;
-    __init $@;
+    __init "$@";
 }
 
 function copy_props() {
@@ -167,20 +165,20 @@ function __undef() {
 }
 
 function public() {
-    __defprop $@;
+    __defprop "$@";
 }
 
 #function protected() {
-#    __defprop $@;
+#    __defprop "$@";
 #}
 
 #function private() {
-#    __defprop $@;
+#    __defprop "$@";
 #}
 
 function delete() {
     local obj;
-    eval "$(for obj in $@; do
+    eval "$(for obj in "$@"; do
 		echo "~${obj};";
 	    done;)"
 }
@@ -215,7 +213,7 @@ function use() {
     esac
 
     local class;
-    for class in $@; do
+    for class in "$@"; do
 	_use ${class};
     done;
 }

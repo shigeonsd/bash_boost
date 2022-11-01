@@ -12,14 +12,21 @@ function Hash() {
     local ___this="${1}";
     shift;
 
-    _new $@;
+    _new "$@";
+}
+
+function Hash.operator_:=() {
+    required_1_args "$@";
+    local obj="${1}";
+    copy_props ${obj} THIS;
+    THIS = ${obj};
 }
 
 function Hash.operator_=() {
-    required_1_args $@;
-    declare -n  _array="${1}"
-    unset THIS;
-    declare -g -A THIS=$(declare -p ${!_array} | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/)$/\n)/');
+    required_1_args "$@";
+    local _hash="${1}"
+    unset -v THIS;
+    declare -g -A THIS=$(declare -p ${_hash} | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/)$/\n)/');
 }
 
 function Hash.set() {
@@ -59,18 +66,18 @@ function Hash.keys() {
 
 function Hash.exists() {
     local val="$1";
-    local k;
-    for k in ${!THIS[@]}; do
-        [ "${THIS[${k}]}" == "${val}" ] && return 0;
+    local key;
+    for key in ${!THIS[@]}; do
+        [ "${THIS[${key}]}" == "${val}" ] && return 0;
     done;
     return 1;
 }
 
 function Hash.key_exists() {
     local val="$1";
-    local k;
-    for k in ${!THIS[@]}; do
-        [ "${k}" == "${val}" ] && return 0;
+    local key;
+    for key in ${!THIS[@]}; do
+        [ "${key}" == "${val}" ] && return 0;
     done;
     return 1;
 }

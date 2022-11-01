@@ -1,6 +1,6 @@
 #! /bin/bash  -x
 #
-# hash_test.bash -- 
+# datetime_test.bash -- 
 #
 #
 set -u;
@@ -14,50 +14,47 @@ modules_dir="${top_dir}/modules";
 source "${modules_dir}/setup.sh";
 
 # 使用クラスの宣言
-use Date;
+use DateTime;
 
 #declare -g d;
-echo Date d;
-Date d = "1971/02/15";
+echo DateTime dt;
+DateTime dt = "1971/02/15 12:34:56";
 
-dump d;
+dump dt;
 
 echo d.yesterday;
-d.yesterday;
+dt.yesterday;
 
 echo d.tomorrow;
-d.tomorrow;
+dt.tomorrow;
 
-echo d.fmt '+%Y-%m-%d'
-d.fmt '+%Y-%m-%d'
+echo d.fmt '+%Y-%m-%d %T'
+dt.fmt '+%Y-%m-%d %T'
 
-echo Date d2; 
-Date d2; 
-d2 = $(today);
+echo DateTime d2; 
+DateTime dt2; 
+dt2=$(today);
 
-echo dump d2;
-dump d2;
+echo dump dt2;
+dump dt2;
 
 echo d2 := d;
-d2 := d;
+dt2 := dt;
 
-echo dump d2;
-dump d2;
-
-echo d2.begin_of_month -1;
-d2.begin_of_month -1;
+echo dt2.begin_of_month -1;
+dt2.begin_of_month -1;
 echo d.end_of_month -1;
-d2.end_of_month -1;
+dt2.end_of_month -1;
 
 echo d.begin_of_month;
-d2.begin_of_month;
+dt2.begin_of_month;
 echo d.end_of_month;
-d2.end_of_month;
+dt2.end_of_month;
 
 echo d.begin_of_month 1;
-d2.begin_of_month 1;
+dt2.begin_of_month 1;
 echo d.end_of_month 1;
-d2.end_of_month 1;
+dt2.end_of_month 1;
 
-echo delete d;
-delete d d2;
+echo delete dt dt2;
+delete dt dt2;

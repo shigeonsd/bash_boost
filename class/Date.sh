@@ -11,11 +11,10 @@ function Date() {
     local ___class=${FUNCNAME};
     local ___this="${1}";
     shift;
-   # local val=${1-$(date '+%Y/%m/%d')};
 
     public fmt '+%Y/%m/%d';
 
-    _new $@;
+    _new "$@";
 }
 
 function Date.set() {

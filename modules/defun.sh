@@ -93,16 +93,16 @@ function __required_n_args() {
 
 function required_1_args() {
     local ___n=1;
-    __required_n_args $@;
+    __required_n_args "$@";
 }
 
 function required_2_args() {
     local ___n=2;
-    __required_n_args $@;
+    __required_n_args "$@";
 }
 
 function required_3_args() {
     local ___n=3;
-    __required_n_args $@;
+    __required_n_args "$@";
 }
 

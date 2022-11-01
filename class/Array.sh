@@ -13,14 +13,21 @@ function Array() {
     local ___args
     shift;
 
-    _new $@;
+    _new "$@";
+}
+
+function Array.operator_:=() {
+    required_1_args "$@";
+    local obj="${1}";
+    copy_props ${obj} THIS;
+    THIS = ${obj};
 }
 
 function Array.operator_=() {
-    required_1_args $@;
-    declare -n  _array="${1}"
-    unset THIS
-    declare -g -a THIS=$(declare -p ${!_array} | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/)$/\n)/');
+    required_1_args "$@";
+    local _array="${1}";
+    unset -v THIS;
+    declare -g -a THIS=$(declare -p ${_array} | sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/)$/\n)/');
 }
 
 function Array.set() {
