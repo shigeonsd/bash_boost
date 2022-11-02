@@ -57,7 +57,24 @@ function usage() {
 }
 
 function usage_if_no_option() {
-    [ "${progargs}" = "" ] && { usage; }
+    [ ${#progargs[@]} -eq 0 ] && { usage; }
+}
+
+function usage_if_args_ne() {
+    local n="${1}";
+    [ ${#progargs[@]} -ne ${n} ] && { usage; }
+}
+
+function usage_if_args_ne_1() {
+    usage_if_args_ne 1;
+}
+
+function usage_if_args_ne_2() {
+    usage_if_args_ne 2;
+}
+
+function __usage_if_not_0_args() {
+    [ $# -ne ${___n} ] && { usage; }
 }
 
 usage_option "-h|-help|--help" usage;
