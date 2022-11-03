@@ -79,7 +79,7 @@ function __defprop() {
     local prop="$2";
     local value=null;
     local props="__object_props__[${___this},${prop}]";
-    shift;
+    shift 2;
 
     # 値の初期化
     [ $# -ne 0 ] && {
@@ -207,10 +207,16 @@ function public() {
 #    __defprop "$@";
 #}
 
+function __delete() {
+    local func="~${1}";
+
+    exist_func  ${func} && echo "${func};";
+}
+
 function delete() {
     local obj;
     eval "$(for obj in "$@"; do
-		echo "~${obj};";
+		__delete ${obj};
 	    done;)"
 }
 

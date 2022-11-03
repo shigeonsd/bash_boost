@@ -39,20 +39,20 @@ function get_method_names() {
 
 function ut_func_tmpl() {
     : テストをスキップする
-    return -1;
+    return $(skipped);
 
     : オブジェクト生成
     CLASS obj;
 
     : テストを実装する。
-    local result;
-    failure;
-    : "obj.method1 args COND obj.method2 args  COND obj.method3 args COND success;"
+    : sucess
+    : 'test statement || return $(failure)';
+    : failure
+    : 'obj.validate "1971/02/15xxxx"'
+    : '[ $? -eq 0 ] && return $(failure)';
 	    
-    : オブジェクト破壊
-    delete obj;
-
-    return ${result};
+    : テスト成功
+    return $(success);
 }
 
 function defun_ut_func() {
@@ -62,7 +62,6 @@ function defun_ut_func() {
 	    declare -f "ut_func_tmpl" \
 	    |  tail -n +2 \
 	    | __macroexpand CLASS ${___class} \
-	    | __macroexpand COND  "${___cond}" \
 	)";
     }
     declare -f "${___ut_func}";
@@ -70,13 +69,11 @@ function defun_ut_func() {
 
 function create_success_case() {
     local ___case=success;
-    local ___cond="\\&\\&";
     defun_ut_func;
 }
 
 function create_failure_case() {
     local ___case=failure;
-    local ___cond="||";
     defun_ut_func;
 }
 

@@ -20,8 +20,7 @@ CLASSES     = $(CLASS_FILES:.sh=)
 UT_FILES    = $(CLASS_FILES:.sh=.ut)
 LOG_FILES   = $(CLASS_FILES:.sh=.log)
 
-SHELL=/bin/bash -o pipefail
-
+SHELL       = /bin/bash -o pipefail
 
 vpath %.sh ${CLASS_DIR}
 
@@ -37,7 +36,7 @@ all: $(LOG_FILES)
 
 %.log:%.ut
 	@echo @@@ Do unit test $*
-	${UT} $< | tee /dev/tty > $@;
+	@${UT} $< | tee /dev/tty > $@;
 
 clean:
 	rm -rf ${LOG_FILES};

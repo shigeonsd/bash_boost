@@ -5,360 +5,283 @@ setup ()
 }
 test_Date_success () 
 { 
-    : テストをスキップする;
-    return -1;
     : オブジェクト生成;
-    Date obj;
+    today=$(today);
+    Date obj = "${today}";
+
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    [ "${obj}" = "${today}" ] || return $(failure);
+
+    : テスト成功;
+    return $(success);
 }
 test_Date_failure () 
 { 
-    : テストをスキップする;
-    return -1;
-    : オブジェクト生成;
-    Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    export today=$(today);
+    (Date obj = "${today}xx") > /dev/null;
+    [ $? -ne 0 ] || return $(failure);
+
+    return $(success);
 }
 test_Date.begin_of_month_success () 
 { 
-    : テストをスキップする;
-    return -1;
+    local arg="1971/02/15";
+    local expected="1971/02/01";
     : オブジェクト生成;
-    Date obj;
+    Date obj = "${arg}";
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    [ "$(obj.begin_of_month)" = "${expected}" ] || return $(failure);
+    : テスト成功;
+    return $(success)
 }
 test_Date.begin_of_month_failure () 
 { 
     : テストをスキップする;
-    return -1;
-    : オブジェクト生成;
-    Date obj;
-    : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    return $(skipped);
 }
 test_Date.class_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.class_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.end_of_month_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.end_of_month_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.fmt_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.fmt_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.get_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.get_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.n_days_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.n_days_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.operator_:=_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.operator_:=_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.operator_=_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.operator_=_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.set_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.set_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.tomorrow_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.tomorrow_failure () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : 'test statement || return $(failure)';
+    : テスト成功;
+    return $(success)
 }
 test_Date.validate_success () 
 { 
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    obj.validate "1971/02/15" && obj.validate "1971-02-15" && success;
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : 'test statement || return $(failure)';
+    obj.validate "1971/02/15" || return $(failure);
+    obj.validate "1971-02-15" || return $(failure);
+    : テスト成功;
+    return $(success)
 }
 test_Date.validate_failure () 
 { 
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    obj.validate "1971/02/15xxxx" || obj.validate "1971@02@15" || success;
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : 'test statement || return $(failure)';
+    obj.validate "1971/02/15xxxx" 
+    [ $? -eq 0 ] && return $(failure)";
+    obj.validate "1971@02@15" 
+    [ $? -eq 0 ] && return $(failure)";
+
+    : テスト成功;
+    return $(success)
 }
 test_Date.yesterday_success () 
 { 
     : テストをスキップする;
-    return -1;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
 test_Date.yesterday_failure () 
 { 
+    : テストをスキップする;
+    return $(skipped);
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    local result;
-    failure;
-    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
-    : オブジェクト破壊;
-    delete obj;
-    return ${result}
+    : "test statement || return $(failure)";
+    : テスト成功;
+    return $(success)
 }
