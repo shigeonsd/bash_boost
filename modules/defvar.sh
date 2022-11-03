@@ -4,7 +4,7 @@
 #
 progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
-progargs=$@;
+progargs=($@);
 
 top_dir=$(dirname ${progdir});
 modules_dir="${top_dir}/modules";

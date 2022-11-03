@@ -6,7 +6,6 @@
 set -u;
 progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
-progargs=("$@");
 
 # モジュールの初期化
 top_dir=$(dirname ${progdir});      
@@ -39,17 +38,21 @@ function get_method_names() {
 }
 
 function ut_func_tmpl() {
-    local ret;
+    : テストをスキップする
+    return -1;
+
+    : オブジェクト生成
     CLASS obj;
 
     : テストを実装する。
-    ret=1;
-
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;"
+	    
+    : オブジェクト破壊
     delete obj;
-    : テスト結果を表示する。
-    : echo success
-    : echo failure
-    echo skipped
+
+    return ${result};
 }
 
 function defun_ut_func() {
@@ -64,12 +67,12 @@ function defun_ut_func() {
 }
 
 function create_success_case() {
-    local ___ut_func=$(printf "test::%03d${___method}_success" ${___num});
+    local ___ut_func=$(printf "test${___method}_success");
     defun_ut_func;
 }
 
 function create_failure_case() {
-    local ___ut_func=$(printf "test::%03d${___method}_failure" ${___num});
+    local ___ut_func=$(printf "test${___method}_failure");
     defun_ut_func;
 }
 

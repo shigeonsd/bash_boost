@@ -11,10 +11,6 @@ function Object() {
     local ___this="$1";
     shift;
 
-    public aaa a;
-    public bbb b;
-    public ccc c;
-
     _new "$@";
 }
 
@@ -27,7 +23,14 @@ function Object.operator_:=() {
 
 function Object.operator_=() {
     error_if_noargs "$@";
+    THIS.validate "$@" || die "Invalid date '$@'" ;
     unset -v THIS;
     declare -g THIS;
     THIS="$@";
 }
+
+function Object.validate() {
+    true;
+}
+
+

@@ -12,13 +12,17 @@ function Date() {
     local ___this="${1}";
     shift;
 
-    public fmt '+%Y/%m/%d';
+    public string fmt '+%Y/%m/%d';
 
     _new "$@";
 }
 
+function Date.validate() {
+    date --date "$@" > /dev/null 2>&1;
+}
+
 function Date.set() {
-    THIS=${1};
+    THIS = ${1};
 }
 
 function Date.get() {

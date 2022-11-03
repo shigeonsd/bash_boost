@@ -1,0 +1,368 @@
+setup () 
+{ 
+    TARGET="Date";
+    use -s Date
+}
+test_Date_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.begin_of_month_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.begin_of_month_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.class_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.class_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.end_of_month_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.end_of_month_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.fmt_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.fmt_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.get_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.get_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.n_days_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.n_days_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.operator_:=_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.operator_:=_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.operator_=_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.operator_=_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    obj = "1971/02/15xxxx" || obj = "1971@02@15" || success;
+
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.set_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.set_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.tomorrow_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.tomorrow_failure () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.validate_success () 
+{ 
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    obj.validate "1971/02/15" && obj.validate "1971-02-15" && success;
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.validate_failure () 
+{ 
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    obj.validate "1971/02/15xxxx" || obj.validate "1971@02@15" || success;
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.yesterday_success () 
+{ 
+    : テストをスキップする;
+    return -1;
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}
+test_Date.yesterday_failure () 
+{ 
+    : オブジェクト生成;
+    Date obj;
+    : テストを実装する。;
+    local result;
+    failure;
+    : "test1 && test2 && test 3 && success;";
+    : オブジェクト破壊;
+    delete obj;
+    return ${result}
+}

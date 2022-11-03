@@ -16,11 +16,40 @@ function __prop() {
 	echo "${__object_props__[THIS,PROP]}";
 	return;
     }
+    local value="$1";
+    validate TYPE "${value}";
     [ $# -eq 1 ] && {
 	__object_props__[THIS,PROP]="${1}";
 	return;
     }
     __object_props__[THIS,PROP]="$@";
+}
+
+function __validate_string() {
+    local value="${1}";
+    : ne
+}
+
+function __validate_int() {
+    local value="${1}";
+    : ne
+}
+
+function __validate_date() {
+    local value="${1}";
+    : ne
+}
+
+function __validate_datetime() {
+    local value="${1}";
+    : ne
+}
+
+function validate() {
+    local type="${1}";
+    local value="${2}";
+
+    __validate_${type} "${value}";
 }
 
 function __dump_this() {
@@ -46,7 +75,8 @@ function dump() {
 }
 
 function __defprop() {
-    local prop="$1";
+    local type="$1";
+    local prop="$2";
     local value=null;
     local props="__object_props__[${___this},${prop}]";
     shift;
@@ -63,6 +93,7 @@ function __defprop() {
 		|  tail -n +2 \
 		| __macroexpand CLASS ${___class} \
 		| __macroexpand PROP ${prop} \
+		| __macroexpand TYPE ${type} \
 		| __macroexpand THIS ${___this} )";
 }
 
@@ -139,7 +170,7 @@ function __init() {
 
 function _new() {
     __super;
-    public class "${___class}";
+    public string class "${___class}";
     __defthis;
     __defmethods;
     __defdestructor;
