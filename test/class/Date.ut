@@ -326,8 +326,6 @@ test_Date.validate_success ()
 }
 test_Date.validate_failure () 
 { 
-    : テストをスキップする;
-    return -1;
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;

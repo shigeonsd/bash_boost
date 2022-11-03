@@ -57,7 +57,8 @@ function die() {
 }
 
 function result() {
-    [ $total -ne $success ] && exit 1;
+    [ $failure -ne 0 ] && exit 1;
+    exit 0;
 }
 
 total=0;
