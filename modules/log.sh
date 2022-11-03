@@ -17,6 +17,8 @@ function debug() {
 function die() {
     local msg=$1;
     local exit_status=${2-1} # 第二引数が指定されていなかったら 1
+    local frame=($(caller 0));
+    error "failed at function ${frame[1]} (${frame[2]}:${frame[0]})";
     error "exit_status=${exit_status}; ${msg}";
     exit ${exit_status};
 }

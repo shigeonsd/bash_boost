@@ -38,18 +38,28 @@ function get_method_names() {
 }
 
 function ut_func_tmpl() {
-    : テストをスキップする
+    : テストスキップ
     return $(skipped);
+
+    : テストデータ
+    local data="12345";
+    local expected="12345";
 
     : オブジェクト生成
     CLASS obj;
 
-    : テストを実装する。
+    : テスト実行
+    :   '<TEST_CONDITION> && return $(failure)';
     : sucess
-    : 'test statement || return $(failure)';
+    :   'obj.validate "1971/02/15"'
+    :   '[ $? -eq 0 ] || return $(failure)';
+    :
+    :   '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
     : failure
-    : 'obj.validate "1971/02/15xxxx"'
-    : '[ $? -eq 0 ] && return $(failure)';
+    :   'obj.validate "1971/02/15xxxx"'
+    :   '[ $? -ne 0 ] || return $(failure)';
+    :
+    :   '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
 	    
     : テスト成功
     return $(success);

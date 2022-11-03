@@ -17,6 +17,15 @@ function Date() {
     _new "$@";
 }
 
+function Object.operator_=() {
+    local fmt=$(THIS.fmt);
+    error_if_noargs "$@";
+    THIS.validate "$@" || die "Invalid date '$@'" ;
+    unset -v THIS;
+    declare -g THIS;
+    THIS="$(date --date "$@" ${fmt})";
+}
+
 function Date.validate() {
     date --date "$@" > /dev/null 2>&1;
 }
@@ -26,12 +35,12 @@ function Date.set() {
 }
 
 function Date.get() {
-    local fmt=$(Date.fmt);
+    local fmt=$(THIS.fmt);
     echo $(date --date "${THIS}" ${fmt});
 }
 
 function Date.n_days() {
-    local fmt=$(Date.fmt);
+    local fmt=$(THIS.fmt);
     local n="$1";
     date --date "${THIS} ${n} days" "${fmt}";
 }

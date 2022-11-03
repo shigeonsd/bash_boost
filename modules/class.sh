@@ -16,27 +16,40 @@ function __prop() {
 	echo "${__object_props__[THIS,PROP]}";
 	return;
     }
-    local value="$1";
-    validate TYPE "${value}";
-    [ $# -eq 1 ] && {
-	__object_props__[THIS,PROP]="${1}";
-	return;
+    [ $# -ne 2 ] && {
+	die "Invalid argument '$@'.";
     }
-    __object_props__[THIS,PROP]="$@";
+    local operator="$1";
+    local value=$2;
+    echo value=${value}
+    [ ! "${operator}" =　"=" ] && {
+	die "Invalid operator '${operator}'.";
+    }
+    # foo.dt = "1971/02/15 12:34:56";
+    # NOTICE: 配列・連想配列はネストできない。
+    validate TYPE "${value}";
+    __object_props__[THIS,PROP]="${value}";
 }
 
 function __validate_string() {
-    local value="${1}";
+    local value="$@";
     : ne
 }
 
+function __validate_any() {
+    local value="$@";
+    : ne
+}
+
+
 function __validate_int() {
-    local value="${1}";
+    local value="$@";
     : ne
 }
 
 function __validate_date() {
-    local value="${1}";
+    local value="$@";
+    : ne
     : ne
 }
 
@@ -53,7 +66,11 @@ function validate() {
 }
 
 function __dump_this() {
-    declare -p ${___this} | sed -e 's/^declare -. //';
+    [[ -v ${___this} ]] && {
+	declare -p ${___this} | sed -e 's/^declare -. //';
+	return;
+    }
+    echo "${___this}=null";
 }
 
 function __dump_props() {
@@ -75,6 +92,8 @@ function dump() {
 }
 
 function __defprop() {
+    [ $# -lt 2 ] && die "Invalid arguments '$@'";
+	
     local type="$1";
     local prop="$2";
     local value=null;
@@ -82,13 +101,14 @@ function __defprop() {
     shift 2;
 
     # 値の初期化
-    [ $# -ne 0 ] && {
-	value="$@";
-    }
+    [ $# -ne 2 ] && die "Invalid arguments '$@'";
+    [ ! ${1} = '=' ] && die "Invalid operaotr '${1}'.";
+    shift;
+    value="$@";
     eval $(echo "${props}='${value}'");
 
     # アクセサ関数の追加
-    eval "$(echo "${___this}.${prop}()";
+    eval "$(echo "${___this}.${___prefix}${prop}()";
 	    declare -f __prop \
 		|  tail -n +2 \
 		| __macroexpand CLASS ${___class} \
@@ -170,7 +190,7 @@ function __init() {
 
 function _new() {
     __super;
-    public string class "${___class}";
+    public string class = "${___class}";
     __defthis;
     __defmethods;
     __defdestructor;
@@ -196,16 +216,19 @@ function __undef() {
 }
 
 function public() {
+    local ___prefix="";
     __defprop "$@";
 }
 
-#function protected() {
-#    __defprop "$@";
-#}
+function protected() {
+    local ___prefix="_";
+    __defprop "$@";
+}
 
-#function private() {
-#    __defprop "$@";
-#}
+function private() {
+    local ___prefix="__";
+    __defprop "$@";
+}
 
 function __delete() {
     local func="~${1}";

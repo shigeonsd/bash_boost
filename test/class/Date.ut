@@ -6,30 +6,27 @@ setup ()
 test_Date_success () 
 { 
     : オブジェクト生成;
-    today=$(today);
+    local today=$(date '+%Y/%m/%d');
     Date obj = "${today}";
-
     : テストを実装する。;
     [ "${obj}" = "${today}" ] || return $(failure);
-
     : テスト成功;
-    return $(success);
+    return $(success)
 }
 test_Date_failure () 
 { 
     : テストを実装する。;
-    export today=$(today);
-    (Date obj = "${today}xx") > /dev/null;
+    export today=$(date '+%Y/%m/%d');
+    ( Date obj = "${today}xx" ) > /dev/null;
     [ $? -ne 0 ] || return $(failure);
-
-    return $(success);
+    return $(success)
 }
 test_Date.begin_of_month_success () 
 { 
-    local arg="1971/02/15";
+    local data="1971/02/15";
     local expected="1971/02/01";
     : オブジェクト生成;
-    Date obj = "${arg}";
+    Date obj = "${data}";
     : テストを実装する。;
     [ "$(obj.begin_of_month)" = "${expected}" ] || return $(failure);
     : テスト成功;
@@ -38,60 +35,58 @@ test_Date.begin_of_month_success ()
 test_Date.begin_of_month_failure () 
 { 
     : テストをスキップする;
-    return $(skipped);
+    return $(skipped)
 }
 test_Date.class_success () 
 { 
-    : テストをスキップする;
-    return $(skipped);
+    local expected="Date";
     : オブジェクト生成;
     Date obj;
-    : テストを実装する。;
-    : "test statement || return $(failure)";
+    [ $(obj.class) != "${expected}" ] && return $(failure);
     : テスト成功;
     return $(success)
 }
 test_Date.class_failure () 
 { 
     : テストをスキップする;
-    return $(skipped);
-    : オブジェクト生成;
-    Date obj;
-    : テストを実装する。;
-    : "test statement || return $(failure)";
-    : テスト成功;
-    return $(success)
+    return $(skipped)
 }
 test_Date.end_of_month_success () 
 { 
-    : テストをスキップする;
-    return $(skipped);
+    local data="1971/02/15";
+    local expected="1971/02/28";
     : オブジェクト生成;
-    Date obj;
+    Date obj = "${data}";
     : テストを実装する。;
-    : "test statement || return $(failure)";
+    [ "$(obj.end_of_month)" = "${expected}" ] || return $(failure);
     : テスト成功;
     return $(success)
 }
 test_Date.end_of_month_failure () 
 { 
     : テストをスキップする;
-    return $(skipped);
-    : オブジェクト生成;
-    Date obj;
-    : テストを実装する。;
-    : "test statement || return $(failure)";
-    : テスト成功;
-    return $(success)
+    return $(skipped)
 }
 test_Date.fmt_success () 
 { 
-    : テストをスキップする;
-    return $(skipped);
+    : テストデータ;
+    local data="$(today)";
+    local expected='+%Y/%m/%d';
+    local fmt2='+%Y-%m-%d';
     : オブジェクト生成;
     Date obj;
-    : テストを実装する。;
-    : "test statement || return $(failure)";
+    : デフォルトfmt を取得確認;
+    [ "$(obj.fmt)" = "${expected}" ] || return $(failure);
+    : fmt2 を設定・確認;
+    obj.fmt "${fmt2}";
+    [ $? -eq 0 ] || return $(failure);
+    [ "$(obj.fmt)" = "${fmt2}" ] || return $(failure);
+    : 値を確認;
+    local data2="1971/02/15";
+    local expected2="1971-02-15";
+    obj = "${data2}";
+    [ $? -eq 0 ]                  || return $(failure);
+    [ "${obj}" = "${expected2}" ] || return $(failure);
     : テスト成功;
     return $(success)
 }
@@ -255,11 +250,10 @@ test_Date.validate_failure ()
     Date obj;
     : テストを実装する。;
     : 'test statement || return $(failure)';
-    obj.validate "1971/02/15xxxx" 
-    [ $? -eq 0 ] && return $(failure)";
-    obj.validate "1971@02@15" 
-    [ $? -eq 0 ] && return $(failure)";
-
+    obj.validate "1971/02/15xxxx";
+    [ $? -eq 0 ] && return $(failure);
+    obj.validate "1971@02@15";
+    [ $? -eq 0 ] && return $(failure);
     : テスト成功;
     return $(success)
 }
@@ -281,7 +275,7 @@ test_Date.yesterday_failure ()
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
-    : "test statement || return $(failure)";
+    : 'test statement || return $(failure)';
     : テスト成功;
     return $(success)
 }
