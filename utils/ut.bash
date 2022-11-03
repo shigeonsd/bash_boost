@@ -31,25 +31,27 @@ function source_ut_file() {
     source "${___ut_file}";
 }
 
-function do_unit_test() {
+function get_test_funcs() {
     { declare -f  | grep "test_${TARGET}_";
       declare -f  | grep "test_${TARGET}.operator_";
       declare -f  | grep "test_${TARGET}." | grep -v "test_${TARGET}.operator_";
     } \
-    | sed -e 's/ () $//' \
-    | { echo "Test target: ${TARGET}";
-	    while read f; do
-		$f;
-		case $? in
-		255) ((skipped++)); echo "?: $f -> skiped"; ;;
-		0) ((success++));   echo "o: $f -> ok";   ;;
-		*) ((failure++));   echo "x: $f -> ng($?)";   ;;
-		esac
-		((total++));
-	    done
-	    echo ;
-	    echo "${total} tests, ${success} success, ${failure} failure, ${skipped} skipped";
-	  }
+    | sed -e 's/ () $//';
+}
+
+function do_unit_test() {
+    echo "Test target: ${TARGET}";
+    for f in $(get_test_funcs) ; do
+	$f;
+	case $? in
+	255) ((skipped++)); echo "?: $f -> skiped"; ;;
+	0) ((success++));   echo "o: $f -> ok";   ;;
+	*) ((failure++));   echo "x: $f -> ng($?)";   ;;
+	esac
+	((total++));
+    done
+    echo ;
+    echo "${total} tests, ${success} success, ${failure} failure, ${skipped} skipped";
 }
 
 function die() {
