@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# ut.bash -- 
+# ut.bash -- クラス用単体テスト実行
 #
 #
 set -u;

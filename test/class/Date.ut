@@ -12,7 +12,7 @@ test_Date_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -26,7 +26,7 @@ test_Date_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -40,7 +40,7 @@ test_Date.begin_of_month_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -54,7 +54,7 @@ test_Date.begin_of_month_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -68,7 +68,7 @@ test_Date.class_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -82,7 +82,7 @@ test_Date.class_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -96,7 +96,7 @@ test_Date.end_of_month_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -110,7 +110,7 @@ test_Date.end_of_month_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -124,7 +124,7 @@ test_Date.fmt_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -138,7 +138,7 @@ test_Date.fmt_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -152,7 +152,7 @@ test_Date.get_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -166,7 +166,7 @@ test_Date.get_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -180,7 +180,7 @@ test_Date.n_days_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -194,7 +194,7 @@ test_Date.n_days_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -208,7 +208,7 @@ test_Date.operator_:=_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -222,7 +222,7 @@ test_Date.operator_:=_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -236,8 +236,7 @@ test_Date.operator_=_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
-
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -251,9 +250,7 @@ test_Date.operator_=_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
-    obj = "1971/02/15xxxx" || obj = "1971@02@15" || success;
-
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -267,7 +264,7 @@ test_Date.set_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -281,7 +278,7 @@ test_Date.set_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -295,7 +292,7 @@ test_Date.tomorrow_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -309,7 +306,7 @@ test_Date.tomorrow_failure ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
@@ -321,7 +318,7 @@ test_Date.validate_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     obj.validate "1971/02/15" && obj.validate "1971-02-15" && success;
     : オブジェクト破壊;
     delete obj;
@@ -329,12 +326,13 @@ test_Date.validate_success ()
 }
 test_Date.validate_failure () 
 { 
+    : テストをスキップする;
+    return -1;
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
     obj.validate "1971/02/15xxxx" || obj.validate "1971@02@15" || success;
     : オブジェクト破壊;
     delete obj;
@@ -349,19 +347,21 @@ test_Date.yesterday_success ()
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args && obj.method2 args  && obj.method3 args && success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}
 }
 test_Date.yesterday_failure () 
 { 
+    : テストをスキップする;
+    return -1;
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;";
+    : "obj.method1 args || obj.method2 args  || obj.method3 args || success;";
     : オブジェクト破壊;
     delete obj;
     return ${result}

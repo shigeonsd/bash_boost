@@ -47,7 +47,7 @@ function ut_func_tmpl() {
     : テストを実装する。
     local result;
     failure;
-    : "test1 && test2 && test 3 && success;"
+    : "obj.method1 args COND obj.method2 args  COND obj.method3 args COND success;"
 	    
     : オブジェクト破壊
     delete obj;
@@ -56,23 +56,27 @@ function ut_func_tmpl() {
 }
 
 function defun_ut_func() {
+    local ___ut_func=$(printf "test${___method}_${___case}");
     exist_func "${___ut_func}" || {
 	eval "$(echo "${___ut_func} ()";
 	    declare -f "ut_func_tmpl" \
 	    |  tail -n +2 \
 	    | __macroexpand CLASS ${___class} \
+	    | __macroexpand COND  "${___cond}" \
 	)";
     }
     declare -f "${___ut_func}";
 }
 
 function create_success_case() {
-    local ___ut_func=$(printf "test${___method}_success");
+    local ___case=success;
+    local ___cond="\\&\\&";
     defun_ut_func;
 }
 
 function create_failure_case() {
-    local ___ut_func=$(printf "test${___method}_failure");
+    local ___case=failure;
+    local ___cond="||";
     defun_ut_func;
 }
 

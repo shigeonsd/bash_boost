@@ -32,5 +32,3 @@ function Object.operator_=() {
 function Object.validate() {
     true;
 }
-
-

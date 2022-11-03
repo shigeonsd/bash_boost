@@ -12,7 +12,7 @@ function DateTime() {
     local ___this="${1}";
     shift;
 
-    public fmt '+%Y/%m/%d %T';
+    public datetime fmt '+%Y/%m/%d %T';
 
     _new "$@";
 }
