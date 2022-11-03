@@ -352,8 +352,6 @@ test_Date.yesterday_success ()
 }
 test_Date.yesterday_failure () 
 { 
-    : テストをスキップする;
-    return -1;
     : オブジェクト生成;
     Date obj;
     : テストを実装する。;

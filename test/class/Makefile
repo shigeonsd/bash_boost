@@ -33,9 +33,8 @@ all: $(LOG_FILES)
 	mv $@.new $@;
 
 %.log:%.ut
-	@echo Do unit test $*
-	${UT} $< > $@;
-	@cat $@;
+	@echo @@@ Do unit test $*
+	${UT} $< > $@; cat $@;
 
 clean:
 	rm -rf ${LOG_FILES};
