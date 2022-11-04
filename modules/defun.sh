@@ -16,6 +16,10 @@ function exist_file() {
     test -f $1;
 }
 
+function exist_var() {
+    [[ -v $1 ]];
+}
+
 function source_file_if_exists() {
     local file="${1}";
     exist_file ${file} || return;

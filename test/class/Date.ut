@@ -78,14 +78,14 @@ test_Date.fmt_success ()
     : デフォルトfmt を取得確認;
     [ "$(obj.fmt)" = "${expected}" ] || return $(failure);
     : fmt2 を設定・確認;
-    obj.fmt "${fmt2}";
+    obj.fmt = "${fmt2}";
     [ $? -eq 0 ] || return $(failure);
     [ "$(obj.fmt)" = "${fmt2}" ] || return $(failure);
     : 値を確認;
     local data2="1971/02/15";
     local expected2="1971-02-15";
     obj = "${data2}";
-    [ $? -eq 0 ]                  || return $(failure);
+    [ $? -eq 0 ] || return $(failure);
     [ "${obj}" = "${expected2}" ] || return $(failure);
     : テスト成功;
     return $(success)

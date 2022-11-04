@@ -4,6 +4,8 @@
 #
 #
 
+use Object;
+
 # Constructor
 function PropertyTest() {
     local ___super=null;

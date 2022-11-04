@@ -21,7 +21,6 @@ function __prop() {
     }
     local operator="$1";
     local value=$2;
-    echo value=${value}
     [ ! "${operator}" =　"=" ] && {
 	die "Invalid operator '${operator}'.";
     }
@@ -243,20 +242,36 @@ function delete() {
 	    done;)"
 }
 
+function __load_class_file() {
+    local class_name="${1}";
+    local class_path="${2}";
+    local class_file;
+    for cp in $(echo ${class_path} | sed -e 's/:/ /g'); do
+	class_file="${cp}/${class_name}.sh";
+	__load_if_exist "${class_file}" && {
+	    debug "${class_file}";
+	    return 0;
+	}
+    done
+    die "Class not found. '${class_name}'";
+}
+
 function _use() {
     local class_name="$1";
 
     [ -v "__${class_name}_loaded" ] && return ;
 
-#declare -f __load_info;
+    local class_path="${progdir}:${class_dir}";
+    exist_var BASHCLASSPATH && {
+	class_path="${BASHCLASSPATH}:${class_path}";
+    }
+    echo class_path=$class_path
     __load_info " use ${class_name}. ";
-    __load_if_exist    "${progdir}/${class_name}.sh" \
-        || __load_if_exist "${class_dir}/${class_name}.sh" \
-            || die "Class not found. '${class_name}'";
+    __load_class_file "${class_name}" "${class_path}";
     __load_info "done";
-
     __add_cleanup "${class_name}";
     __invoke_init "${class_name}";
+
     eval "__${class_name}_loaded=1";
 }
 

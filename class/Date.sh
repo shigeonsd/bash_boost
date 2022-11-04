@@ -12,7 +12,7 @@ function Date() {
     local ___this="${1}";
     shift;
 
-    public string fmt '+%Y/%m/%d';
+    public string fmt = '+%Y/%m/%d';
 
     _new "$@";
 }
