@@ -14,12 +14,26 @@ function debug() {
     _msg "DEBUG:" $@; 
 }
 
+function __stacktrace() {
+    local index=0;
+    local frame="";
+    error "stacktrace {"
+    while frame=($(caller "${index}")); do
+        ((index++))
+        # at function <function name> (<file name>:<line no>)
+        error "at function ${frame[1]} (${frame[2]}:${frame[0]})";
+    done
+    error "}"
+}
+
 function die() {
     local msg=$1;
     local exit_status=${2-1} # 第二引数が指定されていなかったら 1
-    local frame=($(caller 0));
-    error "failed at function ${frame[1]} (${frame[2]}:${frame[0]})";
+    #local frame=($(caller 0));
+    #error "failed at function ${frame[1]} (${frame[2]}:${frame[0]})";
     error "exit_status=${exit_status}; ${msg}";
+    __stacktrace;
+    echo ${exit_status};
     exit ${exit_status};
 }
 

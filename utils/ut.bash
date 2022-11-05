@@ -38,6 +38,7 @@ function get_test_funcs() {
 function do_unit_test() {
     echo "Test target: ${TARGET}";
     for f in $(get_test_funcs) ; do
+	# echo $f;
 	# $f > /dev/null 2>&1;
 	$f;
 	case $? in

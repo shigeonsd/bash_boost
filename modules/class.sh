@@ -14,7 +14,7 @@ function __macroexpand() {
 function __prop() {
     [ $# -eq 0 ] && {
 	echo "${__object_props__[THIS,PROP]}";
-	return;
+	return 0;
     }
     [ $# -ne 2 ] && {
 	die "Invalid argument '$@'.";
@@ -26,8 +26,9 @@ function __prop() {
     }
     # foo.dt = "1971/02/15 12:34:56";
     # NOTICE: 配列・連想配列はネストできない。
-    validate TYPE "${value}";
+    validate TYPE "${value}" || die "Invalid data '${value}'.";
     __object_props__[THIS,PROP]="${value}";
+    return 0;
 }
 
 function __validate_string() {
@@ -40,21 +41,20 @@ function __validate_any() {
     : ne
 }
 
-
 function __validate_int() {
     local value="$@";
     : ne
+    [[ ${value} =~ ^[+-]?[1-9][0-9]*$ ]];
 }
 
 function __validate_date() {
     local value="$@";
-    : ne
-    : ne
+    date --date "${value}" '+%Y/%m/%d' > /dev/null 2>&1
 }
 
 function __validate_datetime() {
-    local value="${1}";
-    : ne
+    local value="${@}";
+    date --date "${value}" '+%Y/%m/%d %T' > /dev/null 2>&1
 }
 
 function validate() {
@@ -265,7 +265,6 @@ function _use() {
     exist_var BASHCLASSPATH && {
 	class_path="${BASHCLASSPATH}:${class_path}";
     }
-    echo class_path=$class_path
     __load_info " use ${class_name}. ";
     __load_class_file "${class_name}" "${class_path}";
     __load_info "done";

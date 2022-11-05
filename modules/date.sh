@@ -7,14 +7,14 @@
 ## description: 今日の日付を保持(yyyymmdd)。
 ##
 function today() {
-    date '+%Y%m%d';
+    date '+%Y/%m/%d';
 }
 
 ## function: yesterday
 ## description: 昨日の日付を保持(yyyymmdd)。
 ##
 function yesterday() {
-    date --date '1 day ago' '+%Y%m%d';
+    date --date '1 day ago' '+%Y/%m/%d';
 }
 
 ## function: now

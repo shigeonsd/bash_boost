@@ -38,6 +38,10 @@ function get_method_names() {
 }
 
 function ut_func_tmpl() {
+    : DEBUG
+    : debug UT_FUNC;
+    : declare -f UT_FUNC;
+	
     : テストスキップ
     return $(skipped);
 
@@ -50,11 +54,13 @@ function ut_func_tmpl() {
 
     : テスト実行
     :   '<TEST_CONDITION> && return $(failure)';
+    :
     : sucess
     :   'obj.validate "1971/02/15"'
     :   '[ $? -eq 0 ] || return $(failure)';
     :
     :   '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :
     : failure
     :   'obj.validate "1971/02/15xxxx"'
     :   '[ $? -ne 0 ] || return $(failure)';
@@ -71,6 +77,7 @@ function defun_ut_func() {
 	eval "$(echo "${___ut_func} ()";
 	    declare -f "ut_func_tmpl" \
 	    |  tail -n +2 \
+	    | __macroexpand UT_FUNC ${___ut_func} \
 	    | __macroexpand CLASS ${___class} \
 	)";
     }
