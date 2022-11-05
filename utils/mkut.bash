@@ -39,8 +39,8 @@ function get_method_names() {
 
 function ut_func_tmpl() {
     : DEBUG
-    : debug UT_FUNC;
-    : declare -f UT_FUNC;
+    : debug METHOD;
+    : declare -f METHOD;
 	
     : テストスキップ
     return $(skipped);
@@ -77,7 +77,7 @@ function defun_ut_func() {
 	eval "$(echo "${___ut_func} ()";
 	    declare -f "ut_func_tmpl" \
 	    |  tail -n +2 \
-	    | __macroexpand UT_FUNC ${___ut_func} \
+	    | __macroexpand METHOD ${___method} \
 	    | __macroexpand CLASS ${___class} \
 	)";
     }

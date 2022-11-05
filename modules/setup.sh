@@ -3,7 +3,9 @@
 # setup.sh -- モジュールを使用するための準備
 #
 set -u
-source "${modules_dir}/defvar.sh";
+source "${modules_dir}/vars.sh";
+source "${modules_dir}/core.sh";
+
 source "${modules_dir}/defun.sh";
 source "${modules_dir}/log.sh";
 source "${modules_dir}/debug.sh";

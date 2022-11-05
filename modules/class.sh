@@ -165,6 +165,9 @@ function __defthis() {
 		|  tail -n +2 \
 		| __macroexpand CLASS ${___class} \
 		| __macroexpand THIS ${___this} )";
+    defun ${____this} __this \
+	CLASS ${__class} \
+	THIS ${___this} \
 }
 
 function __undefthis() {
