@@ -1,0 +1,447 @@
+setup () 
+{ 
+    TARGET="DateTime";
+    use -s DateTime
+}
+test_DateTime_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.begin_of_month_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.begin_of_month_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.class_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.class_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.end_of_month_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.end_of_month_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.fmt_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.fmt_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.get_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.get_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.n_days_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.n_days_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.operator_:=_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.operator_:=_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.operator_=_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.operator_=_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.set_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.set_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.tomorrow_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.tomorrow_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.validate_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.validate_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.yesterday_success () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_DateTime.yesterday_failure () 
+{ 
+    : テストをスキップする;
+    return $(skipped);
+    local value="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    DateTime obj;
+    : テストを実装する。;
+    : sucess;
+    : 'test statement || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -eq 0 ] && return $(failure)';
+    : テスト成功;
+    return $(success)
+}

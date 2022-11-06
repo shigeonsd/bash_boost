@@ -1,0 +1,309 @@
+setup () 
+{ 
+    TARGET="PropertyTest";
+    use -s PropertyTest
+
+    : テストデータ;
+    name="Ryoma SAKAMOTO";
+    addr="Tokyo, Japan";
+    today="$(today)";
+    now="$(now)";
+}
+test_PropertyTest_success () 
+{ 
+    : オブジェクト生成;
+    PropertyTest obj;
+    [ $? -eq 0 ] || return $(failure);
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test_PropertyTest.__birthday_success () 
+{ 
+    : テストデータ;
+    local expected="1971/02/15";
+    : オブジェクト生成;
+    PropertyTest obj;
+
+    [ "$(obj.__birthday)" = "${expected}" ] || return $(failure);
+    obj.__birthday = "${today}";
+    [ "$(obj.__birthday)" = "${today}"    ] || return $(failure);
+
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.__birthday_failure () 
+{ 
+    : オブジェクト生成;
+    PropertyTest obj;
+
+    (obj.__birthday = "${today}xxx") > /dev/null 2>&1;
+    [ $? -ne 0 ] || return $(failure);
+
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.__now_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.__now_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest._age_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest._age_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.addr_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.addr_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.class_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.class_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.name_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_PropertyTest.name_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    PropertyTest obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}

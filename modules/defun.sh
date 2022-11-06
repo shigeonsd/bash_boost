@@ -26,9 +26,10 @@ function __create_macroexpand_func_0() {
 }
 
 function __create_macroexpand_func() {
-    eval $(echo "function __macroexpand() {";
+    local func="${1}";
+    eval "$(echo "function ${func} () {";
 	   __create_macroexpand_func_0;
-	   echo "}");
+	   echo "}";)";
 }
 
 function __funcname() {
@@ -44,8 +45,9 @@ function defun() {
     local ___tmpl_func="${2}";
     shift 2;
     local ___macro=("$@");
+    local macroexpand="__$(uuidgen | sed -e 's/-//g')";
 
-    __create_macroexpand_func;
-    eval "$(__funcname; __tmpl_func | __macroexpand)";
-    unset __macroexpand;
+    __create_macroexpand_func ${macroexpand};
+    eval "$(__funcname; __tmpl_func | ${macroexpand};)";
+    unset ${macroexpand};
 }

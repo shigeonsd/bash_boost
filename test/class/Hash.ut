@@ -1,0 +1,785 @@
+setup () 
+{ 
+    TARGET="Hash";
+    use -s Hash
+}
+test_Hash_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.class_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.class_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.clear_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.clear_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.exists_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.exists_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.foreach_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.foreach_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.get_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.get_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.key_exists_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.key_exists_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.keys_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.keys_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.length_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.length_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.operator_:=_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.operator_:=_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.operator_=_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.operator_=_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.serialize_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.serialize_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.set_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.set_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.unset_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.unset_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.validate_success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Hash.validate_failure () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Hash obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}

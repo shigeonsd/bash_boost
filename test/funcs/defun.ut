@@ -1,0 +1,41 @@
+setup () 
+{ 
+    source ../../modules/defun.sh;
+    function __foo_tmpl () 
+    { 
+        echo NAME;
+        echo AGE;
+        echo ADDR;
+        echo PHONE;
+        echo EMAIL
+    }
+}
+test_defun_success () 
+{ 
+    local ret;
+    : マクロ展開アリ;
+    defun foo __foo_tmpl NAME "Shigeo NISHIDA" AGE 51 ADDR "Kochi, Japab" PHONE "090-1234-5678" EMAIL "shigeo.nsd@gmail.com";
+    [ $? -eq 0 ] || return $(failure);
+    declare -f foo;
+    [ $? -eq 0 ] || return $(failure);
+    foo;
+    [ $? -eq 0 ] || return $(failure);
+    : マクロ展開ナシ;
+    defun bar __foo_tmpl;
+    [ $? -eq 0 ] || return $(failure);
+    declare -f bar;
+    [ $? -eq 0 ] || return $(failure);
+    bar;
+    [ $? -eq 0 ] || return $(failure);
+    : テスト成功;
+    return $(success)
+}
+test_defun_error () 
+{ 
+    : テスト成功;
+    return $(success)
+}
+teardown () 
+{ 
+    :
+}

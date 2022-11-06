@@ -1,0 +1,295 @@
+setup () 
+{ 
+    TARGET="Object";
+    use -s Object
+}
+test_Object_success () 
+{ 
+    : DEBUG;
+    : debug _Object;
+    : declare -f _Object;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object_failure () 
+{ 
+    : DEBUG;
+    : debug _Object;
+    : declare -f _Object;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.class_success () 
+{ 
+    : DEBUG;
+    : debug _Object.class;
+    : declare -f _Object.class;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.class_failure () 
+{ 
+    : DEBUG;
+    : debug _Object.class;
+    : declare -f _Object.class;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.operator_:=_success () 
+{ 
+    : DEBUG;
+    : debug _Object.operator_:=;
+    : declare -f _Object.operator_:=;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.operator_:=_failure () 
+{ 
+    : DEBUG;
+    : debug _Object.operator_:=;
+    : declare -f _Object.operator_:=;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.operator_=_success () 
+{ 
+    : DEBUG;
+    : debug _Object.operator_=;
+    : declare -f _Object.operator_=;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.operator_=_failure () 
+{ 
+    : DEBUG;
+    : debug _Object.operator_=;
+    : declare -f _Object.operator_=;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.validate_success () 
+{ 
+    : DEBUG;
+    : debug _Object.validate;
+    : declare -f _Object.validate;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test_Object.validate_failure () 
+{ 
+    : DEBUG;
+    : debug _Object.validate;
+    : declare -f _Object.validate;
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : オブジェクト生成;
+    Object obj;
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    :;
+    : sucess;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    :;
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :;
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    :;
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
