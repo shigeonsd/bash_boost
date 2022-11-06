@@ -27,12 +27,24 @@ usage_description "
     複数行記載できる。
     さらに詳しく.
 ";
-
 # コマンドラインオプションの定義
 usage_if_no_option;  # オプションが指定されていなければ usage を表示する
 parse_option;        # コマンドラインオプションの解析
 
-echo XXX;
+function usage_x() { echo $FUNCNAME; }
+function usage_y() { echo $FUNCNAME; }
+function usage_z() { echo $FUNCNAME; }
+function usage_q() { echo $FUNCNAME; exit; }
+
+usage "-x|--exclude" "-y" "-z" "-q" " 
+    ここに使い方の詳細を書くこと。
+    複数行記載できる。
+    さらに詳しく.
+";
+
+usage no_option;  # オプションが指定されていなければ usage を表示する
+usage parse_opt; # コマンドラインオプションの解析
+
 # 使用するモジュールのロード
 load runtime proc_lock tmpdir laptime;
 
