@@ -14,6 +14,7 @@ FUNCS_FILES = \
 	array.bash \
 	date.bash \
 	debug.bash \
+	defun.bash \
 	exists.bash \
 	file.bash \
 	if.bash \

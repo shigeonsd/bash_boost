@@ -17,28 +17,34 @@ funcs_dir="${top_dir}/funcs";
 ___func_file="${funcs_dir}/${1}.bash";
 ___ut_file="${2}";
 
-function __tmpl() {
+function __setup_tmpl() {
+    source BASH_FILE;
+}
+
+function __teardown_tmpl() {
     :
 }
 
-function __create_func() {
+function create_setup() {
+    local ___func="setup";
     [ "$(type -t ${___func})" = "function" ] || {
 	eval "$(echo "${___func} ()";
-		declare -f "__tmpl" \
-		|  tail -n +2 
+		declare -f "__${___func}_tmpl" \
+		| tail -n +2  \
+		| sed -e "s@BASH_FILE@${___func_file}@g" \
 	)";
     }
     declare -f "${___func}";
 }
 
-function create_setup() {
-    local ___func="setup";
-    __create_func;
-}
-
 function create_teardown() {
     local ___func="teardown";
-    __create_func;
+    [ "$(type -t ${___func})" = "function" ] || {
+	eval "$(echo "${___func} ()";
+		declare -f "__${___func}_tmpl" \
+		|  tail -n +2 
+	)";
+    }
 }
 
 function test_func_tmpl() {
