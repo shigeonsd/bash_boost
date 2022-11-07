@@ -14,7 +14,7 @@ funcs_dir="${top_dir}/funcs";
 # コマンドラインオプションの定義
 #usage_if_args_ne_2;  # オプションが指定されていなければ usage を表示する
 
-___func_file="${funcs_dir}/${1}.sh";
+___func_file="${funcs_dir}/${1}.bash";
 ___ut_file="${2}";
 
 function __tmpl() {
@@ -67,7 +67,7 @@ function test_func_tmpl() {
 function defun_ut_func() {
     local func="${1}";
     local case="${2}";
-    local ut_func="test_${func}_${case}";
+    local ut_func="test__${func}___${case}";
     [ "$(type -t ${ut_func})" = "function" ] || {
 	eval "$(echo "${ut_func} ()";
 	    declare -f test_func_tmpl \

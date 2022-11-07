@@ -7,37 +7,44 @@ set -u;
 progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
 
-# モジュールの初期化
-top_dir=$(cd ${progdir}/../.. && pwd);
-funcs_dir="${top_dir}/funcs";
-source "${funcs_dir}/vars.sh";   
-source "${funcs_dir}/core.sh";   
-
 ___ut_file="${1}";
 
-function source_ut_file() {
-    exist_file "${___ut_file}" || die "File not found '${___ut_file}'."
+function __source_ut_file() {
+    [ ! -f "${___ut_file}" ] && {
+	echo "File not found '${___ut_file}'."
+	exit 1;
+    }
     source "${___ut_file}";
 }
 
-function get_test_funcs() {
-    local f;
-    declare -f  \
-	| grep "^test_" \
-	| sed -e 's/ () $//'  -e 's/_success$//' -e 's/_error$//' \
-	| uniq \
-	| while read f; do \
-		echo ${f}_success;
-		echo ${f}_error;
-	  done;
+function __do_func_if_exists() {
+    local func="${1}";
+    __exist_func $func || return;
+    $@;
 }
 
-function do_unit_test() {
+function __exist_func() {
+    [ "$(type -t $1)" = "function" ];
+}
+
+function __get_test_funcs() {
+    local f;
+    declare -f  \
+	| grep "^test__" \
+	| sed -e 's/ () $//'  -e 's/___success$//' -e 's/___error$//' \
+	| uniq \
+	| while read f; do \
+		echo "${f}___success";
+		echo "${f}___error";
+	  done ;
+}
+
+function __do_unit_test() {
     local log_dir=$(basename ${___ut_file} .ut);
 
     echo "Test target: ${___ut_file}";
     mkdir -p "${log_dir}";
-    for f in $(get_test_funcs) ; do
+    for f in $(__get_test_funcs) ; do
 	local log_file="${log_dir}/${f}.out";
 	local ret;
 	(${f} >${log_file} 2>&1;)
@@ -53,7 +60,7 @@ function do_unit_test() {
     echo "${total} tests, ${success} success, ${failure} failure, ${skipped} skipped";
 }
 
-function result() {
+function __result() {
     [ $failure -ne 0 ] && exit 1;
     exit 0;
 }
@@ -76,8 +83,8 @@ total=0;
 success=0;
 failure=0;
 skipped=0;
-source_ut_file;
-do_func_if_exists setup;
-do_unit_test;
-do_func_if_exists teardown;
-result;
+__source_ut_file;
+__do_func_if_exists setup;
+__do_unit_test;
+__do_func_if_exists teardown;
+__result;

@@ -1,6 +1,6 @@
 setup () 
 { 
-    source ../../funcs/defun.sh;
+    source ../../funcs/defun.bash;
     function __foo_tmpl () 
     { 
         echo NAME;
@@ -10,7 +10,7 @@ setup ()
         echo EMAIL
     }
 }
-test_defun_success () 
+test__defun___success () 
 { 
     local ret;
     : マクロ展開アリ;
@@ -30,7 +30,7 @@ test_defun_success ()
     : テスト成功;
     return $(success)
 }
-test_defun_error () 
+test__defun___error () 
 { 
     : テスト成功;
     return $(success)
