@@ -4,7 +4,7 @@
 TOP_DIR	    = ../..
 CURRENT_DIR = .
 TEST_DIR    = $(TOP_DIR)/test
-FUNCS_DIR   = $(TOP_DIR)/modules
+FUNCS_DIR   = $(TOP_DIR)/funcs
 
 ENV	    = env BASHMODULEPATH=$(BASHMODULEPATH)
 MKUT	    = $(ENV) $(CURRENT_DIR)/mkut.bash
