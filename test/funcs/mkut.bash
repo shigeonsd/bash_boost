@@ -9,7 +9,7 @@ progdir=$(cd "`dirname $0`" && pwd);
 
 # モジュールの初期化
 top_dir=$(cd ${progdir}/../.. && pwd);      
-funcs_dir="${top_dir}/modules";   
+funcs_dir="${top_dir}/funcs";   
 
 # コマンドラインオプションの定義
 #usage_if_args_ne_2;  # オプションが指定されていなければ usage を表示する

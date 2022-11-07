@@ -1,6 +1,6 @@
 setup () 
 { 
-    source ../../modules/defun.sh;
+    source ../../funcs/defun.sh;
     function __foo_tmpl () 
     { 
         echo NAME;

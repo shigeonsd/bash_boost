@@ -6,29 +6,35 @@ CURRENT_DIR = .
 TEST_DIR    = $(TOP_DIR)/test
 FUNCS_DIR   = $(TOP_DIR)/funcs
 
-ENV	    = env BASHMODULEPATH=$(BASHMODULEPATH)
+ENV	    = 
 MKUT	    = $(ENV) $(CURRENT_DIR)/mkut.bash
 UT	    = $(ENV) $(CURRENT_DIR)/ut.bash
 
 FUNCS_FILES = \
-    core.sh      \
-    defun.sh      \
+	array.bash \
+	date.bash \
+	debug.bash \
+	exists.bash \
+	file.bash \
+	if.bash \
+	log.bash \
+	misc.bash \
+	required.bash \
 #
 
-FUNCS       = $(FUNCS_FILES:.sh=)
-UT_FILES    = $(FUNCS_FILES:.sh=.ut)
-LOG_FILES   = $(FUNCS_FILES:.sh=.log)
+FUNCS       = $(FUNCS_FILES:.bash=)
+UT_FILES    = $(FUNCS_FILES:.bash=.ut)
+LOG_FILES   = $(FUNCS_FILES:.bash=.log)
 
 SHELL          = /bin/bash -o pipefail
-BASHMODULEPATH = $(FUNCS_DIR)
 
-vpath %.sh ${BASHMODULEPATH}
+vpath %.bash ${FUNCS_DIR}
 
 .PRECIOUS : %.ut
 
 all: $(LOG_FILES)
 
-%.ut: %.sh
+%.ut: %.bash
 	@echo Update $@
 	$(MKUT) $* $@ > $@.new;
 	rm -f $@;
@@ -47,4 +53,3 @@ var_dump:
 	@echo $(FUNCS_FILES)
 	@echo $(UT_FILES)
 	@echo $(LOG_FILES)
-	@echo $(BASHMODULEPATH)
