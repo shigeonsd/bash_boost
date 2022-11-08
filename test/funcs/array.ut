@@ -1,34 +1,100 @@
 setup () 
 { 
     source ./../../funcs/array.bash
+
+    function __do_test() {
+	local _bool=${1};
+	local func=${2};
+	local val="${3}";
+	local ary_name=${4};
+	declare -n _array=${4};
+	array_exists "${val}" _array;
+	ret=$?;
+	echo "${func} '${val}' "${ary_name}" => ${ret}";
+	__${_bool} ${ret};
+	return $?;
+    }
+
+    function __true() {
+	return $1;
+    }
+
+    function __false() {
+	[ $1 -ne 0 ];
+    }
+
+    function do_test_t() {
+	__do_test true "$@";
+	return $?
+    }
+
+    function do_test_f() {
+	__do_test false "$@";
+	return $?
+    }
+    : テストデータ;
+    array_int=( $(seq 0 31) );
+    array_str=( $(ls -1 /) "a b c");
+    echo "${array_str[@]}";
+    declare -g -A hash=();
+    local i=0;
+    for k in $(ls -1 /); do
+	hash["${k}"]="${i}";
+	((i++));
+    done
 }
 test__array_exists___success () 
 { 
-    : テストデータ;
-    local array_int=( $(seq 0 31) );
-    local array_str=( $(ls -1) );
-    local expected="12345";
-    local ret;
-
     : テスト実行;
-    function do_test() {
-	local arg="${1}";
-	echo "@@@ array_exists ${val} _array}";
-	echo "@@@ array_exists ${val} _array}";
-	array_exists 10 _array;
-	ret=$?
-	echo "ret=${ret}";
-	return ${ret};
+    echo "@@@ int 配列";
+    echo "array_int=(${array_int[@]})";
+    do_test_t array_exists 10 array_int || return $(failure);
+    do_test_t array_exists 20 array_int || return $(failure);
+    do_test_t array_exists 30 array_int || return $(failure);
 
-    do_test array_exists 10 ${array_int[@]} || return $(failure);
-    do_test array_exists 20 ${array_int[@]} || return $(failure);
-    do_test array_exists 30 ${array_int[@]} || return $(failure);
+    echo "@@@ string 配列";
+    echo "array_str=(${array_str[@]})";
+    do_test_t array_exists etc     array_str || return $(failure);
+    do_test_t array_exists sbin    array_str || return $(failure);
+    do_test_t array_exists bin     array_str || return $(failure);
+    do_test_t array_exists "a b c" array_str || return $(failure);
+
+    echo "@@@ 連想配列";
+    echo "hash=(${hash[@]})";
+    echo "keys=(${!hash[@]})";
+    do_test_t array_exists 2  hash || return $(failure);
+    do_test_t array_exists 4  hash || return $(failure);
+    do_test_t array_exists 8  hash || return $(failure);
+    do_test_t array_exists 16 hash || return $(failure);
 
     : テスト成功;
     return $(success)
 }
 test__array_exists___error () 
 { 
+    : テスト実行;
+    echo "@@@ int 配列";
+    echo "array_int=(${array_int[@]})";
+    do_test_f array_exists 100 array_int || return $(failure);
+    do_test_f array_exists 200 array_int || return $(failure);
+    do_test_f array_exists 300 array_int || return $(failure);
+
+    : テスト実行;
+    echo "@@@ string 配列";
+    echo "array_str=(${array_string[@]})";
+    do_test_f array_exists foo array_str     || return $(failure);
+    do_test_f array_exists bar array_str     || return $(failure);
+    do_test_f array_exists baz array_str     || return $(failure);
+    do_test_f array_exists "x y z" array_str || return $(failure);
+
+    echo "@@@ 連想配列";
+    echo "hash=(${hash[@]})";
+    echo "keys=(${!hash[@]})";
+    do_test_f array_exists 1002 hash || return $(failure);
+    do_test_f array_exists 1004 hash || return $(failure);
+    do_test_f array_exists 1008 hash || return $(failure);
+    do_test_f array_exists 1016 hash || return $(failure);
+
     : テスト成功;
     return $(success)
 }
