@@ -69,9 +69,9 @@ function test_func_tmpl() {
 
     : テスト実行
     : success
-    :   'do_test_t <TEST_CONDITION> && return $(failure)';
+    :   'do_test_t <TEST_CONDITION> || return $(failure)';
     : failure
-    :   'do_test_f <TEST_CONDITION> && return $(failure)';
+    :   'do_test_f <TEST_CONDITION> || return $(failure)';
 	    
     : テスト成功
     return $(success) ;

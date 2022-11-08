@@ -17,15 +17,8 @@ setup ()
 }
 test__now___success () 
 { 
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
     : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> && return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> && return $(failure)';
-    : テスト成功;
+    do_test_t now || return $(failure);
     return $(success)
 }
 test__now___error () 
@@ -35,15 +28,8 @@ test__now___error ()
 }
 test__now_ymd_hms___success () 
 { 
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
     : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> && return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> && return $(failure)';
-    : テスト成功;
+    do_test_t now_ymd_hms || return $(failure);
     return $(success)
 }
 test__now_ymd_hms___error () 
@@ -53,15 +39,8 @@ test__now_ymd_hms___error ()
 }
 test__today___success () 
 { 
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
     : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> && return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> && return $(failure)';
-    : テスト成功;
+    do_test_t today || return $(failure);
     return $(success)
 }
 test__today___error () 
@@ -71,15 +50,8 @@ test__today___error ()
 }
 test__yesterday___success () 
 { 
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
     : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> && return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> && return $(failure)';
-    : テスト成功;
+    do_test_t yesterday || return $(failure);
     return $(success)
 }
 test__yesterday___error () 
