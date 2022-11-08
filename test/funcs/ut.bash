@@ -79,17 +79,39 @@ function skipped() {
     return -1;
 }
 
-function do_test() {
-    echo "@@@ " "$@";
-    "$@";
-    ret=$?
-    echo "ret=${ret}";
-    return ${ret};
+function __do_test() {
+    local _bool=${1};
+    local func=${2};
+    shift 2;
+    local args="$@";
+    ${func} "${val}" "$@";
+    ret=$?;
+    echo "${func} '${args}' => ${ret}";
+    is_${_bool} ${ret};
+    return $?;
 }
 
 function if_ret_true() {
     [ ${ret} -eq 0 ]
 } 
+
+function is_true() {
+    [ $1 -eq 0 ];
+}
+
+function is_false() {
+    [ $1 -ne 0 ];
+}
+
+function do_test_t() {
+    __do_test true "$@";
+    return $?
+}
+
+function do_test_f() {
+    __do_test false "$@";
+    return $?
+}
 
 total=0;
 success=0;

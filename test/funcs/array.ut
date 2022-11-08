@@ -1,5 +1,5 @@
 setup () 
-{ 
+{
     source ./../../funcs/array.bash
 
     function __do_test() {
@@ -8,18 +8,18 @@ setup ()
 	local val="${3}";
 	local ary_name=${4};
 	declare -n _array=${4};
-	array_exists "${val}" _array;
+	${func} "${val}" _array;
 	ret=$?;
 	echo "${func} '${val}' "${ary_name}" => ${ret}";
-	__${_bool} ${ret};
+	is_${_bool} ${ret};
 	return $?;
     }
 
-    function __true() {
-	return $1;
+    function is_true() {
+	[ $1 -eq 0 ];
     }
 
-    function __false() {
+    function is_false() {
 	[ $1 -ne 0 ];
     }
 
@@ -42,6 +42,7 @@ setup ()
 	hash["${k}"]="${i}";
 	((i++));
     done
+    hash['foo bar baz']="${i}";
 }
 test__array_exists___success () 
 { 
@@ -67,7 +68,6 @@ test__array_exists___success ()
     do_test_t array_exists 8  hash || return $(failure);
     do_test_t array_exists 16 hash || return $(failure);
 
-    : テスト成功;
     return $(success)
 }
 test__array_exists___error () 
@@ -95,46 +95,32 @@ test__array_exists___error ()
     do_test_f array_exists 1008 hash || return $(failure);
     do_test_f array_exists 1016 hash || return $(failure);
 
-    : テスト成功;
     return $(success)
 }
 test__array_key_exists___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : '<TEST_CONDITION> && return $(failure)';
-    : success;
-    : 'obj.validate "1971/02/15"';
-    : '[ $? -eq 0 ] || return $(failure)';
-    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
-    : failure;
-    : 'obj.validate "1971/02/15xxxx"';
-    : '[ $? -ne 0 ] || return $(failure)';
-    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
-    : テスト成功;
+    echo "@@@ 連想配列";
+    echo "hash=(${hash[@]})";
+    echo "keys=(${!hash[@]})";
+    do_test_t array_key_exists boot          hash || return $(failure);
+    do_test_t array_key_exists run           hash || return $(failure);
+    do_test_t array_key_exists sys           hash || return $(failure);
+    do_test_t array_key_exists 'foo bar baz' hash || return $(failure);
+
     return $(success)
 }
 test__array_key_exists___error () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : '<TEST_CONDITION> && return $(failure)';
-    : success;
-    : 'obj.validate "1971/02/15"';
-    : '[ $? -eq 0 ] || return $(failure)';
-    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
-    : failure;
-    : 'obj.validate "1971/02/15xxxx"';
-    : '[ $? -ne 0 ] || return $(failure)';
-    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
-    : テスト成功;
+    echo "@@@ 連想配列";
+    echo "hash=(${hash[@]})";
+    echo "keys=(${!hash[@]})";
+    do_test_f array_key_exists xboot         hash || return $(failure);
+    do_test_f array_key_exists xrun          hash || return $(failure);
+    do_test_f array_key_exists xsys          hash || return $(failure);
+    do_test_f array_key_exists 'afo bft cfo' hash || return $(failure);
+
     return $(success)
+}
+teardown() {
+    :
 }

@@ -17,7 +17,7 @@ function array_key_exists() {
     declare -n array="${2}";
     local k;
     for k in "${!array[@]}"; do
-	[ "${k}" == "${array[${key}]}" ] && { return 0; }
+	[ "${k}" == "${key}" ] && { return 0; }
     done
     return 1;
 }
