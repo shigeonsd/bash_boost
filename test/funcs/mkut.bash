@@ -19,6 +19,18 @@ ___ut_file="${2}";
 
 function __setup_tmpl() {
     source BASH_FILE;
+    : __do_test をオーバーライドしてテスト関数を変更する。
+    function ___do_test() {
+	local _bool=${1};
+	local func=${2};
+	shift 2;
+	local args="$@";
+	${func} "$@";
+	ret=$?;
+	echo "${func} ${args} => ${ret}";
+	is_${_bool} ${ret};
+	return $?;
+    }
 }
 
 function __teardown_tmpl() {
@@ -56,15 +68,10 @@ function test_func_tmpl() {
     local expected="12345";
 
     : テスト実行
-    :   '<TEST_CONDITION> && return $(failure)';
     : success
-    :   'obj.validate "1971/02/15"'
-    :   '[ $? -eq 0 ] || return $(failure)';
-    :   '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :   'do_test_t <TEST_CONDITION> && return $(failure)';
     : failure
-    :   'obj.validate "1971/02/15xxxx"'
-    :   '[ $? -ne 0 ] || return $(failure)';
-    :   '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    :   'do_test_f <TEST_CONDITION> && return $(failure)';
 	    
     : テスト成功
     return $(success) ;
