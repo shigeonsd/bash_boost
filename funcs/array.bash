@@ -7,7 +7,7 @@ function array_exists() {
     declare -n array="${2}";
     local v;
     for v in "${array[@]}"; do
-	[ "${v}" == "${val}" ] && { return 0; }
+	[ "${v}" == "${val}" ] && return 0;
     done
     return 1;
 }
@@ -17,7 +17,7 @@ function array_key_exists() {
     declare -n array="${2}";
     local k;
     for k in "${!array[@]}"; do
-	[ "${k}" == "${key}" ] && { return 0; }
+	[ "${k}" == "${key}" ] && return 0;
     done
     return 1;
 }
