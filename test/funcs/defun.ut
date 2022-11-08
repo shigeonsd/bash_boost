@@ -13,27 +13,27 @@ setup ()
 test__defun___success () 
 { 
     local ret;
-    : マクロ展開アリ;
-    defun foo __foo_tmpl NAME "Shigeo NISHIDA" AGE 51 ADDR "Kochi, Japab" PHONE "090-1234-5678" EMAIL "shigeo.nsd@gmail.com";
-    [ $? -eq 0 ] || return $(failure);
-    declare -f foo;
-    [ $? -eq 0 ] || return $(failure);
-    foo;
-    [ $? -eq 0 ] || return $(failure);
-    : マクロ展開ナシ;
-    defun bar __foo_tmpl;
-    [ $? -eq 0 ] || return $(failure);
-    declare -f bar;
-    [ $? -eq 0 ] || return $(failure);
-    bar;
-    [ $? -eq 0 ] || return $(failure);
+    echo "@@@ マクロ展開アリ";
+    do_test_t defun foo __foo_tmpl \
+	    NAME "Shigeo NISHIDA" \
+	    AGE 51 \
+	    ADDR "Kochi, Japab" \
+	    PHONE "090-1234-5678" \
+	    EMAIL "shigeo.nsd@gmail.com" || return $(failure);
+    do_test_t declare -f foo || return $(failure);
+    do_test_t foo || return $(failure);
+
+    echo "@@@ マクロ展開ナシ";
+    do_test_t defun bar __foo_tmpl || return $(failure);
+    do_test_t declare -f bar || return $(failure);
+    do_test_t bar || return $(failure);
     : テスト成功;
     return $(success)
 }
 test__defun___error () 
-{ 
+{
     : テスト成功;
-    return $(success)
+    return $(skipped)
 }
 teardown () 
 { 

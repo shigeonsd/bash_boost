@@ -84,16 +84,12 @@ function __do_test() {
     local func=${2};
     shift 2;
     local args="$@";
-    ${func} "${val}" "$@";
+    ${func} "$@";
     ret=$?;
-    echo "${func} '${args}' => ${ret}";
+    echo "${func} ${args} => ${ret}";
     is_${_bool} ${ret};
     return $?;
 }
-
-function if_ret_true() {
-    [ ${ret} -eq 0 ]
-} 
 
 function is_true() {
     [ $1 -eq 0 ];

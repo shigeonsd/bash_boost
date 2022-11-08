@@ -15,27 +15,9 @@ setup ()
 	return $?;
     }
 
-    function is_true() {
-	[ $1 -eq 0 ];
-    }
-
-    function is_false() {
-	[ $1 -ne 0 ];
-    }
-
-    function do_test_t() {
-	__do_test true "$@";
-	return $?
-    }
-
-    function do_test_f() {
-	__do_test false "$@";
-	return $?
-    }
     : テストデータ;
     array_int=( $(seq 0 31) );
     array_str=( $(ls -1 /) "a b c");
-    echo "${array_str[@]}";
     declare -g -A hash=();
     local i=0;
     for k in $(ls -1 /); do
