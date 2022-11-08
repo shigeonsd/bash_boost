@@ -1,0 +1,89 @@
+setup () 
+{ 
+    source ./../../funcs/date.bash;
+    : __do_test をオーバーライドしてテスト関数を変更する。;
+    function ___do_test () 
+    { 
+        local _bool=${1};
+        local func=${2};
+        shift 2;
+        local args="$@";
+        ${func} "$@";
+        ret=$?;
+        echo "${func} ${args} => ${ret}";
+        is_${_bool} ${ret};
+        return $?
+    }
+}
+test__now___success () 
+{ 
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> && return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__now___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__now_ymd_hms___success () 
+{ 
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> && return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__now_ymd_hms___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__today___success () 
+{ 
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> && return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__today___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__yesterday___success () 
+{ 
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> && return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> && return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__yesterday___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
