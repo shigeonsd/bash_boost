@@ -1,0 +1,74 @@
+setup () 
+{ 
+    source ./../../funcs/array.bash
+}
+test__array_exists___success () 
+{ 
+    : テストデータ;
+    local array_int=( $(seq 0 31) );
+    local array_str=( $(ls -1) );
+    local expected="12345";
+    local ret;
+
+    : テスト実行;
+    function do_test() {
+	local arg="${1}";
+	echo "@@@ array_exists ${val} _array}";
+	echo "@@@ array_exists ${val} _array}";
+	array_exists 10 _array;
+	ret=$?
+	echo "ret=${ret}";
+	return ${ret};
+
+    do_test array_exists 10 ${array_int[@]} || return $(failure);
+    do_test array_exists 20 ${array_int[@]} || return $(failure);
+    do_test array_exists 30 ${array_int[@]} || return $(failure);
+
+    : テスト成功;
+    return $(success)
+}
+test__array_exists___error () 
+{ 
+    : テスト成功;
+    return $(success)
+}
+test__array_key_exists___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    : success;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__array_key_exists___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : '<TEST_CONDITION> && return $(failure)';
+    : success;
+    : 'obj.validate "1971/02/15"';
+    : '[ $? -eq 0 ] || return $(failure)';
+    : '[ ! $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : failure;
+    : 'obj.validate "1971/02/15xxxx"';
+    : '[ $? -ne 0 ] || return $(failure)';
+    : '[ $(obj.method ${data}) = "${expected}" ] || return $(failure)';
+    : テスト成功;
+    return $(success)
+}

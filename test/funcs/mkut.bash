@@ -5,10 +5,10 @@
 #
 set -u;
 progname=$(basename ${0});
-progdir=$(cd "`dirname $0`" && pwd);
+progdir=$(dirname ${0});
 
 # モジュールの初期化
-top_dir=$(cd ${progdir}/../.. && pwd);      
+top_dir=$(echo "${progdir}/../..") ;      
 funcs_dir="${top_dir}/funcs";   
 
 # コマンドラインオプションの定義

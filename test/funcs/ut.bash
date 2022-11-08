@@ -79,6 +79,18 @@ function skipped() {
     return -1;
 }
 
+function do_test() {
+    echo "@@@ " "$@";
+    "$@";
+    ret=$?
+    echo "ret=${ret}";
+    return ${ret};
+}
+
+function if_ret_true() {
+    [ ${ret} -eq 0 ]
+} 
+
 total=0;
 success=0;
 failure=0;
