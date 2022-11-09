@@ -7,7 +7,7 @@ setup ()
 	return 0;
     }
     declare -g existent_variable=1024;
-    test_prog_bash="./data/test_prog.bash";
+    test_prog_bash="./test_data/test_prog.bash";
 }
 test__do_func_if_exists___success () 
 { 
