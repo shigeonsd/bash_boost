@@ -57,6 +57,7 @@ function create_teardown() {
 		|  tail -n +2 
 	)";
     }
+    declare -f "${___func}";
 }
 
 function test_func_tmpl() {
