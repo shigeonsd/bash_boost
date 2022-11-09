@@ -1,0 +1,55 @@
+setup () 
+{ 
+    source ./../../funcs/file.bash;
+    declare -g test_basename="./tmp/tmpfile.file.ut";
+    declare -g test_file="${test_basename}.$$";
+    declare -g ne_test_basename="./tmp2/tmpfile.file.ut";
+    declare -g ne_test_file="${ne_test_basename}.$$";
+    mkdir -p ./tmp
+}
+test__create_fd___success () 
+{ 
+    rm -f "${test_file}";
+    echo "create_fd ${test_file}";
+    create_fd ${test_file};
+    local fd=$?;
+    echo "fd => ${fd}";
+    [ $fd -ne 0 ] || return $(failure);
+    ls -l "${test_file}";
+    rm -f "${test_file}";
+    return $(success)
+}
+test__create_fd___error () 
+{ 
+    rm -f "${ne_test_file}";
+    echo "create_fd ${ne_test_file}";
+    create_fd ${ne_test_file};
+    local fd=$?;
+    echo "fd => ${fd}";
+    ls -l "${ne_test_file}";
+    [ ${fd} -eq 0 ] || return $(failure);
+    return $(success)
+}
+test__create_file___success () 
+{ 
+    rm -f "${test_file}";
+    local fname=$(create_file ${test_file});
+    local ret=$?;
+    [ ${ret} -eq 0 ] || return $(failure);
+    echo "create_file ${test_file} => ${fname}";
+    ls -l "${test_file}";
+    rm -f "${test_file}";
+    return $(success)
+}
+test__create_file___error () 
+{ 
+    rm -f "${ne_test_file}";
+    local fname=$(create_file ${ne_test_file});
+    echo "create_file ${ne_test_file} => ${fname}";
+    ls -l "${ne_test_file}";
+    [ -z ${fname} ] || return $(failure);
+    return $(success)
+}
+teardown() {
+    rm -rf ./tmp
+}

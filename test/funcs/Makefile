@@ -17,7 +17,7 @@ FUNCS_FILES = \
 	defun.bash \
 	exists.bash \
 	file.bash \
-	if.bash \
+#	if.bash \
 	log.bash \
 	misc.bash \
 	required.bash \
