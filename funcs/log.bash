@@ -10,7 +10,7 @@ function error() { _msg "ERROR:" $@; }
 function warn()  { _msg "WARN:"  $@; }
 function info()  { _msg "INFO:"  $@; }
 function debug() {
-    if_debug || return;
+    if_debug || return 0;
     _msg "DEBUG:" $@; 
 }
 
@@ -20,7 +20,6 @@ function __stacktrace() {
     error "stacktrace {"
     while frame=($(caller "${index}")); do
         ((index++))
-        # at function <function name> (<file name>:<line no>)
         error "at function ${frame[1]} (${frame[2]}:${frame[0]})";
     done
     error "}"
@@ -29,11 +28,8 @@ function __stacktrace() {
 function die() {
     local msg=$1;
     local exit_status=${2-1} # 第二引数が指定されていなかったら 1
-    #local frame=($(caller 0));
-    #error "failed at function ${frame[1]} (${frame[2]}:${frame[0]})";
     error "exit_status=${exit_status}; ${msg}";
     __stacktrace;
-    echo ${exit_status};
     exit ${exit_status};
 }
 
@@ -65,5 +61,5 @@ function log_begin_block() { info "${FUNCNAME[1]} {"; }
 function log_end_block()   { info "}"; }
 
 function error_invalid_argument() {
-    error "Invalid arguments '$@'.";
+    error "Invalid arguments $@.";
 }

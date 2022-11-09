@@ -1,0 +1,258 @@
+setup () 
+{ 
+    source ./../../funcs/if.bash;
+    source ./../../funcs/date.bash;
+    source ./../../funcs/log.bash;
+}
+test__debug___success () 
+{ 
+    echo DEBUG=true;
+    DEBUG=true;
+    do_test_t debug "デバッグメッセージ"  || return $(failure);
+    echo DEBUG=false;
+    DEBUG=false;
+    do_test_t debug "デバッグメッセージ"  || return $(failure);
+    return $(success)
+}
+test__debug___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__die___success () 
+{ 
+    (die "エラーメッセージ" 128)
+    echo ret=$?
+    [ $ret -ne 0 ] || return $(failure);
+    return $(success)
+}
+test__die___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__error___success () 
+{ 
+    do_test_t error "エラーメッセージ"  || return $(failure);
+    return $(success)
+}
+test__error___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__error_invalid_argument___success () 
+{ 
+    do_test_t error_invalid_argument  a b c  || return $(failure);
+    do_test_t error_invalid_argument "d e f" || return $(failure);
+    return $(success)
+}
+test__error_invalid_argument___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__info___success () 
+{ 
+    do_test_t info "インフォメッセージ"  || return $(failure);
+    return $(success)
+}
+test__info___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__log_begin_block___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__log_begin_block___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__log_end_block___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__log_end_block___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__log_separater___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__log_separater___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__mod_debug___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__mod_debug___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__mod_info___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__mod_info___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__mod_nop___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__mod_nop___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__warn___success () 
+{ 
+    do_test_t warn "警告メッセージ"  || return $(failure);
+    return $(success)
+}
+test__warn___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+teardown () 
+{ 
+    :
+}
