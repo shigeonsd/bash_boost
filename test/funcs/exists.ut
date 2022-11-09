@@ -1,0 +1,68 @@
+setup () 
+{ 
+    source ./../../funcs/exists.bash;
+
+    function existent_function() {
+	echo "Called ${FUNCNAME}";
+	return 0;
+    }
+    declare -g existent_variable=1024;
+    test_prog_bash="./data/test_prog.bash";
+}
+test__do_func_if_exists___success () 
+{ 
+    do_test_t do_func_if_exists existent_function || return $(failure);
+    return $(success)
+}
+test__do_func_if_exists___error () 
+{ 
+    do_test_f do_func_if_exists non_existent_function || return $(failure);
+    return $(success)
+}
+test__exist_file___success () 
+{ 
+    do_test_t exist_file exists.ut || return $(failure);
+    return $(success)
+}
+test__exist_file___error () 
+{ 
+    do_test_f func_if_exists non_existent_file || return $(failure);
+    return $(success)
+}
+test__exist_func___success () 
+{ 
+    do_test_t exist_func existent_function || return $(failure);
+    return $(success)
+}
+test__exist_func___error () 
+{ 
+    do_test_f exist_func non_existent_function || return $(failure);
+    return $(success)
+}
+test__exist_var___success () 
+{ 
+    do_test_t exist_var existent_variable || return $(failure);
+    declare  -p existent_variable;
+    return $(success);
+}
+test__exist_var___error () 
+{ 
+    do_test_f exist_var non_existent_variable || return $(failure);
+    return $(success);
+}
+test__source_file_if_exists___success () 
+{ 
+    do_test_t source_file_if_exists "${test_prog_bash}" || return $(failure);
+
+    cat "${test_prog_bash}";
+    declare -p ___aaa___;
+    declare -p ___bbb___;
+    declare -p ___ccc___;
+    declare -f ___foo___;
+    return $(success)
+}
+test__source_file_if_exists___error () 
+{ 
+    do_test_f exist_var non_existent_variable || return $(failure);
+    return $(success)
+}
