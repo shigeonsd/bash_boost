@@ -15,9 +15,9 @@ test__defun___success ()
     local ret;
     echo "@@@ マクロ展開アリ";
     do_test_t defun foo __foo_tmpl \
-	    NAME "Shigeo NISHIDA" \
-	    AGE 51 \
-	    ADDR "Kochi, Japab" \
+	    NAME  "Shigeo NISHIDA" \
+	    AGE   51 \
+	    ADDR  "Kochi, Japab" \
 	    PHONE "090-1234-5678" \
 	    EMAIL "shigeo.nsd@gmail.com" || return $(failure);
     do_test_t declare -f foo || return $(failure);

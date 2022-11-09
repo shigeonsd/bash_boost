@@ -1,30 +1,30 @@
 setup () 
-{
-    source ./../../funcs/array.bash
-
-    function __do_test() {
-	local _bool=${1};
-	local func=${2};
-	local val="${3}";
-	local ary_name=${4};
-	declare -n _array=${4};
-	${func} "${val}" _array;
-	ret=$?;
-	echo "${func} '${val}' "${ary_name}" => ${ret}";
-	is_${_bool} ${ret};
-	return $?;
-    }
-
+{ 
+    source ./../../funcs/array.bash;
+    function __do_test () 
+    { 
+        local _bool=${1};
+        local func=${2};
+        local val="${3}";
+        local ary_name=${4};
+        declare -n _array=${4};
+        ${func} "${val}" _array;
+        ret=$?;
+        echo "${func} '${val}' "${ary_name}" => ${ret}";
+        is_${_bool} ${ret};
+        return $?
+    };
     : テストデータ;
-    array_int=( $(seq 0 31) );
-    array_str=( $(ls -1 /) "a b c");
+    array_int=($(seq 0 31));
+    array_str=($(ls -1 /) "a b c");
     declare -g -A hash=();
     local i=0;
-    for k in $(ls -1 /); do
-	hash["${k}"]="${i}";
-	((i++));
-    done
-    hash['foo bar baz']="${i}";
+    for k in $(ls -1 /);
+    do
+        hash["${k}"]="${i}";
+        ((i++));
+    done;
+    hash['foo bar baz']="${i}"
 }
 test__array_exists___success () 
 { 
@@ -34,22 +34,19 @@ test__array_exists___success ()
     do_test_t array_exists 10 array_int || return $(failure);
     do_test_t array_exists 20 array_int || return $(failure);
     do_test_t array_exists 30 array_int || return $(failure);
-
     echo "@@@ string 配列";
     echo "array_str=(${array_str[@]})";
-    do_test_t array_exists etc     array_str || return $(failure);
-    do_test_t array_exists sbin    array_str || return $(failure);
-    do_test_t array_exists bin     array_str || return $(failure);
+    do_test_t array_exists etc array_str || return $(failure);
+    do_test_t array_exists sbin array_str || return $(failure);
+    do_test_t array_exists bin array_str || return $(failure);
     do_test_t array_exists "a b c" array_str || return $(failure);
-
     echo "@@@ 連想配列";
     echo "hash=(${hash[@]})";
     echo "keys=(${!hash[@]})";
-    do_test_t array_exists 2  hash || return $(failure);
-    do_test_t array_exists 4  hash || return $(failure);
-    do_test_t array_exists 8  hash || return $(failure);
+    do_test_t array_exists 2 hash || return $(failure);
+    do_test_t array_exists 4 hash || return $(failure);
+    do_test_t array_exists 8 hash || return $(failure);
     do_test_t array_exists 16 hash || return $(failure);
-
     return $(success)
 }
 test__array_exists___error () 
@@ -60,15 +57,13 @@ test__array_exists___error ()
     do_test_f array_exists 100 array_int || return $(failure);
     do_test_f array_exists 200 array_int || return $(failure);
     do_test_f array_exists 300 array_int || return $(failure);
-
     : テスト実行;
     echo "@@@ string 配列";
     echo "array_str=(${array_string[@]})";
-    do_test_f array_exists foo array_str     || return $(failure);
-    do_test_f array_exists bar array_str     || return $(failure);
-    do_test_f array_exists baz array_str     || return $(failure);
+    do_test_f array_exists foo array_str || return $(failure);
+    do_test_f array_exists bar array_str || return $(failure);
+    do_test_f array_exists baz array_str || return $(failure);
     do_test_f array_exists "x y z" array_str || return $(failure);
-
     echo "@@@ 連想配列";
     echo "hash=(${hash[@]})";
     echo "keys=(${!hash[@]})";
@@ -76,7 +71,6 @@ test__array_exists___error ()
     do_test_f array_exists 1004 hash || return $(failure);
     do_test_f array_exists 1008 hash || return $(failure);
     do_test_f array_exists 1016 hash || return $(failure);
-
     return $(success)
 }
 test__array_key_exists___success () 
@@ -84,11 +78,10 @@ test__array_key_exists___success ()
     echo "@@@ 連想配列";
     echo "hash=(${hash[@]})";
     echo "keys=(${!hash[@]})";
-    do_test_t array_key_exists boot          hash || return $(failure);
-    do_test_t array_key_exists run           hash || return $(failure);
-    do_test_t array_key_exists sys           hash || return $(failure);
+    do_test_t array_key_exists boot hash || return $(failure);
+    do_test_t array_key_exists run hash || return $(failure);
+    do_test_t array_key_exists sys hash || return $(failure);
     do_test_t array_key_exists 'foo bar baz' hash || return $(failure);
-
     return $(success)
 }
 test__array_key_exists___error () 
@@ -96,13 +89,9 @@ test__array_key_exists___error ()
     echo "@@@ 連想配列";
     echo "hash=(${hash[@]})";
     echo "keys=(${!hash[@]})";
-    do_test_f array_key_exists xboot         hash || return $(failure);
-    do_test_f array_key_exists xrun          hash || return $(failure);
-    do_test_f array_key_exists xsys          hash || return $(failure);
+    do_test_f array_key_exists xboot hash || return $(failure);
+    do_test_f array_key_exists xrun hash || return $(failure);
+    do_test_f array_key_exists xsys hash || return $(failure);
     do_test_f array_key_exists 'afo bft cfo' hash || return $(failure);
-
     return $(success)
-}
-teardown() {
-    :
 }
