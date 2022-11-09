@@ -15,3 +15,6 @@ commit: clean
 push:
 	cat ~/.git_token
 	git push -u origin main
+
+pull:
+	git pull
