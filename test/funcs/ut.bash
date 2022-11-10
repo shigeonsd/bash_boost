@@ -84,7 +84,7 @@ function __do_test() {
     local func=${2};
     shift 2;
     local args="$@";
-    ${func} "$@";
+    ( ${func} "$@" );
     ret=$?;
     echo "${func} ${args} => ${ret}";
     is_${_bool} ${ret};
@@ -107,11 +107,6 @@ function do_test_t() {
 function do_test_f() {
     __do_test false "$@";
     return $?
-}
-
-# exit が呼ばれてプロセス終了するのを抑制するため
-function exit() {
-    return 1;
 }
 
 total=0;

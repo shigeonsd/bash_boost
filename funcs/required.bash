@@ -4,14 +4,16 @@
 #
 function error_if_noargs() {
     [ $# -eq 0 ] && {
-	die "No argument." 238;
-	return 1;
+	die "No argument.";
     }
     return 0;
 }
 
 function __required_n_args() {
-    [ $# -ne ${___n} ] && error "Invalid arguments '$@'.";
+    [ $# -ne ${___n} ] && {
+	die "Invalid arguments '$@'.";
+    }
+    return 0;
 }
 
 function required_1_args() {
@@ -34,5 +36,8 @@ function required_args() {
     local ope="${2}";
     local m="${3}";
     local args="${4}";
-    [ $n -${ope} $m ] || die "Invalid arguments '${args}'.";
+    [ $n -${ope} $m ] || {
+	die "Invalid arguments '${args}'.";
+    }
+    return 0;
 }

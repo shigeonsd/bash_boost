@@ -6,14 +6,14 @@ setup ()
 }
 test__error_if_noargs___success () 
 { 
-    ( do_test_t error_if_noargs a ) || return $(failure);
-    ( do_test_t error_if_noargs a b ) || return $(failure);
-    ( do_test_t error_if_noargs a b c ) || return $(failure);
+    do_test_t error_if_noargs a      || return $(failure);
+    do_test_t error_if_noargs a b    || return $(failure);
+    do_test_t error_if_noargs a b c  || return $(failure);
     return $(success)
 }
 test__error_if_noargs___error () 
 { 
-    ( do_test_f error_if_noargs ) || return $(failure);
+    do_test_f error_if_noargs || return $(failure);
     return $(success)
 }
 test__required_1_args___success () 
