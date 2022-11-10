@@ -93,8 +93,8 @@ test__required_args___error ()
 }
 test__required_ge_1_args___success () 
 { 
-    do_test_t required_ge_1_args a || return $(failure);
-    do_test_t required_ge_1_args a b || return $(failure);
+    do_test_t required_ge_1_args a     || return $(failure);
+    do_test_t required_ge_1_args a b   || return $(failure);
     do_test_t required_ge_1_args a b c || return $(failure);
     return $(success)
 }
@@ -105,28 +105,28 @@ test__required_ge_1_args___error ()
 }
 test__required_ge_2_args___success () 
 { 
-    do_test_t required_ge_2_args a b || return $(failure);
-    do_test_t required_ge_2_args a b c || return $(failure);
-    do_test_t required_ge_2_args a b c d || return $(failure);
+    do_test_t required_ge_2_args a b      || return $(failure);
+    do_test_t required_ge_2_args a b c    || return $(failure);
+    do_test_t required_ge_2_args a b c d  || return $(failure);
     return $(success)
 }
 test__required_ge_2_args___error () 
 { 
-    do_test_f required_ge_2_args || return $(failure);
+    do_test_f required_ge_2_args   || return $(failure);
     do_test_f required_ge_2_args a || return $(failure);
     return $(success)
 }
 test__required_ge_3_args___success () 
 { 
-    do_test_t required_ge_3_args a b c || return $(failure);
-    do_test_t required_ge_3_args a b c d || return $(failure);
+    do_test_t required_ge_3_args a b c     || return $(failure);
+    do_test_t required_ge_3_args a b c d   || return $(failure);
     do_test_t required_ge_3_args a b c d e || return $(failure);
     return $(success)
 }
 test__required_ge_3_args___error () 
 { 
-    do_test_f required_ge_3_args || return $(failure);
-    do_test_f required_ge_3_args a || return $(failure);
+    do_test_f required_ge_3_args     || return $(failure);
+    do_test_f required_ge_3_args a   || return $(failure);
     do_test_f required_ge_3_args a b || return $(failure);
     return $(success)
 }

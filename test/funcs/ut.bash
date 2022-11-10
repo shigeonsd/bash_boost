@@ -50,9 +50,9 @@ function __do_unit_test() {
 	(${f} >${log_file} 2>&1;)
 	ret=$?
 	case $ret in
-	255) ((skipped++)); echo " : $f -> skiped"; ;;
-	0) ((success++));   echo "o: $f -> ok";   ;;
-	*) ((failure++));   echo "x: $f -> ng($?)";   ;;
+	255) ((skipped++)); printf ' : %s -> skiped' $f; ;;
+	0) ((success++));   printf '\033[32mo\033[m: %s -> ok\n' $f;   ;;
+	*) ((failure++));   printf '\033[31mx\033[m: %s -> ng(%d)\n' $f $ret;   ;;
 	esac
 	((total++));
     done
@@ -92,7 +92,7 @@ function __do_test() {
 	_args+="${_sep}'${a}'";
 	_sep=" ";
     done
-    echo "${func} ${_args} => ${ret}";
+    echo "## ${func} ${_args} => ${ret}";
 
     is_${_bool} ${ret};
     return $?;

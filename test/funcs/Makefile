@@ -36,13 +36,13 @@ vpath %.bash ${FUNCS_DIR}
 all: $(LOG_FILES)
 
 %.ut: %.bash
-	@echo Update $@
+	@echo \#\# Update $@
 	$(MKUT) $* $@ > $@.new;
 	rm -f $@;
 	mv $@.new $@;
 
 %.log : %.ut
-	@echo @@@ Do unit test $*
+	@echo \#\# Do unit test $*
 	@${UT} $< | tee /dev/tty > $@;
 
 clean:
