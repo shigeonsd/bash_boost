@@ -19,8 +19,8 @@ FUNCS_FILES = \
 	file.bash \
 	if.bash \
 	log.bash \
-#	required.bash \
-	misc.bash \
+	required.bash \
+#	misc.bash \
 #
 
 FUNCS       = $(FUNCS_FILES:.bash=)
