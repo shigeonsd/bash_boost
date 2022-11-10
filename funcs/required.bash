@@ -9,9 +9,21 @@ function error_if_noargs() {
     return 0;
 }
 
+function __format_args() {
+    local args="";
+    local n="$#";
+    local sep="";
+    for a in "$@"; do
+	args+="${sep}'${a}'";
+	sep=", ";
+    done
+    echo "\$@=(${args}), \$#=${n}";
+}
+
 function __required_n_args() {
     [ $# -ne ${___n} ] && {
-	die "Invalid arguments '$@'.";
+	local args=$(__format_args "$@");
+	die "${args}: Required ${___n} argument(s).";
     }
     return 0;
 }
@@ -31,13 +43,37 @@ function required_3_args() {
     __required_n_args "$@";
 }
 
+function __required_ge_n_args() {
+    [ $# -ge ${___n} ] || {
+	local args=$(__format_args "$@");
+	die "${args}: Required over ${___n} argument(s).";
+    }
+    return 0;
+}
+
+function required_ge_1_args() {
+    local ___n=1;
+    __required_ge_n_args "$@";
+}
+
+function required_ge_2_args() {
+    local ___n=2;
+    __required_ge_n_args "$@";
+}
+
+function required_ge_3_args() {
+    local ___n=3;
+    __required_ge_n_args "$@";
+}
+
 function required_args() {
     local n="${1}";
     local ope="${2}";
     local m="${3}";
-    local args="${4}";
+    shift 3;
     [ $n -${ope} $m ] || {
-	die "Invalid arguments '${args}'.";
+	local args=$(__format_args "$@");
+	die "${args}, cond=[ $n -${ope} $m ]: Invalid argument(s)."; 
     }
     return 0;
 }

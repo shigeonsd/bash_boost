@@ -6,9 +6,9 @@ setup ()
 }
 test__error_if_noargs___success () 
 { 
-    do_test_t error_if_noargs a      || return $(failure);
-    do_test_t error_if_noargs a b    || return $(failure);
-    do_test_t error_if_noargs a b c  || return $(failure);
+    do_test_t error_if_noargs a || return $(failure);
+    do_test_t error_if_noargs a b || return $(failure);
+    do_test_t error_if_noargs a b c || return $(failure);
     return $(success)
 }
 test__error_if_noargs___error () 
@@ -18,122 +18,116 @@ test__error_if_noargs___error ()
 }
 test__required_1_args___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    do_test_t required_1_args foo || return $(failure);
+    do_test_t required_1_args 128 || return $(failure);
+    do_test_t required_1_args "a b c" || return $(failure);
     return $(success)
 }
 test__required_1_args___error () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    : args 0;
+    do_test_f required_1_args || return $(failure);
+    : args 2;
+    do_test_f required_1_args foo bar || return $(failure);
+    do_test_f required_1_args 128 256 || return $(failure);
+    do_test_f required_1_args "a b c" "d e f" || return $(failure);
     return $(success)
 }
 test__required_2_args___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    do_test_t required_2_args foo bar || return $(failure);
+    do_test_t required_2_args 128 256 || return $(failure);
+    do_test_t required_2_args "a b c" "d e f" || return $(failure);
     return $(success)
 }
 test__required_2_args___error () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    : args 0;
+    do_test_f required_2_args || return $(failure);
+    : args 1;
+    do_test_f required_2_args foo || return $(failure);
+    : args 3;
+    do_test_f required_2_args 128 256 512 || return $(failure);
+    do_test_f required_2_args "a b c" "d e f" "g h i" || return $(failure);
     return $(success)
 }
 test__required_3_args___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    do_test_t required_3_args foo bar baz || return $(failure);
+    do_test_t required_3_args 128 256 512 || return $(failure);
+    do_test_t required_3_args "a b c" "d e f" "g h i" || return $(failure);
     return $(success)
 }
 test__required_3_args___error () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    : args 0;
+    do_test_f required_3_args || return $(failure);
+    : args 2;
+    do_test_f required_3_args foo bar || return $(failure);
+    : args 4;
+    do_test_f required_3_args 128 256 512 1024 || return $(failure);
+    do_test_f required_3_args "a b c" "d e f" "g h i" "j k l" || return $(failure);
     return $(success)
 }
 test__required_args___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    do_test_t required_args 1 eq 1 "a b c" || return $(failure);
+    do_test_t required_args 1 ne 0 "a b c" || return $(failure);
+    do_test_t required_args 0 ge 0 "a b c" || return $(failure);
+    do_test_t required_args 1 ge 0 "a b c" || return $(failure);
+    do_test_t required_args 2 gt 1 "a b c" || return $(failure);
+    do_test_t required_args 2 le 2 "a b c" || return $(failure);
+    do_test_t required_args 1 le 2 "a b c" || return $(failure);
+    do_test_t required_args 1 lt 2 "a b c" || return $(failure);
     return $(success)
 }
 test__required_args___error () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    do_test_f required_args 0 eq 1 "a b c" "d e f" || return $(failure);
+    do_test_f required_args 0 ne 0 "a b c" "d e f" || return $(failure);
+    do_test_f required_args 0 ge 1 "a b c" "d e f" || return $(failure);
+    do_test_f required_args 0 gt 1 "a b c" "d e f" || return $(failure);
+    do_test_f required_args 3 le 2 "a b c" "d e f" || return $(failure);
+    do_test_f required_args 3 lt 2 "a b c" "d e f" || return $(failure);
+    return $(success)
+}
+test__required_ge_1_args___success () 
+{ 
+    do_test_t required_ge_1_args a || return $(failure);
+    do_test_t required_ge_1_args a b || return $(failure);
+    do_test_t required_ge_1_args a b c || return $(failure);
+    return $(success)
+}
+test__required_ge_1_args___error () 
+{ 
+    do_test_f required_ge_1_args || return $(failure);
+    return $(success)
+}
+test__required_ge_2_args___success () 
+{ 
+    do_test_t required_ge_2_args a b || return $(failure);
+    do_test_t required_ge_2_args a b c || return $(failure);
+    do_test_t required_ge_2_args a b c d || return $(failure);
+    return $(success)
+}
+test__required_ge_2_args___error () 
+{ 
+    do_test_f required_ge_2_args || return $(failure);
+    do_test_f required_ge_2_args a || return $(failure);
+    return $(success)
+}
+test__required_ge_3_args___success () 
+{ 
+    do_test_t required_ge_3_args a b c || return $(failure);
+    do_test_t required_ge_3_args a b c d || return $(failure);
+    do_test_t required_ge_3_args a b c d e || return $(failure);
+    return $(success)
+}
+test__required_ge_3_args___error () 
+{ 
+    do_test_f required_ge_3_args || return $(failure);
+    do_test_f required_ge_3_args a || return $(failure);
+    do_test_f required_ge_3_args a b || return $(failure);
     return $(success)
 }
 teardown () 

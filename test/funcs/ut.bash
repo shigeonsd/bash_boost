@@ -83,10 +83,17 @@ function __do_test() {
     local _bool=${1};
     local func=${2};
     shift 2;
-    local args="$@";
     ( ${func} "$@" );
     ret=$?;
-    echo "${func} ${args} => ${ret}";
+
+    local _args="";
+    local _sep="";
+    for a in "$@"; do
+	_args+="${_sep}'${a}'";
+	_sep=" ";
+    done
+    echo "${func} ${_args} => ${ret}";
+
     is_${_bool} ${ret};
     return $?;
 }
