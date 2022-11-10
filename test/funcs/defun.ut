@@ -14,19 +14,31 @@ test__defun___success ()
 { 
     local ret;
     echo "@@@ マクロ展開アリ";
-    do_test_t defun foo __foo_tmpl \
+    defun foo __foo_tmpl \
 	    NAME  "Shigeo NISHIDA" \
 	    AGE   51 \
 	    ADDR  "Kochi, Japab" \
 	    PHONE "090-1234-5678" \
-	    EMAIL "shigeo.nsd@gmail.com" || return $(failure);
-    do_test_t declare -f foo || return $(failure);
-    do_test_t foo || return $(failure);
+	    EMAIL "shigeo.nsd@gmail.com" 
+    ret=$?;
+    echo defun foo __foo_tmpl \
+	    NAME  "Shigeo NISHIDA" \
+	    AGE   51 \
+	    ADDR  "Kochi, Japab" \
+	    PHONE "090-1234-5678" \
+	    EMAIL "shigeo.nsd@gmail.com" \
+	    "=> ${ret}" 
+    [ $ret -eq 0 ] || return $(failure);
+    declare -f foo || return $(failure);
+    foo            || return $(failure);
 
     echo "@@@ マクロ展開ナシ";
-    do_test_t defun bar __foo_tmpl || return $(failure);
-    do_test_t declare -f bar || return $(failure);
-    do_test_t bar || return $(failure);
+    defun bar __foo_tmpl 
+    ret=$?;
+    echo defun bar __foo_tmpl "=> ${ret}" 
+    [ $ret -eq 0 ] || return $(failure);
+    declare -f bar || return $(failure);
+    bar            || return $(failure);
     : テスト成功;
     return $(success)
 }

@@ -50,7 +50,7 @@ function __do_unit_test() {
 	(${f} >${log_file} 2>&1;)
 	ret=$?
 	case $ret in
-	255) ((skipped++)); printf ' : %s -> skiped' $f; ;;
+	255) ((skipped++)); printf ' : %s -> skiped\n' $f; ;;
 	0) ((success++));   printf '\033[32mo\033[m: %s -> ok\n' $f;   ;;
 	*) ((failure++));   printf '\033[31mx\033[m: %s -> ng(%d)\n' $f $ret;   ;;
 	esac
