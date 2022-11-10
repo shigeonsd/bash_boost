@@ -3,7 +3,11 @@
 # required.sh -- 引数チェック関数
 #
 function error_if_noargs() {
-    [ $# -eq 0 ] && error "No argument.";
+    [ $# -eq 0 ] && {
+	die "No argument." 238;
+	return 1;
+    }
+    return 0;
 }
 
 function __required_n_args() {

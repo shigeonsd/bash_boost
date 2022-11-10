@@ -109,6 +109,11 @@ function do_test_f() {
     return $?
 }
 
+# exit が呼ばれてプロセス終了するのを抑制するため
+function exit() {
+    return 1;
+}
+
 total=0;
 success=0;
 failure=0;
