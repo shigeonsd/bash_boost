@@ -56,8 +56,8 @@ function __do_unit_test() {
 	esac
 	((total++));
     done
-    echo ;
     echo "${total} tests, ${success} success, ${failure} failure, ${skipped} skipped";
+    echo ;
 }
 
 function __result() {
