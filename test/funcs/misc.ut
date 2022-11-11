@@ -1,26 +1,10 @@
+#! /bin/bash
+set -u
 setup () 
 { 
     source ./../../funcs/misc.bash;
-
-    function __do_test() {
-	local _bool=${1};
-	local func=${2};
-	shift 2;
-	( ${func} "$@" );
-	ret=$?;
-
-	local _args="";
-	local _sep="";
-	for a in "$@"; do
-	    _args+="${_sep}'${a}'";
-	    _sep=" ";
-	done
-	echo ;
-	echo "## ${func} ${_args} => ${ret}";
-
-	is_${_bool} ${ret};
-	return $?;
-    }
+    : 値を表示した直後に改行を入れるため。;
+    DO_TEST_VAR_LF=true;
 }
 test__nop___success () 
 { 
@@ -30,22 +14,23 @@ test__nop___success ()
 test__nop___error () 
 { 
     : テストスキップ;
-    return $(skipped);
+    return $(skipped)
 }
 test__sec2hms___success () 
 { 
-    do_test_t sec2hms 1      || return $(failure);
-    do_test_t sec2hms 12     || return $(failure);
-    do_test_t sec2hms 123    || return $(failure);
-    do_test_t sec2hms 1234   || return $(failure);
-    do_test_t sec2hms 12345  || return $(failure);
+    local var="54321";
+    do_test_t sec2hms 1 || return $(failure);
+    do_test_t sec2hms 12 || return $(failure);
+    do_test_t sec2hms 123 || return $(failure);
+    do_test_t sec2hms 1234 || return $(failure);
+    do_test_t sec2hms 12345 || return $(failure);
     do_test_t sec2hms 123456 || return $(failure);
-    do_test_t sec2hms -123   || return $(failure);
+    do_test_t sec2hms var || return $(failure);
     return $(success)
 }
 test__sec2hms___error () 
 { 
-    local now="abc"
+    local now="abc";
     do_test_f sec2hms "${now}" || return $(failure);
     return $(success)
 }

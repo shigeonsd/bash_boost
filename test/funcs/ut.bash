@@ -79,6 +79,7 @@ function skipped() {
     return -1;
 }
 
+DO_TEST_VAR_LF=false;
 function __do_test() {
     local _bool=${1};
     local func=${2};
@@ -92,6 +93,9 @@ function __do_test() {
 	_args+="${_sep}'${a}'";
 	_sep=" ";
     done
+    [ "${DO_TEST_VAR_LF}" == true ] && {
+	echo ;
+    }
     echo "## ${func} ${_args} => ${ret}";
 
     is_${_bool} ${ret};

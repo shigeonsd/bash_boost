@@ -105,7 +105,13 @@ function source_ut_file() {
     source "${___ut_file}";
 }
 
+function bash_header() {
+    echo '#! /bin/bash';
+    echo 'set -u';
+}
+
 source_ut_file;
+bash_header;
 create_setup;
 create_ut;
 create_teardown;
