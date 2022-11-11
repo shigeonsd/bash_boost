@@ -1,0 +1,30 @@
+setup () 
+{ 
+    source ./../../funcs/misc.bash;
+}
+test__nop___success () 
+{ 
+    do_test_t nop || return $(failure);
+    return $(success)
+}
+test__nop___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__sec2hms___success () 
+{ 
+    local sec=123456;
+    do_test_t sec2hms "${sec}" || return $(failure);
+    return $(success)
+}
+test__sec2hms___error () 
+{ 
+    local now="abc"
+    do_test_f sec2hms "${now}" || return $(failure);
+    return $(success)
+}
+teardown () 
+{ 
+    :
+}

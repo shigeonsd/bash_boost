@@ -93,6 +93,10 @@ function interface() {
     done;
 }
 
+function get_module_name() {
+    echo $1 | sed -e 's/^__//' -e 's/_.*$//';
+}
+
 function __on_exit() {
     for f in "${__cleanup_funcs[@]}"; do
 	echo $f;

@@ -51,3 +51,8 @@ function defun() {
     eval "$(__funcname; __tmpl_func | ${macroexpand};)";
     unset ${macroexpand};
 }
+
+function copy_function() {
+    declare -F $1 > /dev/null || return 1;
+    eval "$(echo "${2}()"; declare -f ${1} | tail -n +2)";
+}

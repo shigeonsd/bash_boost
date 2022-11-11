@@ -20,7 +20,7 @@ FUNCS_FILES = \
 	if.bash \
 	log.bash \
 	required.bash \
-#	misc.bash \
+	misc.bash \
 #
 
 FUNCS       = $(FUNCS_FILES:.bash=)
@@ -50,7 +50,7 @@ clean:
 	rm -rf ${FUNCS};
 
 var_dump:
-	@echo $(FUNCS)
-	@echo $(FUNCS_FILES)
-	@echo $(UT_FILES)
-	@echo $(LOG_FILES)
+	@echo FUNCS=$(FUNCS)
+	@echo FUNCS_FILES=$(FUNCS_FILES)
+	@echo UT_FILES=$(UT_FILES)
+	@echo LOG_FILES=$(LOG_FILES)
