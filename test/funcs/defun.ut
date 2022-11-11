@@ -14,36 +14,24 @@ test__defun___success ()
 { 
     local ret;
     echo "@@@ マクロ展開アリ";
-    defun foo __foo_tmpl \
-	    NAME  "Shigeo NISHIDA" \
-	    AGE   51 \
-	    ADDR  "Kochi, Japab" \
-	    PHONE "090-1234-5678" \
-	    EMAIL "shigeo.nsd@gmail.com" 
+    defun foo __foo_tmpl NAME "Shigeo NISHIDA" AGE 51 ADDR "Kochi, Japab" PHONE "090-1234-5678" EMAIL "shigeo.nsd@gmail.com";
     ret=$?;
-    echo defun foo __foo_tmpl \
-	    NAME  "Shigeo NISHIDA" \
-	    AGE   51 \
-	    ADDR  "Kochi, Japab" \
-	    PHONE "090-1234-5678" \
-	    EMAIL "shigeo.nsd@gmail.com" \
-	    "=> ${ret}" 
+    echo defun foo __foo_tmpl NAME "Shigeo NISHIDA" AGE 51 ADDR "Kochi, Japab" PHONE "090-1234-5678" EMAIL "shigeo.nsd@gmail.com" "=> ${ret}";
     [ $ret -eq 0 ] || return $(failure);
     declare -f foo || return $(failure);
-    foo            || return $(failure);
-
+    foo || return $(failure);
     echo "@@@ マクロ展開ナシ";
-    defun bar __foo_tmpl 
+    defun bar __foo_tmpl;
     ret=$?;
-    echo defun bar __foo_tmpl "=> ${ret}" 
+    echo defun bar __foo_tmpl "=> ${ret}";
     [ $ret -eq 0 ] || return $(failure);
     declare -f bar || return $(failure);
-    bar            || return $(failure);
+    bar || return $(failure);
     : テスト成功;
     return $(success)
 }
 test__defun___error () 
-{
+{ 
     : テスト成功;
     return $(skipped)
 }
