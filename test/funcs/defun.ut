@@ -1,3 +1,5 @@
+#! /bin/bash
+set -u
 setup () 
 { 
     source ../../funcs/defun.bash;
@@ -16,18 +18,16 @@ test__copy_function___success ()
     ret=$?;
     echo '##' copy_function  __foo_tmpl baz "=> ${ret}";
     [ $ret -eq 0 ] || return $(failure);
-    echo '##' declare -f __foo_tmpl || return $(failure);
+    echo '##' declare -f __foo_tmpl
     declare -f __foo_tmpl || return $(failure);
-    echo '##' declare -f baz || return $(failure);
+    echo '##' declare -f baz 
     declare -f baz || return $(failure);
     echo '##' baz
     baz || return $(failure);
-    : テスト成功;
     return $(success)
 }
 test__copy_function___error () 
 { 
-    : テストスキップ;
     return $(skipped);
 }
 test__defun___success () 
@@ -52,12 +52,10 @@ test__defun___success ()
     declare -f bar || return $(failure);
     echo '##' bar
     bar || return $(failure);
-    : テスト成功;
     return $(success)
 }
 test__defun___error () 
 { 
-    : テスト成功;
     return $(skipped)
 }
 teardown () 

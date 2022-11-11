@@ -1,3 +1,5 @@
+#! /bin/bash
+set -u
 setup () 
 { 
     source ./../../funcs/array.bash;
