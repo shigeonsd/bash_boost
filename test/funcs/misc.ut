@@ -1,6 +1,26 @@
 setup () 
 { 
     source ./../../funcs/misc.bash;
+
+    function __do_test() {
+	local _bool=${1};
+	local func=${2};
+	shift 2;
+	( ${func} "$@" );
+	ret=$?;
+
+	local _args="";
+	local _sep="";
+	for a in "$@"; do
+	    _args+="${_sep}'${a}'";
+	    _sep=" ";
+	done
+	echo ;
+	echo "## ${func} ${_args} => ${ret}";
+
+	is_${_bool} ${ret};
+	return $?;
+    }
 }
 test__nop___success () 
 { 
@@ -14,8 +34,13 @@ test__nop___error ()
 }
 test__sec2hms___success () 
 { 
-    local sec=123456;
-    do_test_t sec2hms "${sec}" || return $(failure);
+    do_test_t sec2hms 1      || return $(failure);
+    do_test_t sec2hms 12     || return $(failure);
+    do_test_t sec2hms 123    || return $(failure);
+    do_test_t sec2hms 1234   || return $(failure);
+    do_test_t sec2hms 12345  || return $(failure);
+    do_test_t sec2hms 123456 || return $(failure);
+    do_test_t sec2hms -123   || return $(failure);
     return $(success)
 }
 test__sec2hms___error () 

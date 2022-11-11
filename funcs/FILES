@@ -1,0 +1,9 @@
+#! /bin/bash
+#
+# FILES -- bash ファイルリスト
+#
+funcs_dir=${funcs_dir-$(dirname ${BASH_SOURCE[0]})}
+(cd ${funcs_dir};
+    for f in *.bash; do
+	echo ${funcs_dir}/${f}
+    done)
