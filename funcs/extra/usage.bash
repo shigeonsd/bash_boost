@@ -2,76 +2,103 @@
 #
 # usage.sh -- コマンドラインオプションに関する定義
 #
-declare -A __options;
-__usage_options_2="";
-function __usage_option_2() {
-    local opts=$1;
-    local func=$2;
+declare -g __usage_description="";
+declare -g -a __usage_opt1=();
+declare -g -a __usage_opt2=();
 
-    __usage_options_2="${__usage_options_2} [${opts}]";
-    for opt in $(echo $opts | sed -e 's/|/ /g'); do
-	__options["${opt}"]="${func}";
+function __usage_defopt1() {
+    local arg;
+    for arg in "$@"; do
+	[[ "${arg}" =~ ^- ]] || continue;
+	__usage_opt1+=(${arg});
     done;
 }
 
-__usage_options_1="";
-function __usage_option_1() {
-    __usage_options_1="${__usage_options_1} $@";
+function __usage_defopt2() {
+    local arg;
+    for arg in "$@"; do
+	[[ "${arg}" =~ ^- ]] && continue;
+	__usage_opt2+=(${arg});
+    done;
 }
 
-function usage_option() {
-    local num=2;
-    [ $# -eq 1 ] && {
-	num=1;
-    }
-    __usage_option_${num} $@;
+function __usage_defdesc() {
+    __usage_description="$(cat)";
 }
 
-__usage_description="
-    ここに使い方の詳細を書くこと。
-    複数行記載できる。
-    さらに詳しく.
-";
-function usage_description() {
-    local desc="${1}";
-    __usage_description="${desc}";
+function __fmt_opt1() {
+    local opt;
+    local delm="";
+    for opt in ${__usage_opt1[@]}; do
+	echo -n "${delm}[${opt}]"
+	delm=" ";
+    done;
 }
 
-function parse_option() {
-    local array_keys="${!__options[@]}";
-
-    for arg in ${progargs}; do
-	[ "$arg" = "--"  ] && break;
-	[[ "$arg" =~ ^- ]] || break;
-	array_exists ${arg} "${array_keys}" || die "Known option $arg.";
-	"${__options[$arg]}";
-    done
+function __fmt_opt2() {
+    local opt;
+    local delm="";
+    for opt in ${__usage_opt2[@]}; do
+	echo -n "${delm}${opt}"
+	delm=" ";
+    done;
 }
 
 function usage() {
-    printf "Usage: ${progname} ${__usage_options_2}${__usage_options_1}${__usage_description}";
+    echo "Usage: ${progname} " "$(__fmt_opt1)" "$(__fmt_opt2)";
+    echo "${__usage_description}";
     exit 0;
 }
 
-function usage_if_no_option() {
-    [ ${#progargs[@]} -eq 0 ] && { usage; }
+function usage.def() {
+    __usage_defopt1 "$@";
+    __usage_defopt2 "$@";
+    __usage_defdesc "$@";
 }
 
-function usage_if_args_ne() {
-    local n="${1}";
-    [ ${#progargs[@]} -ne ${n} ] && { usage; }
+function __usage_valid_opt() {
+    local opt;
+    for opt in  ${progargs[@]}; do
+	
+	echo opt=$opt;
+    done;
 }
 
-function usage_if_args_ne_1() {
-    usage_if_args_ne 1;
+function usage.chkopt() {
+    local arg1=$1;
+    local arg2=${2-null};
+    local num;
+    local ope;
+
+    case $# in
+    1) num=${arg1}; ope="-eq";     ;;
+    2) num=${arg2}; ope="${arg1}"; ;;
+    esac
+
+    [ ${#progargs[@]} $ope $num ] || usage;
 }
 
-function usage_if_args_ne_2() {
-    usage_if_args_ne 2;
+function __usage_cmpopt() {
+    local arg="${1}";
+    local opt="${2}";
+    local o;
+    [ ${arg} = ${opt} ] && return 0;
+    for o in $(echo ${opt} | sed -e 's/|/ /g'); do
+	[ ${arg} = ${o} ] && return 0;
+    done;
+    return 1;
 }
 
-function __usage_if_not_0_args() {
-    [ $# -ne ${___n} ] && { usage; }
+function usage.getopt() {
+    local arg;
+    local opt;
+    for arg in  ${progargs[@]}; do
+	for opt in ${__usage_opt1[@]}; do
+	    __usage_cmpopt "${arg}" "${opt}" && {
+		echo ${arg};
+		continue 2;
+	    }
+	done;
+	die "$(__ unknown_option "${arg}")"
+    done;
 }
-
-usage_option "-h|-help|--help" usage;

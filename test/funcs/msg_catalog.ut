@@ -1,0 +1,27 @@
+#! /bin/bash
+set -u
+setup () 
+{ 
+    source ../../test/funcs/../../funcs/date.bash;
+    source ../../test/funcs/../../funcs/array.bash;
+    source ../../test/funcs/../../funcs/log.bash;
+    source ../../test/funcs/../../funcs/msg_catalog.bash;
+}
+test_______success () 
+{ 
+    do_test_t __ unknown_option "-a"           || return $(failure);
+    do_test_t __ invalid_arguments foo bar baz || return $(failure);
+    do_test_t __ invalid_arguments "a b c"     || return $(failure);
+    return $(success)
+}
+test_______error () 
+{ 
+    do_test_f __ x_unknown_option "-a"           || return $(failure);
+    do_test_f __ x_invalid_arguments foo bar baz || return $(failure);
+    do_test_f __ x_invalid_arguments "a b c"     || return $(failure);
+    return $(success)
+}
+teardown () 
+{ 
+    :
+}

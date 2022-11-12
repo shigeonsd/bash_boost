@@ -1,3 +1,16 @@
 #! /bin/bash
 source ${1};
-declare -f | grep " () " | grep -v '^[_]' | grep ' () $' | sed -e 's/ () $//'
+declare -f \
+    | grep " () $" \
+    | sed -e 's/ () $//' \
+    | awk '
+/^__[^_]+$/ {
+    next;
+}
+/^_[^_]+$/ {
+    next;
+}
+{
+    print;
+}
+'

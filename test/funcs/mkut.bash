@@ -94,8 +94,6 @@ function defun_ut_func() {
 
 function create_ut() {
     local test_funcs_dir=$(dirname ${BASH_SOURCE[1]});
-    echo test_funcs_dir=${test_funcs_dir};
-    echo ___func_file=${___func_file};
     ${test_funcs_dir}/get_func_names.bash ${___func_file} \
 	| ( local func;
 	    while read func; do

@@ -24,6 +24,7 @@ SRC_BASH_FILES = \
 	log.bash \
 	required.bash \
 	misc.bash \
+	msg_catalog.bash \
 #
 
 LOG_DIRS    = $(SRC_BASH_FILES:.bash=)
