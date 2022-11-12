@@ -5,7 +5,8 @@
 function __() {
     local key=$1;
     shift;
-    array_key_exists "${key}" __messages || die "${key}: Undefined message in \$__messages[@].";
+    array_key_exists "${key}" __messages \
+	|| die "${key}: Undefined message in \$__messages[@].";
     eval "echo $(echo "${__messages[$key]}")";
 }
 

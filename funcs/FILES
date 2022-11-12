@@ -3,8 +3,14 @@
 # FILES -- bash ファイルリスト
 #
 funcs_dir=${funcs_dir-$(dirname ${BASH_SOURCE[0]})}
-source \
-    $(cd ${funcs_dir};
-    for f in *.bash; do
-	echo ${funcs_dir}/${f}
-    done)
+source ${funcs_dir}/array.bash
+source ${funcs_dir}/date.bash
+source ${funcs_dir}/defun.bash
+source ${funcs_dir}/log.bash
+source ${funcs_dir}/debug.bash
+source ${funcs_dir}/exists.bash
+source ${funcs_dir}/file.bash
+source ${funcs_dir}/if.bash
+source ${funcs_dir}/misc.bash
+source ${funcs_dir}/msg_catalog.bash
+source ${funcs_dir}/required.bash
