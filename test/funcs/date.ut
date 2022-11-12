@@ -2,7 +2,7 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/date.bash;
+    source ./../../funcs/date.bash
 }
 test__now___success () 
 { 
@@ -13,7 +13,7 @@ test__now___success ()
 test__now___error () 
 { 
     : テストスキップ;
-    return $(skipped);
+    return $(skipped)
 }
 test__now_ymd_hms___success () 
 { 
@@ -24,7 +24,7 @@ test__now_ymd_hms___success ()
 test__now_ymd_hms___error () 
 { 
     : テストスキップ;
-    return $(skipped);
+    return $(skipped)
 }
 test__today___success () 
 { 
@@ -35,7 +35,7 @@ test__today___success ()
 test__today___error () 
 { 
     : テストスキップ;
-    return $(skipped);
+    return $(skipped)
 }
 test__yesterday___success () 
 { 
@@ -46,5 +46,9 @@ test__yesterday___success ()
 test__yesterday___error () 
 { 
     : テストスキップ;
-    return $(skipped);
+    return $(skipped)
+}
+teardown () 
+{ 
+    :
 }

@@ -1,7 +1,7 @@
 #
-# Makefile -- 関数の単体テスト
+# Makefile -- extra 関数の単体テスト
 #
-TOP_DIR	        = ../..
+TOP_DIR	        = ../../..
 CURRENT_DIR     = .
 FUNCS_DIR       = $(TOP_DIR)/funcs
 EXTRA_FUNCS_DIR = $(FUNCS_DIR)/extra
@@ -14,34 +14,27 @@ MKUT	    = $(ENV) $(TEST_FUNCS_DIR)/mkut.bash
 UT	    = $(ENV) $(TEST_FUNCS_DIR)/ut.bash
 
 SRC_BASH_FILES = \
-	array.bash \
-	date.bash \
-	debug.bash \
-	defun.bash \
-	exists.bash \
-	file.bash \
-	if.bash \
-	log.bash \
-	required.bash \
-	misc.bash \
+	usage.bash  \
+	aop.bash    \
+	load.bash   \
+	class.bash  \
 #
 
 LOG_DIRS    = $(SRC_BASH_FILES:.bash=)
 UT_FILES    = $(SRC_BASH_FILES:.bash=.ut)
 LOG_FILES   = $(SRC_BASH_FILES:.bash=.log)
-EXTRA_DIR   = extra
 
 SHELL          = /bin/bash -o pipefail
 
-vpath %.bash ${FUNCS_DIR}
+vpath %.bash ${EXTRA_FUNCS_DIR}
 
 .PRECIOUS : %.ut
 
-all: $(LOG_FILES) extra-all
+all: $(LOG_FILES)
 
 %.ut: %.bash
 	@echo \#\# Update $@
-	$(MKUT) $* $@ > $@.new;
+	$(MKUT) extra/$* $@ > $@.new;
 	rm -f $@;
 	mv $@.new $@;
 
@@ -49,15 +42,9 @@ all: $(LOG_FILES) extra-all
 	@echo \#\# Do unit test $*
 	@${UT} $< | tee /dev/tty > $@;
 
-extra-all:
-	(cd ${EXTRA_DIR}; make all)
-
-clean: extra-clean
+clean:
 	rm -rf ${LOG_FILES};
 	rm -rf ${LOG_DIRS};
-
-extra-clean:
-	(cd ${EXTRA_DIR}; make clean)
 
 var_dump:
 	@echo LOG_DIRS=$(LOG_DIRS)

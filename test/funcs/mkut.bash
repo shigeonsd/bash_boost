@@ -8,7 +8,7 @@ progname=$(basename ${0});
 progdir=$(dirname ${0});
 
 # モジュールの初期化
-top_dir=$(echo "${progdir}/../..") ;      
+top_dir="${progdir}/../..";
 funcs_dir="${top_dir}/funcs";   
 
 # コマンドラインオプションの定義
@@ -91,8 +91,12 @@ function defun_ut_func() {
     declare -f "${ut_func}";
 }
 
+
 function create_ut() {
-    ${progdir}/get_func_names.bash ${___func_file} \
+    local test_funcs_dir=$(dirname ${BASH_SOURCE[1]});
+    echo test_funcs_dir=${test_funcs_dir};
+    echo ___func_file=${___func_file};
+    ${test_funcs_dir}/get_func_names.bash ${___func_file} \
 	| ( local func;
 	    while read func; do
 		defun_ut_func ${func} success;
