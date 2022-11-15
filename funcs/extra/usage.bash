@@ -44,13 +44,13 @@ function __fmt_opt2() {
     done;
 }
 
-function usage() {
+function __usage() {
     echo "Usage: ${progname} " "$(__fmt_opt1)" "$(__fmt_opt2)";
     echo "${__usage_description}";
     exit 0;
 }
 
-function usage_def() {
+function usage() {
     __usage_defopt1 "$@";
     __usage_defopt2 "$@";
     __usage_defdesc "$@";
@@ -67,7 +67,7 @@ function usage_chkopt() {
     2) num=${arg2}; ope="${arg1}"; ;;
     esac
 
-    [ "${#progargs[@]}" "-${ope}" "${num}" ] || usage;
+    [ "${#progargs[@]}" "-${ope}" "${num}" ] || __usage;
 }
 
 function __equal_opt() {
@@ -109,7 +109,7 @@ function usage_getopt() {
     local opt2=();
     for arg in  "${progargs[@]}"; do
 	case "${arg}" in
-	-h|--help) usage; ;;
+	-h|--help) __usage; ;;
 	esac
 	[[ "${arg}" =~ ^- ]] || {
 	    opt2+=("${arg}");

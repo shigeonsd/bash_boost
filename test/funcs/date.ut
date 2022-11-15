@@ -2,7 +2,8 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/date.bash
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
 }
 test__now___success () 
 { 

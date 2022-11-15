@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# if.sh -- if 支援関数
+# if.bash -- if 支援関数
 #
 
 function if_debug() {
@@ -14,8 +14,9 @@ function if_debug() {
 
 function if_true() {
     local var="${1}";
+    declare -n ref="${1}";
     [[ -v "${var}" ]] || return 1;
-    case $(eval echo "\$${var}") in
+    case "${ref}" in
     0|true)  return 0; ;;
     1|false) return 1; ;;
     esac

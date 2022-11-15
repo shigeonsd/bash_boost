@@ -2,31 +2,35 @@
 # Makefile -- 関数の単体テスト
 #
 TOP_DIR	        = ../..
-CURRENT_DIR     = .
+BASH_BOOST_DIR  = $(TOP_DIR)
+
 FUNCS_DIR       = $(TOP_DIR)/funcs
 UTILS_DIR       = $(TOP_DIR)/utils
 EXTRA_FUNCS_DIR = $(FUNCS_DIR)/extra
-TEST_DIR        = $(TOP_DIR)/test
-TEST_FUNCS_DIR  = $(TEST_DIR)/funcs
+
+TEST_DIR        = ..
+TEST_FUNCS_DIR  = .
 TEST_EXTRA_DIR  = $(TEST_FUNCS_DIR)/extra
 
-ENV	    = 
-MKUT	    = $(ENV) $(TEST_FUNCS_DIR)/mkut.bash
-UT	    = $(ENV) $(TEST_FUNCS_DIR)/ut.bash
+DEBUG       = true
+ENV         = env BASH_BOOST_DIR="$(BASH_BOOST_DIR)" DEBUG="${DEBUG}"
+MKUT	    = $(ENV) $(UTILS_DIR)/mkut.bash
+UT	    = $(ENV) $(UTILS_DIR)/ut.bash
 TRIM_COLOR  = $(UTILS_DIR)/trim_color.bash
 
 SRC_BASH_FILES = \
 	array.bash \
 	date.bash \
 	debug.bash \
+	log.bash \
 	defun.bash \
+	required.bash \
 	exists.bash \
 	file.bash \
 	if.bash \
-	log.bash \
-	required.bash \
 	misc.bash \
-	msg_catalog.bash \
+	__.bash \
+	require.bash \
 #
 
 LOG_DIRS    = $(SRC_BASH_FILES:.bash=)

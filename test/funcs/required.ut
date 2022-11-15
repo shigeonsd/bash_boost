@@ -2,9 +2,8 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/date.bash;
-    source ./../../funcs/log.bash;
-    source ./../../funcs/required.bash
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
 }
 test__error_if_noargs___success () 
 { 

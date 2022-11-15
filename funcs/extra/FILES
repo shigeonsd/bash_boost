@@ -2,9 +2,7 @@
 #
 # FILES -- bash ファイルリスト
 #
-funcs_dir=${funcs_dir-$(dirname ${BASH_SOURCE[0]})}
-source ${funcs_dir}/aop.bash
-source ${funcs_dir}/class.bash
-source ${funcs_dir}/load.bash
-source ${funcs_dir}/usage.bash
-source ${funcs_dir}/usage.old.bash
+source ${extra_funcs_dir}/usage.bash
+#source ${funcs_dir}/aop.bash
+#source ${funcs_dir}/class.bash
+#source ${funcs_dir}/load.bash

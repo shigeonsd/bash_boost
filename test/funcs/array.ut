@@ -2,7 +2,10 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/array.bash;
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
+
+    : 引数に配列・連想配列を渡す必要があるため。
     function __do_test () 
     { 
         local _bool=${1};

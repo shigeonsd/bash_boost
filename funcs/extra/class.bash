@@ -84,7 +84,7 @@ function __dump_props() {
     done;
 }
 
-function dump() {
+function obj_dump() {
     local ___this="${1}";
     __dump_this;
     __dump_props;

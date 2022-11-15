@@ -2,7 +2,9 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/file.bash;
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
+
     declare -g test_basename="./tmp/tmpfile.file.ut";
     declare -g test_file="${test_basename}.$$";
     declare -g ne_test_basename="./tmp2/tmpfile.file.ut";

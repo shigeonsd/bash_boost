@@ -2,7 +2,9 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/misc.bash;
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
+
     : 値を表示した直後に改行を入れるため。;
     DO_TEST_VAR_LF=true;
 }

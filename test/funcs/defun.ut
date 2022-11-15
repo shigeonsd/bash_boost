@@ -2,7 +2,9 @@
 set -u
 setup () 
 { 
-    source ../../funcs/defun.bash;
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
+
     function __foo_tmpl () 
     { 
         echo NAME;

@@ -2,7 +2,8 @@
 set -u
 setup () 
 { 
-    source ./../../funcs/exists.bash;
+    source "../../funcs/VARS";
+    source "../../funcs/FILES";
 
     function existent_function() {
 	echo "Called ${FUNCNAME}";

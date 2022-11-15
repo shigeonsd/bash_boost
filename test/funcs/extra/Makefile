@@ -2,22 +2,28 @@
 # Makefile -- extra 関数の単体テスト
 #
 TOP_DIR	        = ../../..
-CURRENT_DIR     = .
+BASH_BOOST_DIR  = $(TOP_DIR)
+
 FUNCS_DIR       = $(TOP_DIR)/funcs
+UTILS_DIR       = $(TOP_DIR)/utils
 EXTRA_FUNCS_DIR = $(FUNCS_DIR)/extra
-TEST_DIR        = $(TOP_DIR)/test
-TEST_FUNCS_DIR  = $(TEST_DIR)/funcs
-TEST_EXTRA_DIR  = $(TEST_FUNCS_DIR)/extra
 
-ENV	    = 
-MKUT	    = $(ENV) $(TEST_FUNCS_DIR)/mkut.bash
-UT	    = $(ENV) $(TEST_FUNCS_DIR)/ut.bash
+TEST_DIR        = ../..
+TEST_FUNCS_DIR  = ..
+TEST_EXTRA_DIR  = .
 
-SRC_BASH_FILES = \
-	usage.bash  \
-	aop.bash    \
-	load.bash   \
-	class.bash  \
+DEBUG       = true
+ENV         = env BASH_BOOST_DIR="$(BASH_BOOST_DIR)" DEBUG="${DEBUG}"
+MKUT        = $(ENV) $(UTILS_DIR)/mkut.bash
+UT          = $(ENV) $(UTILS_DIR)/ut.bash
+TRIM_COLOR  = $(UTILS_DIR)/trim_color.bash
+
+SRC_BASH_FILES =     \
+	logfile.bash \
+	usage.bash   \
+	aop.bash     \
+	load.bash    \
+	class.bash   \
 #
 
 LOG_DIRS    = $(SRC_BASH_FILES:.bash=)
@@ -40,7 +46,7 @@ all: $(LOG_FILES)
 
 %.log : %.ut
 	@echo \#\# Do unit test $*
-	@${UT} $< | tee /dev/tty > $@;
+	@$(UT) $< | tee /dev/tty | $(TRIM_COLOR) > $@;
 
 clean:
 	rm -rf ${LOG_FILES};

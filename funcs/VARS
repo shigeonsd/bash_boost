@@ -6,7 +6,7 @@ progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
 progargs=("$@");
 
-        top_dir=$(dirname ${progdir});
+        top_dir=${BASH_BOOST_DIR:-$(dirname "${progdir}")}
       funcs_dir="${top_dir}/funcs";
 extra_funcs_dir="${funcs_dir}/extra";
     modules_dir="${top_dir}/modules";
