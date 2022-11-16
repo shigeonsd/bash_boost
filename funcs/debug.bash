@@ -2,10 +2,10 @@
 #
 # debug.sh -- デバッグ支援
 #
-function debug() {
-    if_debug || return 0;
-    _msg "DEBUG:" $@;
-}
+#function debug() {
+#    if_debug || return 0;
+#    _msg "DEBUG:" $@;
+#}
 
 function stacktrace() {
     if_debug || return;

@@ -2,15 +2,18 @@
 #
 # FILES -- bash ファイルリスト
 #
-source ${funcs_dir}/array.bash
-source ${funcs_dir}/date.bash
-source ${funcs_dir}/if.bash
-source ${funcs_dir}/debug.bash
-source ${funcs_dir}/log.bash
-source ${funcs_dir}/defun.bash
-source ${funcs_dir}/required.bash
 source ${funcs_dir}/exists.bash
-source ${funcs_dir}/file.bash
-source ${funcs_dir}/misc.bash
-source ${funcs_dir}/__.bash
+source ${funcs_dir}/if.bash
+source ${funcs_dir}/log.bash
 source ${funcs_dir}/require.bash
+
+require       \
+    __        \
+    array     \
+    debug     \
+    date      \
+    defun     \
+    required  \
+    file      \
+    misc      \
+#

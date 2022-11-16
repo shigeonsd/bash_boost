@@ -2,16 +2,25 @@
 #
 # log.sh -- ログに関する定義
 #
-function _msg() { 
-    shift;
-    echo  $@ >&2; 
+
+# ログファイル出力用の msg はこれよりも前に定義する。
+exist_func _msg || {
+    function _msg() { 
+	shift;
+	echo  $@ >&2; 
+    }
 }
+
+# debug.bash でオーバーライドする。
+function stacktrace() { :; };
 
 function error() { _msg "ERROR:" $@; }
 function warn()  { _msg "WARN:"  $@; }
 function info()  { _msg "INFO:"  $@; }
 function debug() { :; }
-if_debug || function debug() { _msg "DEBUG:" $@; }
+if_debug || {
+    function debug() { _msg "DEBUG:" $@; }
+}
 
 function die() {
     local msg="$1";
@@ -21,3 +30,4 @@ function die() {
     exit ${exit_status};
 }
 
+__bash_boost_required__+=(${BASH_SOURCE[0]});

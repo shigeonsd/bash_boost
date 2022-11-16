@@ -25,3 +25,5 @@ function source_file_if_exists() {
     exist_file ${file} || return;
     source ${file};
 }
+
+__bash_boost_required__+=(${BASH_SOURCE[0]});

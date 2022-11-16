@@ -1,12 +1,16 @@
 #! /bin/bash
 #
-# VARS.sh -- 
+# bootstrap -- 
+#
+set -u
+
+# 変数定義
 #
 progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
 progargs=("$@");
 
-        top_dir=${BASH_BOOST_DIR:-$(dirname "${progdir}")}
+	top_dir=${BASH_BOOST_DIR:-"$(dirname "${BASH_SOURCE[0]}")/.."};
       funcs_dir="${top_dir}/funcs";
 extra_funcs_dir="${funcs_dir}/extra";
     modules_dir="${top_dir}/modules";
@@ -17,3 +21,10 @@ extra_funcs_dir="${funcs_dir}/extra";
 hostname=$(hostname);
 _hostname=$(hostname | sed -e 's/-/_/g');
 
+# require 関数準備
+#
+source ${funcs_dir}/require.bash
+source ${funcs_dir}/exists.bash
+source ${funcs_dir}/array.bash
+source ${funcs_dir}/if.bash
+source ${funcs_dir}/log.bash
