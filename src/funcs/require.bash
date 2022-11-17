@@ -5,14 +5,17 @@
 #
 function __require_file_1() {
     local file="${1}";
+    info " require ${file}. ";
     source "${file}";
-    __bash_boost_required__+=(${BASH_SOURCE[0]});
+    __bash_boost_required__+=( "${file}" );
+    info "done";
 }
 
 function __require_file_once() {
     local file="${1}";
-    exist_array "${file}" && return;
-    __required_file_1 "${file}";
+    array_exists "${file}" __bash_boost_required__  && return 1;
+    __require_file_1 "${file}";
+    return 0;
 }
 
 function __require_file_force() {
@@ -29,9 +32,9 @@ function __require_file() {
     for path  in $(echo ${paths} | sed -e 's/:/ /g'); do
 	for suffix in "${suffixes}"; do
 	    fullpath="${path}/${file}${suffix}";
-	    source_file_if_exist "${fullpath}" && {
+	    exist_file "${fullpath}" && {
 		"__require_file_${___mode}" "${fullpath}";
-		return 0;
+		return $?;
 	    }
 	done
     done
@@ -40,18 +43,17 @@ function __require_file() {
 }
 
 function __invoke_init() {
-    local func="_${___name}_init";
-    exist_func "$func" || return;
+    local init_func="_${___name}_init";
+    exist_func "${init_func}" || return;
     info  "Initializing ${___name}... ";
-    "${func}";
+    "${init_func}";
     info "done";
 }
 
 function __add_cleanup() {
-    local module_name="$1";
-    local func="_${module_name}_cleanup";
-    exist_func "$func" || return;
-    __bash_boost_cleanup_funcs__+=("${func}");
+    local func="_${___name}_cleanup";
+    exist_func "${func}" || return;
+    __bash_boost_cleanup_funcs__+=( "${func}" );
 }
 
 function __require() {
@@ -61,20 +63,18 @@ function __require() {
     exist_var BASHBOOSTPATH && {
 	require_path="${BASHBOOSTPATH}:${require_path}";
     }
-    info " require ${file}. ";
-    __require_file "${file}" "${require_path}";
-    __add_cleanup;
-    __invoke_init;
-    info "done";
-
-    __bash_boost_required__+="${file}";
+    __require_file "${file}" "${require_path}" && {
+	__add_cleanup;
+	__invoke_init;
+	__bash_boost_required__+="${file}";
+    }
 }
 
 function require() {
-    local __mode="once";
+    local ___mode="once";
     local bash_file;
     [ "${1}" = "-f" ] && {
-	__mode="force";
+	___mode="force";
 	shift;
     }
     for bash_file in "$@"; do
