@@ -2,8 +2,7 @@
 set -u
 setup () 
 { 
-    source "../../funcs/VARS";
-    source "../../funcs/FILES";
+    source "../../src/funcs/bootstrap";
 
     : 引数に配列・連想配列を渡す必要があるため。
     function __do_test () 

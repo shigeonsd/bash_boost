@@ -4,7 +4,8 @@
 TOP_DIR	        = ../..
 BASH_BOOST_DIR  = $(TOP_DIR)
 
-FUNCS_DIR       = $(TOP_DIR)/funcs
+SRC_DIR         = $(TOP_DIR)/funcs
+FUNCS_DIR       = $(SRC_DIR)/funcs
 UTILS_DIR       = $(TOP_DIR)/utils
 EXTRA_FUNCS_DIR = $(FUNCS_DIR)/extra
 

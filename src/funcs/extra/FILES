@@ -1,8 +1,0 @@
-#! /bin/bash
-#
-# FILES -- bash ファイルリスト
-#
-source ${extra_funcs_dir}/usage.bash
-#source ${funcs_dir}/aop.bash
-#source ${funcs_dir}/class.bash
-#source ${funcs_dir}/load.bash

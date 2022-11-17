@@ -2,8 +2,7 @@
 set -u
 setup () 
 { 
-    source "../../funcs/VARS";
-    source "../../funcs/FILES";
+    source "../../src/funcs/bootstrap";
 
     function existent_function() {
 	echo "Called ${FUNCNAME}";
