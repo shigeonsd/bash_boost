@@ -7,9 +7,8 @@ source "${top_dir}/src/funcs/bootstrap";
 
 # 拡張機能読み込み
 #
-require       \
+require -v -f \
     __        \
-    array     \
     debug     \
     date      \
     defun     \
@@ -18,4 +17,4 @@ require       \
     misc      \
     array     \
 #
-required_files;
+__required_files;

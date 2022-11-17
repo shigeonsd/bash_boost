@@ -3,12 +3,13 @@
 # require.sh -- 
 #
 #
+
 function __require_file_1() {
     local file="${1}";
-    info " require ${file}. ";
+    "${___info}" " require ${file}. ";
     source "${file}";
     __bash_boost_required__+=( "${file}" );
-    info "done";
+    "${___info}" "done";
 }
 
 function __require_file_once() {
@@ -20,7 +21,7 @@ function __require_file_once() {
 
 function __require_file_force() {
     local file="${1}";
-    __required_file_1 "${file}";
+    __require_file_1 "${file}";
 }
 
 function __require_file() {
@@ -45,9 +46,9 @@ function __require_file() {
 function __invoke_init() {
     local init_func="_${___name}_init";
     exist_func "${init_func}" || return;
-    info  "Initializing ${___name}... ";
+    "${___info}" "Initializing ${___name}... ";
     "${init_func}";
-    info "done";
+    "${___info}" "done";
 }
 
 function __add_cleanup() {
@@ -72,16 +73,17 @@ function __require() {
 function require() {
     local ___mode="once";
     local bash_file;
-    [ "${1}" = "-f" ] && {
-	___mode="force";
-	shift;
-    }
+    local ___info=":";
     for bash_file in "$@"; do
-	__require ${bash_file};
+	case "${bash_file}" in 
+	-f) ___mode="force"; continue; ;;
+	-v) ___info="info";  continue; ;;
+	 *) __require ${bash_file}; ;;
+	esac
     done;
 }
 
-function required_files() {
+function __required_files() {
     local f;
     local n=0;
     echo "Required files are;";
@@ -98,9 +100,9 @@ function __on_exit() {
     done \
     | tac \
     | while read cleanup; do
-        info "Cleanup $(echo ${cleanup} | sed -e 's/^_//' -e 's/_cleanup//')... ";
+        "${___info}" "Cleanup $(echo ${cleanup} | sed -e 's/^_//' -e 's/_cleanup//')... ";
         "${cleanup}";
-        info "done";
+        "${___info}" "done";
     done;
 }
 
@@ -108,5 +110,4 @@ declare -a __bash_boost_required__=();
 declare -a -g __bash_boost_cleanup_funcs__=();
 trap __on_exit EXIT;
 
-echo ${BASH_SOURCE[0]};
 __bash_boost_required__+=(${BASH_SOURCE[0]});
