@@ -1,0 +1,51 @@
+#! /bin/bash
+set -u
+setup () 
+{ 
+    source "../../funcs/VARS";
+    source "../../funcs/FILES"
+}
+test__if_debug___success () 
+{ 
+    echo DEBUG=true;
+    DEBUG=true;
+    do_test_t if_debug || return $(failure);
+    DEBUG=0;
+    do_test_t if_debug || return $(failure);
+    return $(success)
+}
+test__if_debug___error () 
+{ 
+    echo DEBUG=false;
+    DEBUG=false;
+    do_test_f if_debug || return $(failure);
+    DEBUG=1;
+    do_test_f if_debug || return $(failure);
+    DEBUG=xxx;
+    do_test_f if_debug || return $(failure);
+    return $(success)
+}
+test__if_true___success () 
+{ 
+    echo VAR=true;
+    VAR=true;
+    do_test_t if_true VAR || return $(failure);
+    VAR=0;
+    do_test_t if_true VAR || return $(failure);
+    return $(success)
+}
+test__if_true___error () 
+{ 
+    echo VAR=false;
+    VAR=false;
+    do_test_f if_true VAR || return $(failure);
+    VAR=1;
+    do_test_f if_true VAR || return $(failure);
+    VAR=xxx;
+    do_test_f if_true VAR || return $(failure);
+    return $(success)
+}
+teardown () 
+{ 
+    :
+}
