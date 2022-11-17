@@ -8,7 +8,7 @@ function exist_func() {
 
 function do_func_if_exists() {
     local func="${1}";
-    exist_func $func || return;
+    exist_func $func || return 1;
     $@;
 }
 
@@ -22,7 +22,7 @@ function exist_var() {
 
 function source_file_if_exists() {
     local file="${1}";
-    exist_file ${file} || return;
+    exist_file ${file} || return 1;
     source ${file};
 }
 

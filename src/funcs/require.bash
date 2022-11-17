@@ -66,7 +66,6 @@ function __require() {
     __require_file "${file}" "${require_path}" && {
 	__add_cleanup;
 	__invoke_init;
-	__bash_boost_required__+="${file}";
     }
 }
 
@@ -109,4 +108,5 @@ declare -a __bash_boost_required__=();
 declare -a -g __bash_boost_cleanup_funcs__=();
 trap __on_exit EXIT;
 
+echo ${BASH_SOURCE[0]};
 __bash_boost_required__+=(${BASH_SOURCE[0]});

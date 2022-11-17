@@ -18,4 +18,4 @@ require       \
     misc      \
     array     \
 #
-
+required_files;
