@@ -2,8 +2,8 @@
 set -u
 setup () 
 { 
-    source "../../funcs/VARS";
-    source "../../funcs/FILES";
+    source "../../src/funcs/bootstrap";
+    require file;
 
     declare -g test_basename="./tmp/tmpfile.file.ut";
     declare -g test_file="${test_basename}.$$";

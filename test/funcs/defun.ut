@@ -2,8 +2,8 @@
 set -u
 setup () 
 { 
-    source "../../funcs/VARS";
-    source "../../funcs/FILES";
+    source "../../src/funcs/bootstrap";
+    require defun;
 
     function __foo_tmpl () 
     { 

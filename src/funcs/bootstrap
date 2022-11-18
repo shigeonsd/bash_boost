@@ -26,8 +26,8 @@ _hostname=$(hostname | sed -e 's/-/_/g');
 
 # require 関数準備
 #
-source ${funcs_dir}/require.bash
-source ${funcs_dir}/exists.bash
 source ${funcs_dir}/array.bash
+source ${funcs_dir}/exists.bash
 source ${funcs_dir}/if.bash
 source ${funcs_dir}/log.bash
+source ${funcs_dir}/require.bash

@@ -20,18 +20,19 @@ UT	    = $(ENV) $(UTILS_DIR)/ut.bash
 TRIM_COLOR  = $(UTILS_DIR)/trim_color.bash
 
 SRC_BASH_FILES = \
+	exists.bash \
 	array.bash \
+	if.bash \
+	log.bash \
+	require.bash \
+	\
 	date.bash \
 	debug.bash \
-	log.bash \
 	defun.bash \
 	required.bash \
-	exists.bash \
 	file.bash \
-	if.bash \
 	misc.bash \
 	__.bash \
-	require.bash \
 #
 
 LOG_DIRS    = $(SRC_BASH_FILES:.bash=)

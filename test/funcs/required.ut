@@ -3,6 +3,7 @@ set -u
 setup () 
 { 
     source "../../src/funcs/bootstrap";
+    require required;
 }
 test__error_if_noargs___success () 
 { 
