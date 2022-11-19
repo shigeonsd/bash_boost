@@ -8,7 +8,7 @@ progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
 progargs=("$@");
 
-	top_dir=${BASH_BOOST_DIR:-"$(dirname "${BASH_SOURCE[0]}")/../.."};
+	top_dir=${BASH_BOOST_DIR:-"$(dirname "${BASH_SOURCE[0]}")/.."};
         src_dir="${top_dir}/src";
         log_dir="${top_dir}/log";
        docs_dir="${top_dir}/docs";

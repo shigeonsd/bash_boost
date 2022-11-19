@@ -4,24 +4,18 @@
 #
 #
 set -u;
-progname=$(basename ${0});
-progdir=$(cd "`dirname $0`" && pwd);
-progargs=$@;
-
-# モジュールの初期化
-top_dir=$(dirname ${progdir});
-modules_dir="${top_dir}/modules";
-source "${modules_dir}/setup.sh";
+source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
+#source "../src/funcs/class.bash";
 
 # 使用クラスの宣言
-use -s Hash;
+require Hash;
 
 echo Hash h;
 echo Hash h2;
 declare -A h=(
  ["name"]='Shigeo NISHIDA'
  ["age"]=51
- ["Country"]=Japan
+ ["country"]=Japan
  ["pref"]=Kochi
  ["sex"]=male
 );
@@ -33,7 +27,7 @@ Hash h;
 Hash h2;
 
 
-declare -p h | sed -e 's/^[^=].=//';
+#declare -p h | sed -e 's/^[^=].=//';
 
 echo h.serialize;
 h.serialize;
@@ -46,10 +40,10 @@ Hash h3 := h;
 echo Hash h3;
 Hash h4 = h;
 
-dump h;
-dump h2;
-dump h3;
-dump h4;
+#dump h;
+#dump h2;
+#dump h3;
+#dump h4;
 
 echo h.length;
 h.length;

@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# class.sh -- 
+# class.bash -- 
 #
 #
 declare -A __object_props__=();
@@ -11,7 +11,7 @@ function __macroexpand() {
     sed -e "s/${var}/${val}/g" 
 }
 
-function __prop() {
+function __prop_tmpl() {
     [ $# -eq 0 ] && {
 	echo "${__object_props__[THIS,PROP]}";
 	return 0;
@@ -107,13 +107,13 @@ function __defprop() {
     eval $(echo "${props}='${value}'");
 
     # アクセサ関数の追加
-    eval "$(echo "${___this}.${___prefix}${prop}()";
-	    declare -f __prop \
-		|  tail -n +2 \
-		| __macroexpand CLASS ${___class} \
-		| __macroexpand PROP ${prop} \
-		| __macroexpand TYPE ${type} \
-		| __macroexpand THIS ${___this} )";
+    local accessor="${___this}.${___prefix}${prop}"
+    defun "${accessor}" __prop_tmpl \
+	    CLASS "${___class}" \
+	    PROP  "${prop}"     \
+	    TYPE  "${type}"     \
+	    THIS  "${___this}"  \
+	    ;
 }
 
 function __undefprops() {
@@ -153,21 +153,17 @@ function __undefdestructor() {
     echo "unset -f ~${___this};";
 }
 
-function __this() {
+function ___this_tmpl() {
     local operator="operator_${1}";
     shift;
     "THIS.${operator}" "$@";
 }
 
 function __defthis() {
-    eval "$(echo "${___this}()";
-	    declare -f __this \
-		|  tail -n +2 \
-		| __macroexpand CLASS ${___class} \
-		| __macroexpand THIS ${___this} )";
-    defun ${____this} __this \
-	CLASS ${__class} \
-	THIS ${___this} \
+    defun ${___this} ___this_tmpl \
+	CLASS ${___class} \
+	THIS  ${___this} \
+    ;
 }
 
 function __undefthis() {

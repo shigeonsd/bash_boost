@@ -60,7 +60,7 @@ function __add_cleanup() {
 function __require() {
     local file="$1";
     local ___name=$(echo $1 | sed -e 's/\.[^.]*$//');
-    local require_path="${progdir}:${funcs_dir}:${extra_funcs_dir}:${class_dir}";
+    local require_path="${progdir}:${funcs_dir}:${class_dir}";
     exist_var BASHBOOSTPATH && {
 	require_path="${BASHBOOSTPATH}:${require_path}";
     }
@@ -78,6 +78,7 @@ function require() {
 	case "${bash_file}" in 
 	-f) ___mode="force"; continue; ;;
 	-v) ___info="info";  continue; ;;
+	-s) ___info=":";     continue; ;;
 	 *) __require ${bash_file}; ;;
 	esac
     done;

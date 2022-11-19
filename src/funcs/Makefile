@@ -23,6 +23,8 @@ SRC_FILES  = \
 	misc.bash \
 	__.bash \
 	usage.bash \
+	class.bash \
+#	aop.bash \
 #
 LIB_FILE_IN = libbootstrap.in
 LIB_FILE    = $(LIB_FILE_IN:.in=.bash)
@@ -35,11 +37,11 @@ vpath %.bash ${FUNCS_DIR}
 all: $(TARGET)
 
 $(TARGET) : ${LIB_DIR} ${LIB_FILE_IN} ${SRC_FILES}
-	@cat ${LIB_FILE_IN} > $@
-	@cat ${SRC_FILES} | grep -v '^#'>> $@ 
+	cat ${LIB_FILE_IN} > $@
+	cat ${SRC_FILES} | grep -v '^#!'>> $@ 
 
 ${LIB_DIR}:
-	@mkdir $@;
+	mkdir $@;
 
 clean: 
 	rm -rf ${TARGET};
