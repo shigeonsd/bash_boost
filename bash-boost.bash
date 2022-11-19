@@ -1,20 +1,7 @@
 #! /bin/bash
 set -u;
 
-top_dir=${BASH_BOOST_DIR:-"$(dirname "${BASH_SOURCE[0]}")"};
+top_dir="$(dirname "${BASH_SOURCE[0]}")";
 
-source "${top_dir}/src/funcs/bootstrap";
+source "${top_dir}/lib/libbootstrap.bash";
 
-# 拡張機能読み込み
-#
-require -v -f \
-    __        \
-    debug     \
-    date      \
-    defun     \
-    required  \
-    file      \
-    misc      \
-    array     \
-#
-__required_files;

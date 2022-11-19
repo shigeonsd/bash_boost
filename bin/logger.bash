@@ -34,6 +34,8 @@ __log_file="${__log_dir}/$(now_ymd_hms).log";
 __log_symlnk="${__log_dir}/newest";
 VERBOSE=${VERBOSE-"false"};
 
+export BASH_BOOST_LOGGING=true;
+
 function __setup_log_dir() {
     mkdir -p "${__log_dir}";
     rm -f "${__log_symlnk}";

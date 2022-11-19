@@ -4,7 +4,7 @@
 TOP_DIR	        = ../..
 BASH_BOOST_DIR  = $(TOP_DIR)
 
-SRC_DIR         = $(TOP_DIR)/funcs
+SRC_DIR         = $(TOP_DIR)/src
 FUNCS_DIR       = $(SRC_DIR)/funcs
 UTILS_DIR       = $(TOP_DIR)/utils
 EXTRA_FUNCS_DIR = $(FUNCS_DIR)/extra
@@ -25,7 +25,6 @@ SRC_BASH_FILES = \
 	if.bash \
 	log.bash \
 	require.bash \
-	\
 	date.bash \
 	debug.bash \
 	defun.bash \
@@ -39,6 +38,8 @@ LOG_DIRS    = $(SRC_BASH_FILES:.bash=)
 UT_FILES    = $(SRC_BASH_FILES:.bash=.ut)
 LOG_FILES   = $(SRC_BASH_FILES:.bash=.log)
 EXTRA_DIR   = extra
+
+LIBBOOST    = ${FUNCS_DIR}/libboost
 
 SHELL          = /bin/bash -o pipefail
 

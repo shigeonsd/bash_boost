@@ -10,20 +10,19 @@ progdir=$(dirname ${0});
 # モジュールの初期化
 top_dir="${progdir}/..";
 utils_dir="${top_dir}/utils";
-funcs_dir="${top_dir}/funcs";   
+src_dir="${top_dir}/src";   
+funcs_dir="${src_dir}/funcs";   
 extra_funcs_dir="${funcs_dir}/extra";   
 test_funcs_dir="${top_dir}/test/funcs";
 
-___target="${funcs_dir}/${1}.bash";
-___vars="${funcs_dir}/VARS";
-___files="${funcs_dir}/FILES";
-___extra_files="${funcs_dir}/extra/FILES";
+___target="${1}";
+___target_file="${funcs_dir}/${1}.bash";
+___bashboost="${top_dir}/bash-boost.bash";
 ___ut_file="${2}";
 
 function __setup_tmpl() {
-    source "VARS";
-    source "FILES";
-    : source "EXTRA_FILES";
+    source "BASHBOOST";
+    : require "TARGET";
     : __do_test をオーバーライドしてテスト関数を変更する。
     function ___do_test() {
 	local _bool=${1};
@@ -48,9 +47,8 @@ function create_setup() {
 	eval "$(echo "${___func} ()";
 		declare -f "__${___func}_tmpl" \
 		| tail -n +2  \
-		| sed -e "s@\<VARS\>@${___vars}@g" \
-		      -e "s@\<FILES\>@${___files}@g" \
-		      -e "s@\<EXTRA_FILES\>@${___extra_files}@g" \
+		| sed -e "s@\<BASHBOOST\>@${___bashboost}@g" \
+		      -e "s@\<TARGET\>@${___target}@g" \
 	)";
     }
     declare -f "${___func}";
@@ -100,7 +98,7 @@ function defun_ut_func() {
 
 
 function create_ut() {
-    ${utils_dir}/get_func_names.bash ${___target} \
+    ${utils_dir}/get_func_names.bash ${___target_file} \
 	| ( local func;
 	    while read func; do
 		defun_ut_func ${func} success;

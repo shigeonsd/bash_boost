@@ -4,8 +4,6 @@
 #
 set -u
 
-# 変数定義
-#
 progname=$(basename ${0});
 progdir=$(cd "`dirname $0`" && pwd);
 progargs=("$@");
@@ -16,7 +14,6 @@ progargs=("$@");
        docs_dir="${top_dir}/docs";
 
       funcs_dir="${src_dir}/funcs";
-extra_funcs_dir="${funcs_dir}/extra";
 
     modules_dir="${src_dir}/modules";
       class_dir="${src_dir}/class";
@@ -24,10 +21,3 @@ extra_funcs_dir="${funcs_dir}/extra";
 hostname=$(hostname);
 _hostname=$(hostname | sed -e 's/-/_/g');
 
-# require 関数準備
-#
-source ${funcs_dir}/array.bash
-source ${funcs_dir}/exists.bash
-source ${funcs_dir}/if.bash
-source ${funcs_dir}/log.bash
-source ${funcs_dir}/require.bash

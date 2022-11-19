@@ -3,11 +3,14 @@
 # log.sh -- ログに関する定義
 #
 
-# ログファイル出力用の msg はこれよりも前に定義する。
-exist_func _msg || {
-    function _msg() { 
-	shift;
-	echo  $@ >&2; 
+function _msg() {
+    shift;
+    echo  $@ >&2; 
+}
+
+if_true BASH_BOOST_LOGGIN && {
+    function _msg() {
+	echo "$(now)" $@; >&2;
     }
 }
 

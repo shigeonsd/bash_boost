@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# usage.sh -- コマンドラインオプションに関する定義
+# usage.bash -- コマンドラインオプションに関する定義
 #
 declare -g __usage_description="";
 declare -g -a __usage_opt1=( "-h|--help" );

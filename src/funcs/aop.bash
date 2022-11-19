@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# aop.sh -- 
+# aop.bash -- 
 #
 #
 defun __aop_info  mod_info;
