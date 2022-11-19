@@ -1,20 +1,13 @@
 #! /bin/bash
 #
-# array.sh -- 
+# array.bash -- 
 #
 #
 set -u;
-progname=$(basename ${0});
-progdir=$(cd "`dirname $0`" && pwd);
-progargs=$@
-
-# モジュールの初期化
-top_dir=$(dirname ${progdir});
-modules_dir="${top_dir}/modules";
-source "${modules_dir}/setup.sh";
+source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
 
 # 使用クラスの宣言
-use Array;
+require Array;
 
 declare -a foo=(a b 'c d e');
 declare -a bar=();
@@ -41,17 +34,17 @@ Array afo;
 echo afo = foo;
 afo = foo;
 
-echo dump foo bar baz
-dump foo;
-dump bar;
-dump baz;
-dump afo;
+#echo dump foo bar baz
+#dump foo;
+#dump bar;
+#dump baz;
+#dump afo;
 
 echo foo.class
 foo.class
 
-echo foo.foreach echo ;
-foo.foreach echo ;
+echo foo.map echo ;
+foo.map echo ;
 echo foo.exists 4;
 foo.exists 4;
 echo $?;
@@ -72,8 +65,8 @@ foo.unshift 256
 echo foo.set 1 512;
 foo.set 1 512;
 
-echo foo.foreach echo ;
-foo.foreach echo ;
+echo foo.map echo ;
+foo.map echo ;
 
 echo foo.get 1;
 foo.get 1;
@@ -85,21 +78,21 @@ declare -a rfoo=($(foo.reverse));
 echo Array hoge = rfoo;
 Array hoge = rfoo;
 
-echo dump hoge;
-dump hoge;
+#echo dump hoge;
+#dump hoge;
 
-echo bar.foreach echo
-bar.foreach echo
+echo bar.map echo
+bar.map echo
 
 echo foo.pop;
 foo.pop;
-echo foo.foreach echo ;
-foo.foreach echo ;
+echo foo.map echo ;
+foo.map echo ;
 
 echo foo.shift;
 foo.shift;
-echo foo.foreach echo ;
-foo.foreach echo ;
+echo foo.map echo ;
+foo.map echo ;
 
 echo foo.clear;
 foo.clear;

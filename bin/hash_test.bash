@@ -48,8 +48,8 @@ Hash h4 = h;
 echo h.length;
 h.length;
 
-echo h.foreach echo;
-h.foreach echo;
+echo h.map echo;
+h.map echo;
 
 echo h.exists 51;
 h.exists 51;
