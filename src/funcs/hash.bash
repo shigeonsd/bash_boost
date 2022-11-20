@@ -3,20 +3,20 @@
 # hash.bash --連想配列用関数
 #
 function hash_exists() {
-    local val="${1}";
-    declare -n hash="${2}";
+    declare -n __hash_ref="${1}";
+    local val="${2}";
     local v;
-    for v in "${hash[@]}"; do
+    for v in "${__hash_ref[@]}"; do
 	[ "${v}" == "${val}" ] && return 0;
     done
     return 1;
 }
 
 function hash_key_exists() {
-    local _key="${1}";
-    declare -n hash="${2}";
+    declare -n __hash_ref="${1}";
+    local _key="${2}";
     local key;
-    for key in "${!hash[@]}"; do
+    for key in "${!__hash_ref[@]}"; do
 	[ "${_key}" == "${key}" ] && return 0;
     done
     return 1;
@@ -27,36 +27,36 @@ function hash_copy() {
     declare -n h2="${2}"; # to
     local key;
     h2=();
-    for key in "${!hash[@]}"; do
-	h2["${key}"]=${h1["${ey}"]};
+    for key in "${!h1[@]}"; do
+	h2["${key}"]=${h1["${key}"]};
     done
 }
 
 function hash_map() {
-    declare -n hash="${1}"; 
+    declare -n __hash_ref="${1}"; 
     local func="${2}";
     local k;
-    for k in ${!hash[@]}; do
-        ${func} "${hash[$k]}" "${k}" || return $?;
+    for k in "${!__hash_ref[@]}"; do
+        ${func} "${__hash_ref[${k}]}" "${k}" || return $?;
     done;
     return 0;
 }
 
 function hash_keys() {
-    declare -n hash="${1}"; 
+    declare -n __hash_ref="${1}"; 
 
-    echo "${!hash[@]}";
+    echo "${!__hash_ref[@]}";
 }
 
 function hash_clear() {
-    declare -n hash="${1}"; 
-    hash=();
+    declare -n __hash_ref="${1}"; 
+    __hash_ref=();
     return 0;
 }
 
 function hash_length() {
-    declare -n hash="${1}";
-    echo "${#hash[@]}";
+    declare -n __hash_ref="${1}";
+    echo "${#__hash_ref[@]}";
     return 0;
 }
 

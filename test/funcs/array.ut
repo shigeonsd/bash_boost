@@ -11,7 +11,12 @@ setup ()
         declare -g -a array_int=($(seq 0 31));
         declare -g -a array_str=($(ls -1 /) "a b c");
         declare -g -a dst=()
-    };
+    }
+    function __lambda() {
+        local val="${1}";
+        local index="${2}";
+        echo "val='${val}', index='${index}'";
+    }
     __required_files
 }
 test__array_exists___success () 
@@ -53,7 +58,7 @@ test__array_copy___success ()
 { 
     __data_init;
     do_test_t array_copy array_int dst || return $(failure);
-    do_test_t array_map dst echo || return $(failure);
+    do_test_t array_map dst __lambda   || return $(failure);
     return $(success)
 }
 test__array_copy___error () 
@@ -64,7 +69,7 @@ test__array_copy___error ()
 test__array_map___success () 
 { 
     __data_init;
-    do_test_t array_map array_int echo || return $(failure);
+    do_test_t array_map array_int __lambda || return $(failure);
     return $(success)
 }
 test__array_map___error () 
@@ -76,13 +81,13 @@ test__array_clear___success ()
 { 
     __data_init;
     echo "@@@ before";
-    do_test_t array_length array_int echo || return $(failure);
-    do_test_t array_map array_int echo || return $(failure);
+    do_test_t array_length array_int       || return $(failure);
+    do_test_t array_map array_int __lambda || return $(failure);
     echo "@@@ call array_clear()";
-    do_test_t array_clear array_int || return $(failure);
+    do_test_t array_clear array_int        || return $(failure);
     echo "@@@ after";
-    do_test_t array_length array_int echo || return $(failure);
-    do_test_t array_map array_int echo || return $(failure);
+    do_test_t array_length array_int       || return $(failure);
+    do_test_t array_map array_int __lambda || return $(failure);
     return $(success)
 }
 test__array_clear___error () 
@@ -93,7 +98,8 @@ test__array_clear___error ()
 test__array_length___success () 
 { 
     __data_init;
-    do_test_t array_length array_int echo || return $(failure)
+    do_test_t array_length array_int || return $(failure)
+    do_test_t array_length array_str || return $(failure)
 }
 test__array_length___error () 
 { 

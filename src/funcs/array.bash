@@ -1,12 +1,12 @@
 #! /bin/bash
 #
-# array.sh -- 配列用関数
+# __array_ref.sh -- 配列用関数
 #
 function array_exists() {
-    declare -n array="${1}";
+    declare -n __array_ref="${1}";
     local val="${2}";
     local v;
-    for v in "${array[@]}"; do
+    for v in "${__array_ref[@]}"; do
 	[ "${v}" == "${val}" ] && return 0;
     done
     return 1;
@@ -20,24 +20,26 @@ function array_copy() {
 }
 
 function array_map() {
-    declare -n array="${1}"; 
+    declare -n __array_ref="${1}"; 
     local func="${2}";
     local e;
-    for e in "${array[@]}"; do
-        ${func} $e || return $?;
+    local index=0;
+    for e in "${__array_ref[@]}"; do
+        ${func} $e ${index} || return $?;
+	((index++));
     done;
     return 0;
 }
 
 function array_clear() {
-    declare -n array="${1}";
-    array=();
+    declare -n __array_ref="${1}";
+    __array_ref=();
     return 0;
 }
 
 function array_length() {
-    declare -n array="${1}";
-    echo "${#array[@]}";
+    declare -n __array_ref="${1}";
+    echo "${#__array_ref[@]}";
     return 0;
 }
 
