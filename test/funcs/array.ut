@@ -2,9 +2,8 @@
 set -u
 setup () 
 { 
-    source "../../src/funcs/bootstrap";
-
-    : 引数に配列・連想配列を渡す必要があるため。
+    source "../../utils/../bash-boost.bash";
+    : 引数に配列・連想配列を渡す必要があるため。;
     function __do_test () 
     { 
         local _bool=${1};
@@ -77,25 +76,97 @@ test__array_exists___error ()
     do_test_f array_exists 1016 hash || return $(failure);
     return $(success)
 }
-test__array_key_exists___success () 
+test__array_copy___success () 
 { 
-    echo "@@@ 連想配列";
-    echo "hash=(${hash[@]})";
-    echo "keys=(${!hash[@]})";
-    do_test_t array_key_exists boot hash || return $(failure);
-    do_test_t array_key_exists run hash || return $(failure);
-    do_test_t array_key_exists sys hash || return $(failure);
-    do_test_t array_key_exists 'foo bar baz' hash || return $(failure);
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
     return $(success)
 }
-test__array_key_exists___error () 
+test__array_copy___error () 
 { 
-    echo "@@@ 連想配列";
-    echo "hash=(${hash[@]})";
-    echo "keys=(${!hash[@]})";
-    do_test_f array_key_exists xboot hash || return $(failure);
-    do_test_f array_key_exists xrun hash || return $(failure);
-    do_test_f array_key_exists xsys hash || return $(failure);
-    do_test_f array_key_exists 'afo bft cfo' hash || return $(failure);
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
     return $(success)
+}
+test__array_map___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__array_map___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__array_clear___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__array_clear___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+teardown () 
+{ 
+    :
 }

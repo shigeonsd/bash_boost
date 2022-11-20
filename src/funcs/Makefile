@@ -12,6 +12,7 @@ UTILS_DIR       = $(TOP_DIR)/utils
 SRC_FILES  = \
 	exists.bash \
 	array.bash \
+	hash.bash \
 	if.bash \
 	log.bash \
 	require.bash \
@@ -23,10 +24,10 @@ SRC_FILES  = \
 	misc.bash \
 	__.bash \
 	usage.bash \
-	class.bash \
+#	class.bash \
 #	aop.bash \
 #
-LIB_FILE_IN = libbootstrap.in
+LIB_FILE_IN = libbashboost.in
 LIB_FILE    = $(LIB_FILE_IN:.in=.bash)
 TARGET      = ${LIB_DIR}/$(LIB_FILE)
 

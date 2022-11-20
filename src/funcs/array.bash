@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# array.sh -- 配列・連想配列用関数
+# array.sh -- 配列用関数
 #
 function array_exists() {
     local val="${1}";
@@ -12,14 +12,26 @@ function array_exists() {
     return 1;
 }
 
-function array_key_exists() {
-    local key="${1}";
-    declare -n array="${2}";
-    local k;
-    for k in "${!array[@]}"; do
-	[ "${k}" == "${key}" ] && return 0;
-    done
-    return 1;
+function array_copy() {
+    declare -n a1="${1}"; #from 
+    declare -n a2="${2}"; #to
+
+    a2=( "${a1[@]}" );
+}
+
+function array_map() {
+    declare -n array="${1}"; 
+    local func="${2}";
+    local e;
+    for e in "${array[@]}"; do
+        ${func} $e || return $?;
+    done;
+    return 0;
+}
+
+function array_clear() {
+    declare -n array="${1}";
+    array=();
 }
 
 __bash_boost_required__+=(${BASH_SOURCE[0]});

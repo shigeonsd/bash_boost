@@ -3,7 +3,6 @@
 # PropertyTest.sh -- PropertyTest クラス
 #
 #
-
 use Object;
 
 # Constructor

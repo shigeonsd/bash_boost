@@ -5,10 +5,9 @@
 #
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
-#source "../src/funcs/class.bash";
 
 # 使用クラスの宣言
-require Hash;
+use Hash;
 
 echo Hash h;
 echo Hash h2;

@@ -3,8 +3,6 @@
 # class.bash -- 
 #
 #
-declare -A __object_props__=();
-
 function __macroexpand() {
     local var=${1};
     local val=$2;
@@ -12,8 +10,9 @@ function __macroexpand() {
 }
 
 function __prop_tmpl() {
+    declare -n props="$(__props_name "THIS")";
     [ $# -eq 0 ] && {
-	echo "${__object_props__[THIS,PROP]}";
+	echo "${props[PROP]}";
 	return 0;
     }
     [ $# -ne 2 ] && {
@@ -27,7 +26,7 @@ function __prop_tmpl() {
     # foo.dt = "1971/02/15 12:34:56";
     # NOTICE: 配列・連想配列はネストできない。
     validate TYPE "${value}" || die "Invalid data '${value}'.";
-    __object_props__[THIS,PROP]="${value}";
+    props[PROP]="${value}";
     return 0;
 }
 
@@ -73,15 +72,21 @@ function __dump_this() {
 }
 
 function __dump_props() {
-    local props=${!__object_props__[@]};
+    declare -n props="$(__props_name "${___this}")";
     local prop;
     local pname;
-    for prop in ${props}; do
-	[[ ${prop} =~ ^${___this}, ]] && {
-	    pname=${prop/,/.};
-	    echo "${pname}=${__object_props__[${prop}]};";
-	}
+    for prop in "${!props[@]}"; do
+	echo "${prop@}=${props[${prop}]};";
     done;
+}
+
+function __props_name() {
+    echo "__${1}_props__";
+}
+
+function is_object() {
+    local props="$(__props_name "${1}")";
+    [ -v "${props}" ]
 }
 
 function obj_dump() {
@@ -90,13 +95,14 @@ function obj_dump() {
     __dump_props;
 }
 
-function __defprop() {
+function __addprop() {
+    local props="$(__props_name "${1}")";
     [ $# -lt 2 ] && die "Invalid arguments '$@'";
 	
     local type="$1";
     local prop="$2";
     local value=null;
-    local props="__object_props__[${___this},${prop}]";
+    local props="${___props}[${prop}]";
     shift 2;
 
     # 値の初期化
@@ -116,14 +122,15 @@ function __defprop() {
 	    ;
 }
 
-function __undefprops() {
-    local props="\${!__object_props__[@]}";
-    local prop;
-    for prop in $(eval echo  ${props}); do
-	[[ ${prop} =~ ^${___this}, ]] && {
-	    echo "unset __object_props__[${prop}];";
-	}
-    done;
+function copy_props() {
+    local src_props="$(__props_name "${1}")";
+    local dst_props="$(__props_name "${2}")";
+
+    hash_copy "${src_props }" "${dst_props }"
+}
+
+function __undefprop() {
+    unset "${___props}";
 }
 
 function __defmethods() {
@@ -170,7 +177,6 @@ function __undefthis() {
     echo "unset -f ${___this};";
 }
 
-
 function __super() {
     [ ${___super} = null ] && return;
     ${___super} ${___this};
@@ -195,37 +201,25 @@ function _new() {
     __init "$@";
 }
 
-function copy_props() {
-    local ___src="${1}";
-    local ___dst="${2}";
-    local props="\${!__object_props__[@]}";
-    local src_prop;
-    local dst_prop;
-    for src_prop in $(eval echo  ${props} | sed -e 's/ /\n/g'| grep "^${___src},"); do
-	dst_prop="$(echo ${src_prop} | sed -e "s/${___src}/${___dst}/")";
-	__object_props__[${dst_prop}]="${__object_props__[${src_prop}]}";
-    done;
-}
-
 function __undef() {
-    __undefprops;
+    __undefprop;
     __undefmethods;
     __undefdestructor;
 }
 
 function public() {
     local ___prefix="";
-    __defprop "$@";
+    __addprop "$@";
 }
 
 function protected() {
     local ___prefix="_";
-    __defprop "$@";
+    __addprop "$@";
 }
 
 function private() {
     local ___prefix="__";
-    __defprop "$@";
+    __addprop "$@";
 }
 
 function __delete() {
@@ -241,52 +235,11 @@ function delete() {
 	    done;)"
 }
 
-function __load_class_file() {
-    local class_name="${1}";
-    local class_path="${2}";
-    local class_file;
-    for cp in $(echo ${class_path} | sed -e 's/:/ /g'); do
-	class_file="${cp}/${class_name}.sh";
-	__load_if_exist "${class_file}" && {
-	    debug "${class_file}";
-	    return 0;
-	}
-    done
-    die "Class not found. '${class_name}'";
-}
-
-function _use() {
-    local class_name="$1";
-
-    [ -v "__${class_name}_loaded" ] && return ;
-
-    local class_path="${progdir}:${class_dir}";
-    exist_var BASHCLASSPATH && {
-	class_path="${BASHCLASSPATH}:${class_path}";
-    }
-    __load_info " use ${class_name}. ";
-    __load_class_file "${class_name}" "${class_path}";
-    __load_info "done";
-    __add_cleanup "${class_name}";
-    __invoke_init "${class_name}";
-
-    eval "__${class_name}_loaded=1";
-}
-
 function use() {
-    case $1 in
-    -s) __load_silence=true;
-        defun_load_info  __load_info;
-        defun_load_debug __load_debug;
-        shift; ;;
-    -v) __load_silence=false;
-        defun_load_info  __load_info;
-        defun_load_debug __load_debug;
-        shift; ;;
-    esac
+    local ___invoke="${FUNCNAME}";
+    local ___suffixes=(".class");
+    local ___specified="${BASHBOOST_CLASSPATH-""}";
+    local ___default=("${progdir}" "${class_dir}");
 
-    local class;
-    for class in "$@"; do
-	_use ${class};
-    done;
+    __require "$@";
 }
