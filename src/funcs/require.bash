@@ -28,14 +28,14 @@ function __require_file() {
     __bash_boost_required__+=( "${file}" );
 }
 
-function __required_file_once() {
+function __require_file_once() {
     local file="${1}";
     array_exists "${file}" __bash_boost_required__  && return 1;
     __require_file "${file}";
     return 0;
 }
 
-function __required_file_force() {
+function __require_file_force() {
     local file="${1}";
     __require_file "${file}";
 }
@@ -63,7 +63,7 @@ function __require_0() {
     local ___info=":";
     local opt;
     for opt in "$@"; do
-	case "${file}" in 
+	case "${opt}" in 
 	-f) ___mode="force"; ;;
 	-v) ___info="info";  ;;
 	-s) ___info=":";     ;;

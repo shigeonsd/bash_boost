@@ -9,8 +9,6 @@ source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
 # 使用クラスの宣言
 use Hash;
 
-echo Hash h;
-echo Hash h2;
 declare -A h=(
  ["name"]='Shigeo NISHIDA'
  ["age"]=51
@@ -22,7 +20,9 @@ declare -A h=(
 declare -p h;
 declare -A h2;
 declare -A h3;
+echo Hash h;
 Hash h;
+echo Hash h2;
 Hash h2;
 
 

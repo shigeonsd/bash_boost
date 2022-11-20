@@ -96,13 +96,13 @@ function obj_dump() {
 }
 
 function __addprop() {
-    local props="$(__props_name "${1}")";
+    local props_array="$(__props_name "${___this}")";
     [ $# -lt 2 ] && die "Invalid arguments '$@'";
 	
     local type="$1";
     local prop="$2";
     local value=null;
-    local props="${___props}[${prop}]";
+    local props="${props_array}[${prop}]";
     shift 2;
 
     # 値の初期化
@@ -123,14 +123,15 @@ function __addprop() {
 }
 
 function copy_props() {
-    local src_props="$(__props_name "${1}")";
-    local dst_props="$(__props_name "${2}")";
+    local src_props_hash="$(__props_name "${1}")";
+    local dst_props_hash="$(__props_name "${2}")";
 
-    hash_copy "${src_props }" "${dst_props }"
+    hash_copy "${src_props_hash}" "${dst_props_hash}"
 }
 
 function __undefprop() {
-    unset "${___props}";
+    local props_array="$(__props_name "${___this}")";
+    unset "${props_array}";
 }
 
 function __defmethods() {
@@ -151,13 +152,13 @@ function __undefmethods() {
 }
 
 function __defdestructor() {
-     eval "$(echo "~${___this}() {";
+    eval "$(echo "~${___this}() {";
 	    __undef;
 	    echo "}")";
 }
 
 function __undefdestructor() {
-    echo "unset -f ~${___this};";
+    eval "unset -f ~${___this};";
 }
 
 function ___this_tmpl() {
@@ -237,7 +238,7 @@ function delete() {
 
 function use() {
     local ___invoke="${FUNCNAME}";
-    local ___suffixes=(".class");
+    local ___suffixes=(".class" ".bash");
     local ___specified="${BASHBOOST_CLASSPATH-""}";
     local ___default=("${progdir}" "${class_dir}");
 

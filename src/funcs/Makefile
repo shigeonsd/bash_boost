@@ -24,7 +24,7 @@ SRC_FILES  = \
 	misc.bash \
 	__.bash \
 	usage.bash \
-#	class.bash \
+	class.bash \
 #	aop.bash \
 #
 LIB_FILE_IN = libbashboost.in
