@@ -2,7 +2,7 @@
 set -u
 setup () 
 { 
-    source "../../src/funcs/bootstrap";
+    source "../../bash-boost.bash";
     require file;
 
     declare -g test_basename="./tmp/tmpfile.file.ut";

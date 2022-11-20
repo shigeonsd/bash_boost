@@ -2,7 +2,8 @@
 set -u
 setup () 
 { 
-    source "../../src/funcs/bootstrap"
+    source "../../bash-boost.bash";
+    require log;
 }
 test__error___success () 
 { 

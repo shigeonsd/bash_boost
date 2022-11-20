@@ -2,7 +2,7 @@
 set -u
 setup () 
 { 
-    source "../../src/funcs/bootstrap";
+    source "../../bash-boost.bash";
     require defun;
 
     function __foo_tmpl () 

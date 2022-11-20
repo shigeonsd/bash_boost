@@ -7,11 +7,9 @@ BASH_BOOST_DIR  = $(TOP_DIR)
 SRC_DIR         = $(TOP_DIR)/src
 FUNCS_DIR       = $(SRC_DIR)/funcs
 UTILS_DIR       = $(TOP_DIR)/utils
-EXTRA_FUNCS_DIR = $(FUNCS_DIR)/extra
 
 TEST_DIR        = ..
 TEST_FUNCS_DIR  = .
-TEST_EXTRA_DIR  = $(TEST_FUNCS_DIR)/extra
 
 DEBUG       = true
 ENV         = env BASH_BOOST_DIR="$(BASH_BOOST_DIR)" DEBUG="${DEBUG}"
@@ -22,6 +20,7 @@ TRIM_COLOR  = $(UTILS_DIR)/trim_color.bash
 SRC_BASH_FILES = \
 	exists.bash \
 	array.bash \
+	hash.bash \
 	if.bash \
 	log.bash \
 	require.bash \
@@ -32,12 +31,14 @@ SRC_BASH_FILES = \
 	file.bash \
 	misc.bash \
 	__.bash \
+#        usage.bash \
+#        class.bash \
+#       aop.bash \
 #
 
 LOG_DIRS    = $(SRC_BASH_FILES:.bash=)
 UT_FILES    = $(SRC_BASH_FILES:.bash=.ut)
 LOG_FILES   = $(SRC_BASH_FILES:.bash=.log)
-EXTRA_DIR   = extra
 
 LIBBOOST    = ${FUNCS_DIR}/libboost
 
@@ -47,7 +48,7 @@ vpath %.bash ${FUNCS_DIR}
 
 .PRECIOUS : %.ut
 
-all: $(LOG_FILES) extra-all
+all: $(LOG_FILES) 
 
 %.ut: %.bash
 	@echo \#\# Update $@
@@ -59,15 +60,9 @@ all: $(LOG_FILES) extra-all
 	@echo \#\# Do unit test $*
 	@$(UT) $< | tee /dev/tty | $(TRIM_COLOR) > $@;
 
-extra-all:
-	(cd ${EXTRA_DIR}; make all)
-
-clean: extra-clean
+clean:
 	rm -rf ${LOG_FILES};
 	rm -rf ${LOG_DIRS};
-
-extra-clean:
-	(cd ${EXTRA_DIR}; make clean)
 
 var_dump:
 	@echo LOG_DIRS=$(LOG_DIRS)

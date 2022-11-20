@@ -3,8 +3,8 @@
 # array.sh -- 配列用関数
 #
 function array_exists() {
-    local val="${1}";
-    declare -n array="${2}";
+    declare -n array="${1}";
+    local val="${2}";
     local v;
     for v in "${array[@]}"; do
 	[ "${v}" == "${val}" ] && return 0;
@@ -32,6 +32,12 @@ function array_map() {
 function array_clear() {
     declare -n array="${1}";
     array=();
+    return 0;
 }
 
-__bash_boost_required__+=(${BASH_SOURCE[0]});
+function array_length() {
+    declare -n array="${1}";
+    echo "${#array[@]}";
+    return 0;
+}
+

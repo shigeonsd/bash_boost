@@ -2,7 +2,7 @@
 set -u
 setup () 
 { 
-    source "../../src/funcs/bootstrap";
+    source "../../bash-boost.bash";
     require misc;
 
     : 値を表示した直後に改行を入れるため。;

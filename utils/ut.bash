@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# ut.bash -- クラス用単体テスト実行
+# ut.bash -- 単体テスト実行
 #
 #
 set -u;
@@ -80,12 +80,16 @@ function skipped() {
 }
 
 DO_TEST_VAR_LF=false;
+DO_TEST_SUBSHELL=true;
 function __do_test() {
     local _bool=${1};
     local func=${2};
     shift 2;
-    ( ${func} "$@" );
-    ret=$?;
+
+    case "${DO_TEST_SUBSHELL}" in
+    false)    ${func} "$@"  ; ret=$?; ;;
+    true|*) ( ${func} "$@" ); ret=$?; ;;
+    esac
 
     local _args="";
     local _sep="";

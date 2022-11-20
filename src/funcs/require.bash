@@ -30,7 +30,7 @@ function __require_file() {
 
 function __require_file_once() {
     local file="${1}";
-    array_exists "${file}" __bash_boost_required__  && return 1;
+    array_exists __bash_boost_required__ "${file}" && return 1;
     __require_file "${file}";
     return 0;
 }
@@ -84,7 +84,6 @@ function __require() {
 	"$(echo "${___specified[@]}" | sed -e 's/:/ /g')"
 	"${___default[@]}"
     );
-echo "${___paths[@]}";
     __require_0 "$@";
 }
 
@@ -123,5 +122,3 @@ function __on_exit() {
 declare -a __bash_boost_required__=();
 declare -a -g __bash_boost_cleanup_funcs__=();
 trap __on_exit EXIT;
-
-__bash_boost_required__+=(${BASH_SOURCE[0]});

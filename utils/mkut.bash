@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# mnkut.bash -- モジュール用単体テストプログラム生成
+# mnkut.bash -- 単体テストプログラム生成
 #
 #
 set -u;
@@ -12,7 +12,6 @@ top_dir="${progdir}/..";
 utils_dir="${top_dir}/utils";
 src_dir="${top_dir}/src";   
 funcs_dir="${src_dir}/funcs";   
-extra_funcs_dir="${funcs_dir}/extra";   
 test_funcs_dir="${top_dir}/test/funcs";
 
 ___target="${1}";
@@ -23,18 +22,11 @@ ___ut_file="${2}";
 function __setup_tmpl() {
     source "BASHBOOST";
     : require "TARGET";
-    : __do_test をオーバーライドしてテスト関数を変更する。
-    function ___do_test() {
-	local _bool=${1};
-	local func=${2};
-	shift 2;
-	local args="$@";
-	${func} "$@";
-	ret=$?;
-	echo "${func} ${args} => ${ret}";
-	is_${_bool} ${ret};
-	return $?;
-    }
+
+    : テスト対象関数を関数をサブシェルを介して呼び出す true
+    : テスト対象関数を関数をサブシェルを介さず呼び出す false
+    : DO_TEST_SUBSHELL=false;
+    __required_files;
 }
 
 function __teardown_tmpl() {

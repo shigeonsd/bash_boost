@@ -51,6 +51,12 @@ function hash_keys() {
 function hash_clear() {
     declare -n hash="${1}"; 
     hash=();
+    return 0;
 }
 
-__bash_boost_required__+=(${BASH_SOURCE[0]});
+function hash_length() {
+    declare -n hash="${1}";
+    echo "${#hash[@]}";
+    return 0;
+}
+

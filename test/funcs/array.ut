@@ -3,168 +3,102 @@ set -u
 setup () 
 { 
     source "../../utils/../bash-boost.bash";
-    : 引数に配列・連想配列を渡す必要があるため。;
-    function __do_test () 
-    { 
-        local _bool=${1};
-        local func=${2};
-        local val="${3}";
-        local ary_name=${4};
-        declare -n _array=${4};
-        ${func} "${val}" _array;
-        ret=$?;
-        echo "${func} '${val}' "${ary_name}" => ${ret}";
-        is_${_bool} ${ret};
-        return $?
-    };
+    require array;
+    DO_TEST_SUBSHELL=false;
     : テストデータ;
-    array_int=($(seq 0 31));
-    array_str=($(ls -1 /) "a b c");
-    declare -g -A hash=();
-    local i=0;
-    for k in $(ls -1 /);
-    do
-        hash["${k}"]="${i}";
-        ((i++));
-    done;
-    hash['foo bar baz']="${i}"
+    function __data_init () 
+    { 
+        declare -g -a array_int=($(seq 0 31));
+        declare -g -a array_str=($(ls -1 /) "a b c");
+        declare -g -a dst=()
+    };
+    __required_files
 }
 test__array_exists___success () 
 { 
+    __data_init;
     : テスト実行;
     echo "@@@ int 配列";
-    echo "array_int=(${array_int[@]})";
-    do_test_t array_exists 10 array_int || return $(failure);
-    do_test_t array_exists 20 array_int || return $(failure);
-    do_test_t array_exists 30 array_int || return $(failure);
+    echo "array_int=("${array_int[@]}")";
+    do_test_t array_exists array_int 10 || return $(failure);
+    do_test_t array_exists array_int 20 || return $(failure);
+    do_test_t array_exists array_int 30 || return $(failure);
     echo "@@@ string 配列";
-    echo "array_str=(${array_str[@]})";
-    do_test_t array_exists etc array_str || return $(failure);
-    do_test_t array_exists sbin array_str || return $(failure);
-    do_test_t array_exists bin array_str || return $(failure);
-    do_test_t array_exists "a b c" array_str || return $(failure);
-    echo "@@@ 連想配列";
-    echo "hash=(${hash[@]})";
-    echo "keys=(${!hash[@]})";
-    do_test_t array_exists 2 hash || return $(failure);
-    do_test_t array_exists 4 hash || return $(failure);
-    do_test_t array_exists 8 hash || return $(failure);
-    do_test_t array_exists 16 hash || return $(failure);
+    echo "array_str=("${array_str[@]}")";
+    do_test_t array_exists array_str etc || return $(failure);
+    do_test_t array_exists array_str sbin || return $(failure);
+    do_test_t array_exists array_str bin || return $(failure);
+    do_test_t array_exists array_str "a b c" || return $(failure);
     return $(success)
 }
 test__array_exists___error () 
 { 
+    __data_init;
     : テスト実行;
     echo "@@@ int 配列";
-    echo "array_int=(${array_int[@]})";
-    do_test_f array_exists 100 array_int || return $(failure);
-    do_test_f array_exists 200 array_int || return $(failure);
-    do_test_f array_exists 300 array_int || return $(failure);
+    echo "array_int=("${array_int[@]}")";
+    do_test_f array_exists array_int 100 || return $(failure);
+    do_test_f array_exists array_int 200 || return $(failure);
+    do_test_f array_exists array_int 300 || return $(failure);
     : テスト実行;
     echo "@@@ string 配列";
-    echo "array_str=(${array_string[@]})";
-    do_test_f array_exists foo array_str || return $(failure);
-    do_test_f array_exists bar array_str || return $(failure);
-    do_test_f array_exists baz array_str || return $(failure);
-    do_test_f array_exists "x y z" array_str || return $(failure);
-    echo "@@@ 連想配列";
-    echo "hash=(${hash[@]})";
-    echo "keys=(${!hash[@]})";
-    do_test_f array_exists 1002 hash || return $(failure);
-    do_test_f array_exists 1004 hash || return $(failure);
-    do_test_f array_exists 1008 hash || return $(failure);
-    do_test_f array_exists 1016 hash || return $(failure);
+    echo "array_str=("${array_string[@]}")";
+    do_test_f array_exists array_str foo || return $(failure);
+    do_test_f array_exists array_str bar || return $(failure);
+    do_test_f array_exists array_str baz || return $(failure);
+    do_test_f array_exists array_str "x y z" || return $(failure);
     return $(success)
 }
 test__array_copy___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    __data_init;
+    do_test_t array_copy array_int dst || return $(failure);
+    do_test_t array_map dst echo || return $(failure);
     return $(success)
 }
 test__array_copy___error () 
 { 
     : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
-    return $(success)
+    return $(skipped)
 }
 test__array_map___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    __data_init;
+    do_test_t array_map array_int echo || return $(failure);
     return $(success)
 }
 test__array_map___error () 
 { 
     : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
-    return $(success)
+    return $(skipped)
 }
 test__array_clear___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    __data_init;
+    echo "@@@ before";
+    do_test_t array_length array_int echo || return $(failure);
+    do_test_t array_map array_int echo || return $(failure);
+    echo "@@@ call array_clear()";
+    do_test_t array_clear array_int || return $(failure);
+    echo "@@@ after";
+    do_test_t array_length array_int echo || return $(failure);
+    do_test_t array_map array_int echo || return $(failure);
     return $(success)
 }
 test__array_clear___error () 
 { 
     : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
-    return $(success)
+    return $(skipped)
+}
+test__array_length___success () 
+{ 
+    __data_init;
+    do_test_t array_length array_int echo || return $(failure)
+}
+test__array_length___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
 }
 teardown () 
 { 

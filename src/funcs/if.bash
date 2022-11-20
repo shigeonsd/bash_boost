@@ -23,4 +23,3 @@ function if_true() {
     return 1;
 }
 
-__bash_boost_required__+=(${BASH_SOURCE[0]});

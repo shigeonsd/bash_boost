@@ -2,7 +2,8 @@
 set -u
 setup () 
 { 
-    source "../../src/funcs/bootstrap";
+    source "../../bash-boost.bash";
+    require exists;
 
     function existent_function() {
 	echo "Called ${FUNCNAME}";
