@@ -1,0 +1,134 @@
+#! /bin/bash
+set -u
+setup () 
+{ 
+    source "../../utils/../bash-boost.bash";
+    require "hash";
+    DO_TEST_SUBSHELL=false;
+    : テストデータ;
+    function __data_init () 
+    { 
+        declare -g -A hash=();
+        local i=0;
+        for k in $(cat test_data/hash_test_data.txt);
+        do
+            hash["${k}"]="${i}";
+            ((i++));
+        done;
+        hash['foo bar baz']="${i}";
+        declare -g -A dst=()
+    };
+    function __lambda () 
+    { 
+        local val="${1}";
+        local key="${2}";
+        echo "val='${val}', key='${key}'"
+    }
+}
+test__hash_exists___success () 
+{ 
+    __data_init;
+    echo "hash=("${hash[@]}")";
+    do_test_t hash_exists hash 1 || return $(failure);
+    do_test_t hash_exists hash 2 || return $(failure);
+    do_test_t hash_exists hash 4 || return $(failure);
+    do_test_t hash_exists hash 8 || return $(failure);
+    return $(success)
+}
+test__hash_exists___error () 
+{ 
+    __data_init;
+    echo "hash=("${hash[@]}")";
+    do_test_f hash_exists hash 1024 || return $(failure);
+    do_test_f hash_exists hash 2048 || return $(failure);
+    do_test_f hash_exists hash 4096 || return $(failure);
+    do_test_f hash_exists hash 8192 || return $(failure);
+    return $(success)
+}
+test__hash_key_exists___success () 
+{ 
+    __data_init;
+    echo "keys=("${!hash[@]}")";
+    do_test_t hash_key_exists hash bin || return $(failure);
+    do_test_t hash_key_exists hash opt || return $(failure);
+    do_test_t hash_key_exists hash etc || return $(failure);
+    do_test_t hash_key_exists hash usr || return $(failure);
+    return $(success)
+}
+test__hash_key_exists___error () 
+{ 
+    __data_init;
+    echo "keys=("${!hash[@]}")";
+    do_test_f hash_key_exists hash xbin || return $(failure);
+    do_test_f hash_key_exists hash xopt || return $(failure);
+    do_test_f hash_key_exists hash xetc || return $(failure);
+    do_test_f hash_key_exists hash xusr || return $(failure);
+    return $(success)
+}
+test__hash_copy___success () 
+{ 
+    __data_init;
+    do_test_t hash_copy hash dst || return $(failure);
+    do_test_t hash_map dst __lambda || return $(failure);
+    return $(success)
+}
+test__hash_copy___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__hash_map___success () 
+{ 
+    __data_init;
+    do_test_t hash_map hash __lambda || return $(failure);
+    return $(success)
+}
+test__hash_map___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__hash_keys___success () 
+{ 
+    __data_init;
+    echo "keys=("${!hash[@]}")";
+    do_test_t hash_keys hash || return $(failure);
+    return $(success)
+}
+test__hash_keys___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__hash_clear___success () 
+{ 
+    __data_init;
+    echo "@@@ before";
+    do_test_t hash_length hash || return $(failure);
+    do_test_t hash_map hash __lambda || return $(failure);
+    echo "@@@ call hash_clear()";
+    do_test_t hash_clear hash || return $(failure);
+    echo "@@@ after";
+    do_test_t hash_length hash || return $(failure);
+    do_test_t hash_map hash __lambda || return $(failure);
+    return $(success)
+}
+test__hash_clear___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__hash_length___success () 
+{ 
+    __data_init;
+    do_test_t hash_length hash || return $(failure)
+}
+test__hash_length___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+teardown () 
+{ 
+    :
+}
