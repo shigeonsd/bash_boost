@@ -11,13 +11,216 @@ setup ()
         declare -g -a array_int=($(seq 0 31));
         declare -g -a array_str=($(ls -1 /) "a b c");
         declare -g -a dst=()
-    }
-    function __lambda() {
+	declare -g -a array=();
+    };
+    function __lambda () 
+    { 
         local val="${1}";
         local index="${2}";
-        echo "val='${val}', index='${index}'";
+        echo "val='${val}', index='${index}'"
+    };
+    function __dump() {
+	declare -n _a="${1}";
+	echo "array=${1}";
+	array_length _a 
+	array_map    _a __lambda 
     }
     __required_files
+}
+test__array_copy___success () 
+{ 
+    __data_init;
+    do_test_t array_copy array_int dst || return $(failure);
+    __dump dst;
+
+    __data_init;
+    do_test_t array_copy array_str dst || return $(failure);
+    __dump dst;
+    return $(success)
+}
+test__array_copy___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__array_set___success () 
+{ 
+    __data_init;
+    do_test_t array_set array 0 "foo" || return $(failure);
+    do_test_t array_set array 1 "bar" || return $(failure);
+    do_test_t array_set array 2 "baz" || return $(failure);
+    __dump array;
+    return $(success)
+}
+test__array_set___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_get___success () 
+{ 
+    __data_init;
+    do_test_t array_get array_int 0 || return $(failure);
+    do_test_t array_get array_int 1 || return $(failure);
+    do_test_t array_get array_int 2 || return $(failure);
+
+    do_test_t array_get array_str 0 || return $(failure);
+    do_test_t array_get array_str 1 || return $(failure);
+    do_test_t array_get array_str 2 || return $(failure);
+    return $(success)
+}
+test__array_get___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_unset___success () 
+{ 
+    __data_init;
+    __dump array_int;
+    do_test_t array_unset array_int 2 || return $(failure);
+    do_test_t array_unset array_int 1 || return $(failure);
+    do_test_t array_unset array_int 0 || return $(failure);
+    __dump array_int;
+    return $(success)
+}
+test__array_unset___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_push___success () 
+{ 
+    __data_init;
+
+    __dump array_int;
+    do_test_t array_push array_int 128 || return $(failure);
+    do_test_t array_push array_int 256 || return $(failure);
+    do_test_t array_push array_int 512 || return $(failure);
+    __dump array_int;
+
+    __dump array_str;
+    do_test_t array_push array_str "abc"   || return $(failure);
+    do_test_t array_push array_str "d e f" || return $(failure);
+    do_test_t array_push array_str "foo"   || return $(failure);
+    __dump array_str;
+
+    return $(success)
+}
+test__array_push___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_pop___success () 
+{ 
+    __data_init;
+
+    __dump array_int;
+    do_test_t array_pop array_int || return $(failure);
+    do_test_t array_pop array_int || return $(failure);
+    do_test_t array_pop array_int || return $(failure);
+    __dump array_int;
+
+    __dump array_str;
+    do_test_t array_pop array_str || return $(failure);
+    do_test_t array_pop array_str || return $(failure);
+    do_test_t array_pop array_str || return $(failure);
+    __dump array_str;
+
+    return $(success)
+}
+test__array_pop___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_unshift___success () 
+{ 
+    __data_init;
+
+    __dump array_int;
+    do_test_t array_unshift array_int 128 || return $(failure);
+    do_test_t array_unshift array_int 256 || return $(failure);
+    do_test_t array_unshift array_int 512 || return $(failure);
+    __dump array_int;
+
+    __dump array_str;
+    do_test_t array_unshift array_str "def"   || return $(failure);
+    do_test_t array_unshift array_str "g h i" || return $(failure);
+    do_test_t array_unshift array_str "foo"   || return $(failure);
+    __dump array_str;
+
+    return $(success)
+}
+test__array_unshift___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_shift___success () 
+{ 
+    __data_init;
+
+    __dump array_int;
+    do_test_t array_shift array_int || return $(failure);
+    do_test_t array_shift array_int || return $(failure);
+    do_test_t array_shift array_int || return $(failure);
+    __dump array_int;
+
+    __dump array_str;
+    do_test_t array_shift array_str || return $(failure);
+    do_test_t array_shift array_str || return $(failure);
+    do_test_t array_shift array_str || return $(failure);
+    __dump array_str;
+
+    return $(success)
+}
+test__array_shift___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
+test__array_length___success () 
+{ 
+    __data_init;
+    do_test_t array_length array_int || return $(failure);
+    do_test_t array_length array_str || return $(failure)
+}
+test__array_length___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__array_map___success () 
+{ 
+    __data_init;
+    do_test_t array_map array_int __lambda || return $(failure);
+    do_test_t array_map array_str __lambda || return $(failure);
+    return $(success)
+}
+test__array_map___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__array_clear___success () 
+{ 
+    __data_init;
+    echo "@@@ before";
+    do_test_t array_length array_int || return $(failure);
+    do_test_t array_map array_int __lambda || return $(failure);
+    echo "@@@ call array_clear()";
+    do_test_t array_clear array_int || return $(failure);
+    echo "@@@ after";
+    do_test_t array_length array_int || return $(failure);
+    do_test_t array_map array_int __lambda || return $(failure);
+    return $(success)
+}
+test__array_clear___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
 }
 test__array_exists___success () 
 { 
@@ -54,57 +257,39 @@ test__array_exists___error ()
     do_test_f array_exists array_str "x y z" || return $(failure);
     return $(success)
 }
-test__array_copy___success () 
+test__array_reverse___success () 
 { 
     __data_init;
-    do_test_t array_copy array_int dst || return $(failure);
-    do_test_t array_map dst __lambda   || return $(failure);
+
+    __dump array_int;
+    do_test_t array_reverse array_int || return $(failure);
+
+    __dump array_str;
+    do_test_t array_reverse array_str || return $(failure);
+
     return $(success)
 }
-test__array_copy___error () 
+test__array_reverse___error () 
 { 
     : テストスキップ;
-    return $(skipped)
+    return $(skipped);
 }
-test__array_map___success () 
+test__array_serialize___success () 
 { 
     __data_init;
-    do_test_t array_map array_int __lambda || return $(failure);
+
+    __dump array_int;
+    do_test_t array_serialize array_int || return $(failure);
+
+    __dump array_str;
+    do_test_t array_serialize array_str || return $(failure);
+
     return $(success)
 }
-test__array_map___error () 
+test__array_serialize___error () 
 { 
     : テストスキップ;
-    return $(skipped)
-}
-test__array_clear___success () 
-{ 
-    __data_init;
-    echo "@@@ before";
-    do_test_t array_length array_int       || return $(failure);
-    do_test_t array_map array_int __lambda || return $(failure);
-    echo "@@@ call array_clear()";
-    do_test_t array_clear array_int        || return $(failure);
-    echo "@@@ after";
-    do_test_t array_length array_int       || return $(failure);
-    do_test_t array_map array_int __lambda || return $(failure);
-    return $(success)
-}
-test__array_clear___error () 
-{ 
-    : テストスキップ;
-    return $(skipped)
-}
-test__array_length___success () 
-{ 
-    __data_init;
-    do_test_t array_length array_int || return $(failure)
-    do_test_t array_length array_str || return $(failure)
-}
-test__array_length___error () 
-{ 
-    : テストスキップ;
-    return $(skipped)
+    return $(skipped);
 }
 teardown () 
 { 

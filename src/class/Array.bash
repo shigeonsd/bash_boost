@@ -82,10 +82,6 @@ function Array.map() {
     return 0;
 }
 
-function Array.keys() {
-    echo ${!THIS[@]};
-}
-
 function Array.clear() {
     THIS=();
 }
