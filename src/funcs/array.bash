@@ -2,7 +2,7 @@
 #
 # array.bash -- 配列操作関数
 #
-function array_cmp() {
+function array_compare() {
     declare -n a1="${1}";
     declare -n a2="${2}";
 
@@ -14,7 +14,6 @@ function array_cmp() {
     local i=0;
     local n=$((len1 -1));
     for i in $(seq 0 ${n}); do
-	echo "${a1[$i]}" = "${a2[$i]}";
 	[ ! "${a1[$i]}" = "${a2[$i]}" ] && return 1;
 	((i++));
     done;
@@ -33,22 +32,34 @@ function array_set() {
     local n="$2";
     local val="$3";
 
-    __array_ref[$n]=${val};
+    __array_ref[$n]="${val}";
+}
+
+function array_add() {
+    declare -n __array_ref="${1}";
+    shift;
+    local val;
+    local n="$(array_length __array_ref)";
+    for val in "$@"; do
+	__array_ref["$n"]="${val}";
+	((n++))
+    done
+    return 0;
 }
 
 function array_get() {
     declare -n __array_ref="${1}";
     local n="$2";
 
-    echo ${__array_ref[$n]};
+    echo "${__array_ref[$n]}";
 }
 
 function array_unset() {
     declare -n __array_ref="${1}";
     local n=$2;
 
-    echo  ${__array_ref[$n]};
-    unset __array_ref[$n];
+    echo  "${__array_ref[$n]}";
+    unset __array_ref["$n"];
     __array_ref=("${__array_ref[@]}");
 }
 
@@ -76,8 +87,8 @@ function array_shift() {
 }
 
 function array_length() {
-    declare -n __array_ref="${1}";
-    echo "${#__array_ref[@]}";
+    declare -n ____array_ref="${1}";
+    echo "${#____array_ref[@]}";
     return 0;
 }
 

@@ -22,8 +22,52 @@ setup ()
     { 
         local val="${1}";
         local key="${2}";
-        echo "val='${val}', key='${key}'"
+        echo "[${key}]='${val}'";
     }
+    function __dump ()
+    {
+        declare -n _h="${1}";
+        echo "hash=${1}";
+        hash_length _h;
+        hash_map _h __lambda
+    };
+    __required_files
+}
+test__hash_compare___success () 
+{
+    __data_init;
+    hash_copy hash dst;
+    __dump hash;
+    __dump dst;
+    do_test_t hash_compare hash dst || return $(failure);
+    return $(success)
+}
+test__hash_compare___error () 
+{
+    __data_init;
+    hash_copy hash dst
+    hash_set dst 'kernel' 35536;
+    __dump dst;
+    do_test_f hash_compare hash dst || return $(failure);
+
+    __data_init;
+    hash_copy hash dst
+    hash_unset dst 'bin';
+    __dump dst;
+    do_test_f hash_compare hash dst || return $(failure);
+    return $(success)
+}
+test__hash_copy___success () 
+{ 
+    __data_init;
+    do_test_t hash_copy hash dst || return $(failure);
+    do_test_t hash_map dst __lambda || return $(failure);
+    return $(success)
+}
+test__hash_copy___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
 }
 test__hash_set___success () 
 { 
@@ -136,6 +180,24 @@ test__hash_map___error ()
     : テストスキップ;
     return $(skipped)
 }
+test__hash_clear___success () 
+{ 
+    __data_init;
+    echo "@@@ before";
+    do_test_t hash_length hash || return $(failure);
+    do_test_t hash_map hash __lambda || return $(failure);
+    echo "@@@ call hash_clear()";
+    do_test_t hash_clear hash || return $(failure);
+    echo "@@@ after";
+    do_test_t hash_length hash || return $(failure);
+    do_test_t hash_map hash __lambda || return $(failure);
+    return $(success)
+}
+test__hash_clear___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
 test__hash_keys___success () 
 { 
     __data_init;
@@ -188,35 +250,35 @@ test__hash_key_exists___error ()
     do_test_f hash_key_exists hash xusr || return $(failure);
     return $(success)
 }
-test__hash_clear___success () 
-{ 
-    __data_init;
-    echo "@@@ before";
-    do_test_t hash_length hash || return $(failure);
-    do_test_t hash_map hash __lambda || return $(failure);
-    echo "@@@ call hash_clear()";
-    do_test_t hash_clear hash || return $(failure);
-    echo "@@@ after";
-    do_test_t hash_length hash || return $(failure);
-    do_test_t hash_map hash __lambda || return $(failure);
-    return $(success)
-}
-test__hash_clear___error () 
+test__array_serialize___success () 
 { 
     : テストスキップ;
-    return $(skipped)
-}
-test__hash_copy___success () 
-{ 
-    __data_init;
-    do_test_t hash_copy hash dst || return $(failure);
-    do_test_t hash_map dst __lambda || return $(failure);
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
     return $(success)
 }
-test__hash_copy___error () 
+test__array_serialize___error () 
 { 
     : テストスキップ;
-    return $(skipped)
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
 }
 teardown () 
 { 

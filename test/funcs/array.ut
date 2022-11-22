@@ -16,8 +16,8 @@ setup ()
     function __lambda () 
     { 
         local val="${1}";
-        local index="${2}";
-        echo "val='${val}', index='${index}'"
+        local idx="${2}";
+        echo "[${idx}]='${val}'";
     };
     function __dump () 
     { 
@@ -28,40 +28,36 @@ setup ()
     };
     __required_files
 }
-test__array_cmp___success () 
+test__array_compare___success () 
 { 
     __data_init;
     array_copy array_int dst;
     __dump array_int;
     __dump dst;
-    do_test_t array_cmp array_int dst || return $(failure);
-
+    do_test_t array_compare array_int dst || return $(failure);
     array_copy array_str dst;
     __dump array_str;
     __dump dst;
-    do_test_t array_cmp array_str dst || return $(failure);
+    do_test_t array_compare array_str dst || return $(failure);
     return $(success)
 }
-test__array_cmp___error () 
+test__array_compare___error () 
 { 
     __data_init;
     declare -a rai=();
     array_reverse array_int rai;
     __dump rai;
-    do_test_f array_cmp array_int rai || return $(failure);
-
+    do_test_f array_compare array_int rai || return $(failure);
     array_pop rai;
     __dump rai;
-    do_test_f array_cmp array_int rai || return $(failure);
-
+    do_test_f array_compare array_int rai || return $(failure);
     declare -a ras=();
-    array_reverse array_str ras
+    array_reverse array_str ras;
     __dump ras;
-    do_test_f array_cmp array_str ras || return $(failure);
-
+    do_test_f array_compare array_str ras || return $(failure);
     array_shift ras;
     __dump ras;
-    do_test_f array_cmp array_str ras || return $(failure);
+    do_test_f array_compare array_str ras || return $(failure);
     return $(success)
 }
 test__array_copy___success () 
@@ -93,12 +89,30 @@ test__array_set___error ()
     : テストスキップ;
     return $(skipped)
 }
+test__array_add___success () 
+{ 
+    __data_init;
+    do_test_t array_add array "foo" || return $(failure);
+    do_test_t array_add array "bar" || return $(failure);
+    do_test_t array_add array "baz" || return $(failure);
+
+    do_test_t array_add array "a b c" || return $(failure);
+    do_test_t array_add array  d e f  || return $(failure);
+    __dump array;
+    return $(success)
+}
+test__array_add___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
 test__array_get___success () 
 { 
     __data_init;
     do_test_t array_get array_int 0 || return $(failure);
     do_test_t array_get array_int 1 || return $(failure);
     do_test_t array_get array_int 2 || return $(failure);
+
     do_test_t array_get array_str 0 || return $(failure);
     do_test_t array_get array_str 1 || return $(failure);
     do_test_t array_get array_str 2 || return $(failure);
@@ -286,7 +300,6 @@ test__array_reverse___success ()
     __dump array_int;
     do_test_t array_reverse array_int dst || return $(failure);
     __dump dst;
-
     __dump array_str;
     do_test_t array_reverse array_str dst || return $(failure);
     __dump dst;
