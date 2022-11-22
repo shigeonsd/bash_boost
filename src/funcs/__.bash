@@ -5,7 +5,7 @@
 function __() {
     local key=$1;
     shift;
-    hash_key_exists "${key}" __messages \
+    hash_key_exists __messages "${key}" \
 	|| die "${key}: Undefined message in \$__messages[@].";
     eval "echo $(echo "${__messages[$key]}")";
 }

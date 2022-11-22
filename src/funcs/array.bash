@@ -2,6 +2,25 @@
 #
 # array.bash -- 配列操作関数
 #
+function array_cmp() {
+    declare -n a1="${1}";
+    declare -n a2="${2}";
+
+    local len1=$(array_length a1);
+    local len2=$(array_length a2);
+
+    [ "${len1}" -ne "${len2}" ] && return 1;
+
+    local i=0;
+    local n=$((len1 -1));
+    for i in $(seq 0 ${n}); do
+	echo "${a1[$i]}" = "${a2[$i]}";
+	[ ! "${a1[$i]}" = "${a2[$i]}" ] && return 1;
+	((i++));
+    done;
+    return 0;
+}
+
 function array_copy() {
     declare -n a1="${1}"; #from 
     declare -n a2="${2}"; #to
@@ -35,21 +54,21 @@ function array_unset() {
 
 function array_push() {
     declare -n __array_ref="${1}";
-    __array_ref+=("$2");
+    __array_ref+=("${2}");
 }
 
 function array_pop() {
     declare -n __array_ref="${1}";
     local len=${#__array_ref[@]};
     local n=$((len -1));
-    array_unset "${1}" "$n";
+    array_unset "${1}" "${n}";
 }
 
 function array_unshift() {
     declare -n __array_ref="${1}";
-    local _array=($2);
-    _array+=(${__array_ref[@]});
-    __array_ref=(${_array[@]});
+    local _array=("${2}");
+    _array+=("${__array_ref[@]}");
+    __array_ref=("${_array[@]}");
 }
 
 function array_shift() {
@@ -91,16 +110,14 @@ function array_exists() {
 }
 
 function array_reverse() {
-    declare -n __array_ref="${1}";
+    declare -n __src_ref="${1}";
+    declare -n __dst_ref="${2}";
     local e;
     local elm;
-    for e in "${__array_ref[@]}"; do
-        echo "${e}";
-    done \
-    | tac \
-    | while read elm ; do
-        echo "${elm}";
-    done
+    dst=();
+    for e in "${__src_ref[@]}"; do
+        array_unshift __dst_ref "${e}";
+    done 
 }
 
 function array_serialize() {

@@ -3,7 +3,7 @@ set -u
 setup () 
 { 
     source "../../bash-boost.bash";
-    require if;
+    require if
 }
 test__if_debug___success () 
 { 

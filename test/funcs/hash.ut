@@ -25,6 +25,129 @@ setup ()
         echo "val='${val}', key='${key}'"
     }
 }
+test__hash_set___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__hash_set___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__hash_get___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__hash_get___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__hash_unset___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__hash_unset___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__hash_length___success () 
+{ 
+    __data_init;
+    do_test_t hash_length hash || return $(failure)
+}
+test__hash_length___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__hash_map___success () 
+{ 
+    __data_init;
+    do_test_t hash_map hash __lambda || return $(failure);
+    return $(success)
+}
+test__hash_map___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
+test__hash_keys___success () 
+{ 
+    __data_init;
+    echo "keys=("${!hash[@]}")";
+    do_test_t hash_keys hash || return $(failure);
+    return $(success)
+}
+test__hash_keys___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
+}
 test__hash_exists___success () 
 { 
     __data_init;
@@ -65,41 +188,6 @@ test__hash_key_exists___error ()
     do_test_f hash_key_exists hash xusr || return $(failure);
     return $(success)
 }
-test__hash_copy___success () 
-{ 
-    __data_init;
-    do_test_t hash_copy hash dst || return $(failure);
-    do_test_t hash_map dst __lambda || return $(failure);
-    return $(success)
-}
-test__hash_copy___error () 
-{ 
-    : テストスキップ;
-    return $(skipped)
-}
-test__hash_map___success () 
-{ 
-    __data_init;
-    do_test_t hash_map hash __lambda || return $(failure);
-    return $(success)
-}
-test__hash_map___error () 
-{ 
-    : テストスキップ;
-    return $(skipped)
-}
-test__hash_keys___success () 
-{ 
-    __data_init;
-    echo "keys=("${!hash[@]}")";
-    do_test_t hash_keys hash || return $(failure);
-    return $(success)
-}
-test__hash_keys___error () 
-{ 
-    : テストスキップ;
-    return $(skipped)
-}
 test__hash_clear___success () 
 { 
     __data_init;
@@ -118,12 +206,14 @@ test__hash_clear___error ()
     : テストスキップ;
     return $(skipped)
 }
-test__hash_length___success () 
+test__hash_copy___success () 
 { 
     __data_init;
-    do_test_t hash_length hash || return $(failure)
+    do_test_t hash_copy hash dst || return $(failure);
+    do_test_t hash_map dst __lambda || return $(failure);
+    return $(success)
 }
-test__hash_length___error () 
+test__hash_copy___error () 
 { 
     : テストスキップ;
     return $(skipped)
