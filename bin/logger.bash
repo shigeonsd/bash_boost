@@ -4,7 +4,16 @@
 #
 set -u
 source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
-command=$@;
+
+function __getopt2() {
+    [ $# -le 0 ] && die "No specified command.";
+
+    progname=$(basename ${1});
+    __log_dir="${log_dir}/$(today)/${progname}";
+    __log_file="${__log_dir}/$(now_ymd_hms).log";
+    __log_symlnk="${__log_dir}/newest";
+    command="$@";
+}
 
 usage "command args..." <<_
     "command args..." で指定したコマンドを実行し、画面出力をログファイルに記録する。
@@ -14,12 +23,8 @@ usage "command args..." <<_
         /home/nishida/src/shell_toolkit/log/YYYYMMDD/プログラム名/newest
 _
 usage_chkopt ge 1;
-#usage_getopt;
+usage_getopt : __getopt2;
 
-progname=$(basename ${1});
-__log_dir="${log_dir}/$(today)/${progname}";
-__log_file="${__log_dir}/$(now_ymd_hms).log";
-__log_symlnk="${__log_dir}/newest";
 VERBOSE=${VERBOSE-"false"};
 
 export BASH_BOOST_LOGGING=true;
@@ -38,4 +43,4 @@ function __setup_verbose() {
 
 __setup_log_dir;
 #__setup_verbose;
-script -c "$*" -a "${__log_file}" > /dev/null 2>&1;
+script -c "${command}" -a "${__log_file}" > /dev/null 2>&1;

@@ -12,6 +12,7 @@ function __usage_defopt1() {
 	[[ "${arg}" =~ ^- ]] || continue;
 	__usage_opt1+=(${arg});
     done;
+    __usage_opt1+=("--");
 }
 
 function __usage_defopt2() {
@@ -101,20 +102,16 @@ function __get_optarg() {
     echo "${1}" | sed -e 's/^.*=//';
 }
 
-function usage_getopt() {
-    local lambda1="${1-:}";
-    local lambda2="${2-:}";
+function __usage_getopt1() {
+    local lambda1="${1}";
     local arg;
     local opt1;
-    local opt2=();
     for arg in  "${progargs[@]}"; do
 	case "${arg}" in
 	-h|--help) __usage; ;;
+	--) break; ;;
 	esac
-	[[ "${arg}" =~ ^- ]] || {
-	    opt2+=("${arg}");
-	    continue;
-	}
+	[[ "${arg}" =~ ^- ]] || break;
 	for opt1 in "${__usage_opt1[@]}"; do
 	    __usage_cmpopt "${arg}" "${opt1}" && {
 		local    opt="$(__get_optstr "${arg}")";
@@ -125,6 +122,31 @@ function usage_getopt() {
 	done;
 	die "$(__ unknown_option "${arg}")";
     done;
+}
+
+function __usage_getopt2() {
+    local lambda2="${1}";
+    local arg;
+    local opt2=();
+    local optend=false;
+    for arg in  "${progargs[@]}"; do
+	if_true optend || {
+	    [ ${arg} = "--" ] && {
+		optend=true;
+		continue;
+	    }
+	    [[ "${arg}" =~ ^- ]] && continue;
+	    optend=true;
+	}
+	opt2+=("${arg}");
+    done;
     "${lambda2}" "${opt2[@]}";
 }
 
+function usage_getopt() {
+    local lambda1="${1-:}";
+    local lambda2="${2-:}";
+
+    __usage_getopt1 "${lambda1}";
+    __usage_getopt2 "${lambda2}";
+}
