@@ -6,7 +6,7 @@ set -u;
 source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
 
 function __getopt2() {
-    exist_file "${1}" || die $(__ file_not_found "${1}");
+    exist_file "${1}" || die "$(__ file_not_found "${1}")";
 }
 
 usage "bash_file" <<_
@@ -58,5 +58,5 @@ function main() {
     __private_func "${bash_file}";
 }
 
-local bash_file="${1}";
+bash_file="${1}";
 main "${bash_file}";
