@@ -3,30 +3,18 @@
 # logger.sh -- ログ取得ラッパー
 #
 set -u
-progname=$(basename ${0});
-progdir=$(cd "`dirname $0`" && pwd);
-progargs=$@;
+source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
 command=$@;
 
-top_dir=$(dirname ${progdir});
-modules_dir="${top_dir}/modules";
-log_dir="${top_dir}/log";
-
-source "${modules_dir}/defun.sh";
-source "${modules_dir}/date.sh";
-source "${modules_dir}/log.sh";
-source "${modules_dir}/usage.sh";
-
-usage_option "command args...";
-usage_description '
+usage "command args..." <<_
     "command args..." で指定したコマンドを実行し、画面出力をログファイルに記録する。
     記録されるログディレクトリは以下の通り。
         /home/nishida/src/shell_toolkit/log/YYYYMMDD/プログラム名/YYYYMMDD_HHMMSS.log
     最新のログファイルに対して newest が symlink される。
         /home/nishida/src/shell_toolkit/log/YYYYMMDD/プログラム名/newest
-';
-usage_if_no_option;
-parse_option;
+_
+usage_chkopt ge 1;
+#usage_getopt;
 
 progname=$(basename ${1});
 __log_dir="${log_dir}/$(today)/${progname}";
