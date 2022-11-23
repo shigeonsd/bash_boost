@@ -44,10 +44,9 @@ function hash_get() {
 
 function hash_unset() {
     declare -n __hash_ref="${1}";
-    local key="${1}";
-    echo  ${__hash_ref["${key}"]};
+    local key="${2}";
+    echo  "${__hash_ref["${key}"]}";
     unset __hash_ref["${key}"];
-    __hash_ref=("${__hash_ref[@]}");
 }
 
 function hash_length() {

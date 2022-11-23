@@ -2,6 +2,11 @@
 #
 # array.bash -- 配列操作関数
 #
+function array_reindex() {
+    declare -n __array_ref="${1}";
+    __array_ref=("${__array_ref[@]}");
+}
+
 function array_compare() {
     declare -n a1="${1}";
     declare -n a2="${2}";
@@ -88,6 +93,16 @@ function array_length() {
 }
 
 function array_map() {
+    declare -n __array_ref="${1}"; 
+    local func="${2}";
+    local i;
+    for i in "${!__array_ref[@]}"; do
+        ${func} "${__array_ref[${i}]}" "${i}" || return $?;
+    done;
+    return 0;
+}
+
+function __array_map() {
     declare -n __array_ref="${1}"; 
     local func="${2}";
     local e;

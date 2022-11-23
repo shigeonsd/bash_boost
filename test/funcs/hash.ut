@@ -22,10 +22,10 @@ setup ()
     { 
         local val="${1}";
         local key="${2}";
-        echo "[${key}]='${val}'";
-    }
-    function __dump ()
-    {
+        echo "[${key}]='${val}'"
+    };
+    function __dump () 
+    { 
         declare -n _h="${1}";
         echo "hash=${1}";
         hash_length _h;
@@ -34,7 +34,7 @@ setup ()
     __required_files
 }
 test__hash_compare___success () 
-{
+{ 
     __data_init;
     hash_copy hash dst;
     __dump hash;
@@ -43,15 +43,14 @@ test__hash_compare___success ()
     return $(success)
 }
 test__hash_compare___error () 
-{
+{ 
     __data_init;
-    hash_copy hash dst
+    hash_copy hash dst;
     hash_set dst 'kernel' 35536;
     __dump dst;
     do_test_f hash_compare hash dst || return $(failure);
-
     __data_init;
-    hash_copy hash dst
+    hash_copy hash dst;
     hash_unset dst 'bin';
     __dump dst;
     do_test_f hash_compare hash dst || return $(failure);
@@ -250,35 +249,17 @@ test__hash_key_exists___error ()
     do_test_f hash_key_exists hash xusr || return $(failure);
     return $(success)
 }
-test__array_serialize___success () 
+test__hash_serialize___success () 
 { 
-    : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
+    __data_init;
+    __dump hash;
+    do_test_t hash_serialize hash || return $(failure);
     return $(success)
 }
-test__array_serialize___error () 
+test__hash_serialize___error () 
 { 
     : テストスキップ;
-    return $(skipped);
-    : テストデータ;
-    local data="12345";
-    local expected="12345";
-    : テスト実行;
-    : success;
-    : 'do_test_t <TEST_CONDITION> || return $(failure)';
-    : failure;
-    : 'do_test_f <TEST_CONDITION> || return $(failure)';
-    : テスト成功;
-    return $(success)
+    return $(skipped)
 }
 teardown () 
 { 

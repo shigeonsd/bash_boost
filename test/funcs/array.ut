@@ -17,7 +17,7 @@ setup ()
     { 
         local val="${1}";
         local idx="${2}";
-        echo "[${idx}]='${val}'";
+        echo "[${idx}]='${val}'"
     };
     function __dump () 
     { 
@@ -27,6 +27,27 @@ setup ()
         array_map _a __lambda
     };
     __required_files
+}
+test__array_reindex___success () 
+{ 
+    __data_init;
+    __dump array_int;
+    do_test_t array_set array_int 1024 1024 || return $(failure);
+    do_test_t array_set array_int 2048 2048 || return $(failure);
+    do_test_t array_set array_int 4096 4096 || return $(failure);
+    unset array_int[2];
+    unset array_int[4];
+    unset array_int[8];
+    unset array_int[16];
+    __dump array_int;
+    do_test_t array_reindex array_int || return $(failure);
+    __dump array_int;
+    return $(success)
+}
+test__array_reindex___error () 
+{ 
+    : テストスキップ;
+    return $(skipped)
 }
 test__array_compare___success () 
 { 
@@ -95,16 +116,15 @@ test__array_add___success ()
     do_test_t array_add array "foo" || return $(failure);
     do_test_t array_add array "bar" || return $(failure);
     do_test_t array_add array "baz" || return $(failure);
-
     do_test_t array_add array "a b c" || return $(failure);
-    do_test_t array_add array  d e f  || return $(failure);
+    do_test_t array_add array d e f || return $(failure);
     __dump array;
     return $(success)
 }
 test__array_add___error () 
 { 
     : テストスキップ;
-    return $(skipped);
+    return $(skipped)
 }
 test__array_get___success () 
 { 
@@ -112,7 +132,6 @@ test__array_get___success ()
     do_test_t array_get array_int 0 || return $(failure);
     do_test_t array_get array_int 1 || return $(failure);
     do_test_t array_get array_int 2 || return $(failure);
-
     do_test_t array_get array_str 0 || return $(failure);
     do_test_t array_get array_str 1 || return $(failure);
     do_test_t array_get array_str 2 || return $(failure);
