@@ -8,11 +8,15 @@ source "$(cd $(dirname "$0") && pwd)/../bash-boost.bash";
 function __getopt2() {
     [ $# -le 0 ] && die "No specified command.";
 
-    progname=$(basename ${1});
+    local progname=$(basename ${1});
     __log_dir="${log_dir}/$(today)/${progname}";
     __log_file="${__log_dir}/$(now_ymd_hms).log";
     __log_symlnk="${__log_dir}/newest";
-    command="$@";
+
+    cmd="${1}";
+    shift;
+    local _args=("$@");
+    args="$(array_quoted_values _args)";
 }
 
 usage "command args..." <<_
@@ -43,4 +47,4 @@ function __setup_verbose() {
 
 __setup_log_dir;
 #__setup_verbose;
-script -c "${command}" -a "${__log_file}" > /dev/null 2>&1;
+script -c "${cmd} ${args}" -a "${__log_file}" > /dev/null 2>&1;

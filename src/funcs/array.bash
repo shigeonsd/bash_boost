@@ -102,18 +102,6 @@ function array_map() {
     return 0;
 }
 
-function __array_map() {
-    declare -n __array_ref="${1}"; 
-    local func="${2}";
-    local e;
-    local index=0;
-    for e in "${__array_ref[@]}"; do
-        ${func} "$e" "${index}" || return $?;
-	((index++));
-    done;
-    return 0;
-}
-
 function array_clear() {
     declare -n __array_ref="${1}";
     __array_ref=();
@@ -145,3 +133,14 @@ function array_serialize() {
     declare -p "${1}"| sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/ )$/\n)/';
 }
 
+function array_quoted_values() {
+    declare -n __array_ref="${1}";
+    local val;
+    local quoted_values="";
+    local delim="";
+    for val in "${__array_ref[@]}"; do
+	quoted_values+="${delim}'${val}'";
+	delim=" ";
+    done
+    echo "${quoted_values}";
+}
