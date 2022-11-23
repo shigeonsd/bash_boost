@@ -11,6 +11,8 @@ function __() {
 }
 
 declare -g -A __messages=(
-    [invalid_arguments]='$@: Invalid arguments.'
-       [unknown_option]='$1: Unknown option.'
+         [invalid_arguments]='$@: Invalid arguments.'
+            [unknown_option]='$1: Unknown option.'
+            [file_not_found]='$1: File not found.'
+ [no_such_file_or_directory]='$1: No such file or directory.'
 );

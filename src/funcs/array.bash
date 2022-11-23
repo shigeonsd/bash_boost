@@ -38,12 +38,7 @@ function array_set() {
 function array_add() {
     declare -n __array_ref="${1}";
     shift;
-    local val;
-    local n="$(array_length __array_ref)";
-    for val in "$@"; do
-	__array_ref["$n"]="${val}";
-	((n++))
-    done
+    __array_ref+=("$@");
     return 0;
 }
 

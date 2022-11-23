@@ -25,7 +25,7 @@ if_debug || {
 function die() {
     local msg="$1";
     local exit_status="${2-1}" # 第二引数が指定されていなかったら 1
-    error "exit_status=${exit_status}; ${msg}";
+    error "exit_status=${exit_status}: ${msg}";
     __on_die;
     exit ${exit_status};
 }
