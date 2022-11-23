@@ -122,13 +122,13 @@ function aop_cut_point() {
 
 function __aop() {
     local func="${1}";
-    local ___aop_cmd=$@;
+    local ___aop_cmd="$@";
     __aop_debug "${1}() {";
     local ret=0;
-    __aop_before $@;
-    __aop_around $@;
-    ret=$?;
-    __aop_after $@;
+    __aop_before "$@";
+    __aop_around "$@";
+    ret="$?";
+    __aop_after "$@";
     __aop_debug "${1}() }";
     return ${ret};
 }

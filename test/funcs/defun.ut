@@ -4,7 +4,6 @@ setup ()
 { 
     source "../../bash-boost.bash";
     require defun;
-
     function __foo_tmpl () 
     { 
         echo NAME;
@@ -13,24 +12,6 @@ setup ()
         echo PHONE;
         echo EMAIL
     }
-}
-test__copy_function___success () 
-{ 
-    copy_function  __foo_tmpl baz ;
-    ret=$?;
-    echo '##' copy_function  __foo_tmpl baz "=> ${ret}";
-    [ $ret -eq 0 ] || return $(failure);
-    echo '##' declare -f __foo_tmpl
-    declare -f __foo_tmpl || return $(failure);
-    echo '##' declare -f baz 
-    declare -f baz || return $(failure);
-    echo '##' baz
-    baz || return $(failure);
-    return $(success)
-}
-test__copy_function___error () 
-{ 
-    return $(skipped);
 }
 test__defun___success () 
 { 
@@ -43,20 +24,38 @@ test__defun___success ()
     echo '##' defun foo __foo_tmpl NAME "Shigeo NISHIDA" AGE 51 ADDR "Kochi, Japab" PHONE "090-1234-5678" EMAIL "shigeo.nsd@gmail.com" "=> ${ret}";
     [ $ret -eq 0 ] || return $(failure);
     declare -f foo || return $(failure);
-    echo '##' foo
+    echo '##' foo;
     foo || return $(failure);
     echo "## マクロ展開ナシ";
     defun bar __foo_tmpl;
     ret=$?;
     echo '##' defun bar __foo_tmpl "=> ${ret}";
     [ $ret -eq 0 ] || return $(failure);
-    echo '##' declare -f bar
+    echo '##' declare -f bar;
     declare -f bar || return $(failure);
-    echo '##' bar
+    echo '##' bar;
     bar || return $(failure);
     return $(success)
 }
 test__defun___error () 
+{ 
+    return $(skipped)
+}
+test__copy_function___success () 
+{ 
+    copy_function __foo_tmpl baz;
+    ret=$?;
+    echo '##' copy_function __foo_tmpl baz "=> ${ret}";
+    [ $ret -eq 0 ] || return $(failure);
+    echo '##' declare -f __foo_tmpl;
+    declare -f __foo_tmpl || return $(failure);
+    echo '##' declare -f baz;
+    declare -f baz || return $(failure);
+    echo '##' baz;
+    baz || return $(failure);
+    return $(success)
+}
+test__copy_function___error () 
 { 
     return $(skipped)
 }

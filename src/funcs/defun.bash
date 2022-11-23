@@ -10,10 +10,10 @@ function __create_macroexpand_func_0() {
 
     for e in "${___macro[@]}"; do
 	[ -z "${mvar}" ] && {
-	    mvar=${e};
+	    mvar="${e}";
 	    continue;
 	}
-	mval=${e};
+	mval="${e}";
 	sed_opt="${sed_opt} -e 's/${mvar}/${mval}/g'";
 	mvar="";
 	mval="";
@@ -47,12 +47,12 @@ function defun() {
     local ___macro=("$@");
     local macroexpand="__$(uuidgen | sed -e 's/-//g')";
 
-    __create_macroexpand_func ${macroexpand};
-    eval "$(__funcname; __tmpl_func | ${macroexpand};)";
-    unset ${macroexpand};
+    __create_macroexpand_func "${macroexpand}";
+    eval "$(__funcname; __tmpl_func | "${macroexpand}";)";
+    unset "${macroexpand}";
 }
 
 function copy_function() {
-    declare -F $1 > /dev/null || return 1;
-    eval "$(echo "${2}()"; declare -f ${1} | tail -n +2)";
+    declare -F "${1}" > /dev/null || return 1;
+    eval "$(echo "${2}()"; declare -f "${1}" | tail -n +2)";
 }

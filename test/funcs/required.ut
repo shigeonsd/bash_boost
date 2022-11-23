@@ -3,7 +3,7 @@ set -u
 setup () 
 { 
     source "../../bash-boost.bash";
-    require required;
+    require required
 }
 test__error_if_noargs___success () 
 { 
@@ -70,6 +70,45 @@ test__required_3_args___error ()
     do_test_f required_3_args "a b c" "d e f" "g h i" "j k l" || return $(failure);
     return $(success)
 }
+test__required_ge_1_args___success () 
+{ 
+    do_test_t required_ge_1_args a || return $(failure);
+    do_test_t required_ge_1_args a b || return $(failure);
+    do_test_t required_ge_1_args a b c || return $(failure);
+    return $(success)
+}
+test__required_ge_1_args___error () 
+{ 
+    do_test_f required_ge_1_args || return $(failure);
+    return $(success)
+}
+test__required_ge_2_args___success () 
+{ 
+    do_test_t required_ge_2_args a b || return $(failure);
+    do_test_t required_ge_2_args a b c || return $(failure);
+    do_test_t required_ge_2_args a b c d || return $(failure);
+    return $(success)
+}
+test__required_ge_2_args___error () 
+{ 
+    do_test_f required_ge_2_args || return $(failure);
+    do_test_f required_ge_2_args a || return $(failure);
+    return $(success)
+}
+test__required_ge_3_args___success () 
+{ 
+    do_test_t required_ge_3_args a b c || return $(failure);
+    do_test_t required_ge_3_args a b c d || return $(failure);
+    do_test_t required_ge_3_args a b c d e || return $(failure);
+    return $(success)
+}
+test__required_ge_3_args___error () 
+{ 
+    do_test_f required_ge_3_args || return $(failure);
+    do_test_f required_ge_3_args a || return $(failure);
+    do_test_f required_ge_3_args a b || return $(failure);
+    return $(success)
+}
 test__required_args___success () 
 { 
     do_test_t required_args 1 eq 1 "a b c" || return $(failure);
@@ -90,45 +129,6 @@ test__required_args___error ()
     do_test_f required_args 0 gt 1 "a b c" "d e f" || return $(failure);
     do_test_f required_args 3 le 2 "a b c" "d e f" || return $(failure);
     do_test_f required_args 3 lt 2 "a b c" "d e f" || return $(failure);
-    return $(success)
-}
-test__required_ge_1_args___success () 
-{ 
-    do_test_t required_ge_1_args a     || return $(failure);
-    do_test_t required_ge_1_args a b   || return $(failure);
-    do_test_t required_ge_1_args a b c || return $(failure);
-    return $(success)
-}
-test__required_ge_1_args___error () 
-{ 
-    do_test_f required_ge_1_args || return $(failure);
-    return $(success)
-}
-test__required_ge_2_args___success () 
-{ 
-    do_test_t required_ge_2_args a b      || return $(failure);
-    do_test_t required_ge_2_args a b c    || return $(failure);
-    do_test_t required_ge_2_args a b c d  || return $(failure);
-    return $(success)
-}
-test__required_ge_2_args___error () 
-{ 
-    do_test_f required_ge_2_args   || return $(failure);
-    do_test_f required_ge_2_args a || return $(failure);
-    return $(success)
-}
-test__required_ge_3_args___success () 
-{ 
-    do_test_t required_ge_3_args a b c     || return $(failure);
-    do_test_t required_ge_3_args a b c d   || return $(failure);
-    do_test_t required_ge_3_args a b c d e || return $(failure);
-    return $(success)
-}
-test__required_ge_3_args___error () 
-{ 
-    do_test_f required_ge_3_args     || return $(failure);
-    do_test_f required_ge_3_args a   || return $(failure);
-    do_test_f required_ge_3_args a b || return $(failure);
     return $(success)
 }
 teardown () 

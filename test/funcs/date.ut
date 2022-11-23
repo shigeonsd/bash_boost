@@ -3,15 +3,15 @@ set -u
 setup () 
 { 
     source "../../bash-boost.bash";
-    require date;
+    require date
 }
-test__now___success () 
+test__today___success () 
 { 
     : テスト実行;
-    do_test_t now || return $(failure);
+    do_test_t today || return $(failure);
     return $(success)
 }
-test__now___error () 
+test__today___error () 
 { 
     : テストスキップ;
     return $(skipped)
@@ -27,16 +27,76 @@ test__now_ymd_hms___error ()
     : テストスキップ;
     return $(skipped)
 }
-test__today___success () 
+test__now___success () 
 { 
     : テスト実行;
-    do_test_t today || return $(failure);
+    do_test_t now || return $(failure);
     return $(success)
 }
-test__today___error () 
+test__now___error () 
 { 
     : テストスキップ;
     return $(skipped)
+}
+test__n_days___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__n_days___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__tomorow___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__tomorow___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
 }
 test__yesterday___success () 
 { 

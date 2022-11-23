@@ -44,7 +44,7 @@ function required_3_args() {
 }
 
 function __required_ge_n_args() {
-    [ $# -ge ${___n} ] || {
+    [ $# -ge "${___n}" ] || {
 	local args=$(__format_args "$@");
 	die "${args}: Required over ${___n} argument(s).";
     }
@@ -73,7 +73,7 @@ function required_args() {
     shift 3;
     [ $n -${ope} $m ] || {
 	local args=$(__format_args "$@");
-	die "${args}, cond=[ $n -${ope} $m ]: Invalid argument(s)."; 
+	die "cond=[ $n -${ope} $m ], ${args}: Invalid argument(s)."; 
     }
     return 0;
 }

@@ -19,7 +19,7 @@ function __add_cleanup() {
 
 function __require_file() {
     local file="${1}";
-    local ___name=$(basename "${file}" | sed -e 's/\.[^.]*$//');
+    local ___name="$(basename "${file}" | sed -e 's/\.[^.]*$//')";
     "${___info}" "${___invoke} ${file}. ";
     source "${file}";
     __add_cleanup;
@@ -108,11 +108,10 @@ function __required_files() {
 }
 
 function __on_exit() {
-    for f in "${__bash_boost_cleanup_funcs__[@]}"; do
-        echo $f;
-    done \
-    | tac \
-    | while read cleanup; do
+    declare -a __bash_boost_cleanup_funcs_rev__=();
+    local cleanup;
+    array_reverse __bash_boost_cleanup_funcs__ __bash_boost_cleanup_funcs_rev__;
+    for cleanup in "${__bash_boost_cleanup_funcs_rev__[@]}"; do
         "${___info}" "Cleanup $(echo ${cleanup} | sed -e 's/^_//' -e 's/_cleanup//')... ";
         "${cleanup}";
         "${___info}" "done";
