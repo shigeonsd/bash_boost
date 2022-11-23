@@ -96,6 +96,6 @@ function hash_key_exists() {
     return 1;
 }
 
-function array_serialize() {
+function hash_serialize() {
     declare -p "${1}"| sed -e 's/^[^=]*=//' -e 's/\[/\n[/g' -e 's/ )$/\n)/';
 }
