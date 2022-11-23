@@ -343,6 +343,20 @@ test__array_serialize___error ()
     : テストスキップ;
     return $(skipped)
 }
+test__array_quoted_values___success () 
+{ 
+    __data_init;
+    __dump array_int;
+    do_test_t array_quoted_values array_int || return $(failure);
+    __dump array_str;
+    do_test_t array_quoted_values array_str || return $(failure);
+    return $(success)
+}
+test__array_quoted_values___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+}
 teardown () 
 { 
     :
