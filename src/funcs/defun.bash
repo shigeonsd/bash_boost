@@ -20,7 +20,7 @@ function __create_macroexpand_func_0() {
     done
     [ -z "${sed_opt}" ] && {
 	echo "cat;";
-	return;
+	return 0;
     }
     echo "sed ${sed_opt};";
 }

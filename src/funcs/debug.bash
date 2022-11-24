@@ -8,7 +8,7 @@
 #}
 
 function stacktrace() {
-    if_debug || return;
+    if_debug || return 0;
     local log=${1-info};
     local index=0;
     local frame="";
@@ -21,7 +21,7 @@ function stacktrace() {
 }
 
 function var_dump() {
-    if_debug || return;
+    if_debug || return 0;
     debug "var_dump {";
     for var in $@; do
         debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
@@ -30,29 +30,29 @@ function var_dump() {
 }
 
 function check_point() {
-    if_debug || return;
+    if_debug || return 0;
 }
 
 function enter() {
-    if_debug || return;
+    if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
     debug "enter ${funcname}() {";
 }
 
 function leave() {
-    if_debug || return;
+    if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
     debug "leave ${funcname}() }";
 }
 
 function debug_before() {
-    if_debug || return;
+    if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
     enter ${funcname};
 }
 
 function debug_after() {
-    if_debug || return;
+    if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
     leave ${funcname};
 }

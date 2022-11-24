@@ -66,7 +66,7 @@ function validate() {
 function __dump_this() {
     [[ -v ${___this} ]] && {
 	declare -p ${___this} | sed -e 's/^declare -. //';
-	return;
+	return 0;
     }
     echo "${___this}=null";
 }
@@ -179,12 +179,12 @@ function __undefthis() {
 }
 
 function __super() {
-    [ ${___super} = null ] && return;
+    [ ${___super} = null ] && return 0;
     ${___super} ${___this};
 }
 
 function __init() {
-    [ $# -eq 0 ] && return;
+    [ $# -eq 0 ] && return 0;
 
     local operator="${1}"
     shift;

@@ -46,7 +46,7 @@ function __aop_before() {
     local func="${1}";
     local keys=${!__aop_before_handlers[@]};
     shift;
-    array_exists "$func" "$keys" || return;
+    array_exists "$func" "$keys" || return 0;
     local handlers=${__aop_before_handlers[${func}]};
     var_dump handlers;
     for h in ${handlers[@]}; do
@@ -58,7 +58,7 @@ function __aop_after() {
     local func="${1}";
     local keys=${!__aop_after_handlers[@]};
     shift;
-    array_exists "$func" "$keys" || return;
+    array_exists "$func" "$keys" || return 0;
     local handlers=${__aop_after_handlers[${func}]};
     for h in ${handlers[@]}; do
         echo $h;
@@ -72,7 +72,7 @@ function __aop_after() {
 function __aop_around() {
     local func="${1}";
     local keys=${!__aop_around_handlers[@]};
-    array_exists "$func" "$keys" || return;
+    array_exists "$func" "$keys" || return 0;
     shift;
     local handlers=${__aop_around_handlers[${func}]};
     debug ${handlers[@]} $@;
@@ -98,7 +98,7 @@ function __aop_cut_point() {
     exist_func "${func}" || die "Not exists function ${func}().";
     exist_func ${orig_func} && {
 	__aop_debug "Already exists __aop_orig_${func}().";
-	return;
+	return 0;
     }
     copy_function "${func}" "__aop_orig_${func}";
     eval "function ${func}() { __aop \"${func}\" \"__aop_orig_${func}\" \$@; }";

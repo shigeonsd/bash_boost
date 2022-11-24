@@ -5,7 +5,7 @@
 #
 function __invoke_init() {
     local init_func="@${___name}_init";
-    exist_func "${init_func}" || return;
+    exist_func "${init_func}" || return 0;
     "${___info}" " Initializing ${___name}... ";
     "${init_func}";
     "${___info}" " done";
@@ -13,13 +13,13 @@ function __invoke_init() {
 
 function __add_cleanup() {
     local func="@${___name}_cleanup";
-    exist_func "${func}" || return;
+    exist_func "${func}" || return 0;
     __bash_boost_cleanup_funcs__+=( "${func}" );
 }
 
 function __add_script_ready() {
     local func="@${___name}_script_ready";
-    exist_func "${func}" || return;
+    exist_func "${func}" || return 0;
     __bash_boost_script_ready_funcs__+=( "${func}" );
 }
 
