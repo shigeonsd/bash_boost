@@ -44,6 +44,14 @@ function __setup_verbose() {
     #exec 1>"${__log_file}";
 }
 
+function get_command_exit_code() {
+    tail -1 "${__log_file}" \
+	| sed -e 's/.*[COMMAND_EXIT_CODE="//' \
+	      -e 's/"]$"//'		    
+}
+
 __setup_log_dir;
 #__setup_verbose;
 script -c "${cmd} ${args}" -a "${__log_file}" > /dev/null 2>&1;
+
+exit "$(get_command_exit_code)";
