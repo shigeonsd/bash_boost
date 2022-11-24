@@ -68,20 +68,8 @@ function required_ge_3_args() {
 
 function required_args() {
     [ "$@" ] || {
-	local args=$(__format_args "$@");
-	die "cond=[ $@ ]: Invalid argument(s)."; 
-    }
-    return 0;
-}
-
-function xrequired_args() {
-    local n="${1}";
-    local ope="${2}";
-    local m="${3}";
-    shift 3;
-    [ $n -${ope} $m ] || {
-	local args=$(__format_args "$@");
-	die "cond=[ $n -${ope} $m ], ${args}: Invalid argument(s)."; 
+	#die "cond=[ $* ]: Invalid argument(s)."; 
+	die "$(__ invalid_arguments "cond=[ $@ ]")"; 
     }
     return 0;
 }

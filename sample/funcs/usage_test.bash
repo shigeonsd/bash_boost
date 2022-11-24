@@ -26,7 +26,7 @@ function __getopt2() {
 	echo "args[${i}]='$arg'";
 	((i++));
     done
-    required_args $# -eq 2 || die "$(__ invalid_arguments)";
+    required_args $# -eq 2;
 }
 
 usage "-x|--exclude" "-y=NUM|--yield=NUN" "-z" "-q|--quit" "FILE1 FILE2" <<_
@@ -34,13 +34,14 @@ usage "-x|--exclude" "-y=NUM|--yield=NUN" "-z" "-q|--quit" "FILE1 FILE2" <<_
     複数行記載できる。
     さらに詳しく.
 _
-usage_chkopt ge 2;
+#usage_chkopt ge 2;
 usage_getopt __getopt1 __getopt2
 
 function main() {
     enter;
+    info "args=$@";
     info "processing main.";
     leave;
 }
 
-run main;
+run main "$@";

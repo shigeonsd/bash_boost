@@ -136,6 +136,7 @@ function __on_script_ready() {
 function run() {
     local main="${1}";
     __on_script_ready;
+    shift;
     "${main}" "$@";
 }
 

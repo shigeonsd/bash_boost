@@ -64,7 +64,7 @@ function usage_chkopt() {
     local ope;
 
     case $# in
-    1) num=${arg1}; ope="-eq";     ;;
+    1) num=${arg1}; ope="eq";     ;;
     2) num=${arg2}; ope="${arg1}"; ;;
     esac
 
