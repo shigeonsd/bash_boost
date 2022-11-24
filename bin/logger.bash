@@ -30,7 +30,6 @@ usage_chkopt ge 1;
 usage_getopt : __getopt2;
 
 VERBOSE=${VERBOSE-"false"};
-
 export BASH_BOOST_LOGGING=true;
 
 function __setup_log_dir() {

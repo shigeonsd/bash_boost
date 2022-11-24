@@ -5,7 +5,7 @@
 
 function if_debug() {
     [[ -v DEBUG ]] || return 1;
-    case $DEBUG in
+    case "${DEBUG}" in
     0|true)  return 0; ;;
     1|false) return 1; ;;
     esac

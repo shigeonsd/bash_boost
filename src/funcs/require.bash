@@ -4,7 +4,7 @@
 #
 #
 function __invoke_init() {
-    local init_func="_${___name}_init";
+    local init_func="@${___name}_init";
     exist_func "${init_func}" || return;
     "${___info}" " Initializing ${___name}... ";
     "${init_func}";
@@ -12,9 +12,15 @@ function __invoke_init() {
 }
 
 function __add_cleanup() {
-    local func="_${___name}_cleanup";
+    local func="@${___name}_cleanup";
     exist_func "${func}" || return;
     __bash_boost_cleanup_funcs__+=( "${func}" );
+}
+
+function __add_script_ready() {
+    local func="@${___name}_script_ready";
+    exist_func "${func}" || return;
+    __bash_boost_script_ready_funcs__+=( "${func}" );
 }
 
 function __require_file() {
@@ -109,15 +115,31 @@ function __required_files() {
 
 function __on_exit() {
     declare -a __bash_boost_cleanup_funcs_rev__=();
-    local cleanup;
+    local func;
     array_reverse __bash_boost_cleanup_funcs__ __bash_boost_cleanup_funcs_rev__;
     for cleanup in "${__bash_boost_cleanup_funcs_rev__[@]}"; do
         "${___info}" "Cleanup $(echo ${cleanup} | sed -e 's/^_//' -e 's/_cleanup//')... ";
-        "${cleanup}";
+        "${func}";
         "${___info}" "done";
     done;
 }
 
+function __on_script_ready() {
+    local script_ready;
+    info "Script ready...";
+    for func in "${__bash_boost_script_ready_funcs__[@]}"; do
+        "${func}";
+    done;
+    info "done";
+}
+
+function run() {
+    local main="${1}";
+    __on_script_ready;
+    "${main}" "$@";
+}
+
 declare -a __bash_boost_required__=();
 declare -a -g __bash_boost_cleanup_funcs__=();
+declare -a -g __bash_boost_script_ready_funcs__=();
 trap __on_exit EXIT;

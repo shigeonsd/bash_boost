@@ -7,7 +7,7 @@ function _msg() {
     echo  $@ >&2; 
 }
 
-if_true BASH_BOOST_LOGGIN && {
+if_true BASH_BOOST_LOGGING && {
     # logger.bash の中で動いているときは日時付きでログを出力する。
     # (_msg() をオーバーライドする）
     function _msg() {
@@ -19,7 +19,7 @@ function error() { _msg "ERROR:" $@; }
 function warn()  { _msg "WARN:"  $@; }
 function info()  { _msg "INFO:"  $@; }
 function debug() { :; }
-if_debug || {
+if_debug && {
     # デバッグモードの時のみメッセージを出力する。
     # (debug() をオーバーライドする）
     function debug() { _msg "DEBUG:" $@; }
@@ -39,4 +39,3 @@ function die() {
 function __on_die() {
     if_debug && stacktrace error;
 }
-
