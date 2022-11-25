@@ -48,6 +48,36 @@ test__require___error ()
     : テスト成功;
     return $(success)
 }
+test__run___success () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
+test__run___error () 
+{ 
+    : テストスキップ;
+    return $(skipped);
+    : テストデータ;
+    local data="12345";
+    local expected="12345";
+    : テスト実行;
+    : success;
+    : 'do_test_t <TEST_CONDITION> || return $(failure)';
+    : failure;
+    : 'do_test_f <TEST_CONDITION> || return $(failure)';
+    : テスト成功;
+    return $(success)
+}
 teardown () 
 { 
     :
