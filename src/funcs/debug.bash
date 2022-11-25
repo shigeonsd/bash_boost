@@ -31,6 +31,8 @@ function var_dump() {
 
 function check_point() {
     if_debug || return 0;
+    local frame=($(caller 0));
+    debug "check_point: ${frame[1]} (${frame[2]}:${frame[0]})";
 }
 
 function enter() {

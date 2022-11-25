@@ -140,7 +140,7 @@ function run() {
     "${main}" "$@";
 }
 
-declare -a __bash_boost_required__=();
+declare -a -g __bash_boost_required__=();
 declare -a -g __bash_boost_cleanup_funcs__=();
 declare -a -g __bash_boost_script_ready_funcs__=();
 trap __on_exit EXIT;

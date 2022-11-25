@@ -128,7 +128,46 @@ function __aop() {
     __aop_before "$@";
     __aop_around "$@";
     ret="$?";
+    [ ${ret} -eq 0 ] && __aop_after_returning "$@";
     __aop_after "$@";
     __aop_debug "${1}() }";
     return ${ret};
+}
+
+declare -A -g __bash_boost_aop_before__=();     
+function @before() {
+    declare -n h_before=__bash_boost_aop_before__;
+    local func="${1}"
+    local filename=$(basename "${frame[2]}" .bash);
+    h_before[$[
+}
+
+declare -A -g __bash_boost_aop_after__=();     
+function @after() {
+    declare -n h_after=__bash_boost_aop_before__;
+	:
+}
+
+declare -A -g __bash_boost_aop_around__=();     
+function @around() {
+    declare -n h_around=__bash_boost_aop_before__;
+	:
+}
+
+declare -A -g __bash_boost_aop_after_returning__=();     
+function @after_retuning() {
+    declare -n h_after_returning=__bash_boost_aop_after_returning;
+	:
+}
+
+function @aop_init() {
+    :
+}
+
+function @aop_script_ready() {
+    :
+}
+
+function @aop_cleanup() {
+    :
 }
