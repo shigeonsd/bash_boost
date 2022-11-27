@@ -4,11 +4,9 @@
 #
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
-require debug;
-
-#require aop;
-#require foo_advice;
-
+require aop;
+require foo_advisor;
+#aop_dump;
 function func1() {
     echo
     enter;

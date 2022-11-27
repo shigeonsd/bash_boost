@@ -4,7 +4,7 @@
 #
 #
 function __invoke_init() {
-    local init_func="@${___name}_init";
+    local init_func="_${___name}_init";
     exist_func "${init_func}" || return 0;
     "${___info}" " Initializing ${___name}... ";
     "${init_func}";
@@ -12,13 +12,13 @@ function __invoke_init() {
 }
 
 function __add_cleanup() {
-    local func="@${___name}_cleanup";
+    local func="_${___name}_cleanup";
     exist_func "${func}" || return 0;
     __bash_boost_cleanup_funcs__+=( "${func}" );
 }
 
 function __add_script_ready() {
-    local func="@${___name}_script_ready";
+    local func="_${___name}_script_ready";
     exist_func "${func}" || return 0;
     __bash_boost_script_ready_funcs__+=( "${func}" );
 }
@@ -28,6 +28,7 @@ function __require_file() {
     local ___name="$(basename "${file}" | sed -e 's/\.[^.]*$//')";
     "${___info}" "${___invoke} ${file}. ";
     source "${file}";
+    __add_script_ready;
     __add_cleanup;
     __invoke_init;
     "${___info}" "done";

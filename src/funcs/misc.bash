@@ -15,3 +15,7 @@ function nop() {
     return 0;
 }
 
+
+function get_defined_functions() {
+    declare -f | grep ' () $' | sed -e 's/ () //g'
+}
