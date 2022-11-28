@@ -40,20 +40,28 @@ function __xaop_set_advice() {
 #    done;
 }
 
-function __aop_do_join_point() {
+function __aop_do_joinpoint() {
+enter;
+    echo "${1}"
+    declare -p "${1}";
     declare -n  jp_array="${1}";
     local      _jp_hash;
     local      _pointcut;
     local      advice;
     shift;
+    
     for _jp_hash in "${jp_array[@]}"; do
 	declare -n jp_hash="${_jp_hash}";
+	declare -p "${_jp_hash}";
 	for _pointcut in "${!jp_hash[@]}"; do 
-	    advice="${jp_hash["${pointcut}"]}";
-	    [[ "${___func}" =~ ${pointcut} ]] || continue;
+	    advice="${jp_hash["${_pointcut}"]}";
+	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
+	    echo 
+	    echo "@@@ ${advice} -> ${_pointcut}";
 	    "${advice}" "$@" || die "$(__ failed "${advice} $@")";
 	done;
     done;
+leave;
 }
 
 function __aop_do_before() {
@@ -69,54 +77,60 @@ function __aop_do_after_returning() {
 }
 
 function __aop_do_around() {
-    "${__aop_around[@]}" $@;
+    "${__aop_around[@]}" "$@";
 }
 
 function aop_around_template() {
     local ret;
-    shift;
-
-    $@;
-    ret=$?
-
+    #shift;
+    "$@";
+    ret=$?;
     return ${ret};
 }
 
 function __aop_injector_tmpl() {
     local ___func="${FUNCNAME}";
-    local ___aop_cmd="$@";
+    local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
-    __aop_do_before "$@";
-    __aop_do_around "$@";
+echo "${___aop_cmd[@]}";
+    __aop_do_before "${___aop_cmd[@]}";
+    __aop_do_around "${___aop_cmd[@]}";
     ___ret="$?";
-    __aop_do_after_returning "$@";
-    __aop_do_after "$@";
-    return ${ret};
+    __aop_do_after_returning "${___aop_cmd[@]}";
+    __aop_do_after "${___aop_cmd[@]}";
+    return ${___ret};
 }
 
 function __aop_wrap_func_with_injector() {
     local func="${1}";
-    defun "${func}" "__aop_orig_${func}";
-    defun __aop_injector_tmpl "${func}" \
+    defun "__aop_orig_${func}" "${func}";
+    defun "${func}" __aop_injector_tmpl;
 }
 
-function __aop_set_advice() {
+function __aop_pick_target_funcs() {
     local func;
     local pointcut;
     while read func; do
 	for pointcut in "${__aop_pointcuts[@]}"; do
 	    [[ "${func}" =~ ${pointcut} ]] && {
-		__aop_wrap_func_with_injector "${func}";
+		echo "${func}";
 		break;
 	    }
 	done;
     done;
 }
 
+function __aop_inject_advice() {
+    local func;
+    while read func; do
+	__aop_wrap_func_with_injector "${func}";
+	declare -f "${func}";
+    done;
+}
+
 #
 # @joinpoint advice pointcut ...
 #
-
 function __aop_add_joinpoint() {
     local joinpoint="${1}"; 
     local advice="${2}";
@@ -134,22 +148,48 @@ function __aop_add_joinpoint() {
 	jp_hash["${pointcut}"]="${advice}";
 	__aop_pointcuts+=("${pointcut}");
     done
-    aop_jp_array+=( "${_h}" );
+    array_exists aop_jp_array "${_h}" || {
+	aop_jp_array+=( "${_h}" );
+    }
 }
 
 function @before() {
+    local frame=($(caller 0));
+    local advice="__$(basename "${frame[2]}" .bash)_before";
+    __aop_add_joinpoint before "${advice}" "$@";
+}
+
+function @Before() {
     __aop_add_joinpoint before "$@";
 }
 
 function @after() {
+    local frame=($(caller 0));
+    local advice="__$(basename "${frame[2]}" .bash)_after";
+    __aop_add_joinpoint after "${advice}" "$@";
+}
+
+function @After() {
     __aop_add_joinpoint after "$@";
 }
 
 function @around() {
+    local frame=($(caller 0));
+    local advice="__$(basename "${frame[2]}" .bash)_around";
+    __aop_add_joinpoint around "${advice}" "$@";
+}
+
+function @Around() {
     __aop_add_joinpoint around "$@";
 }
 
 function @after_returning() {
+    local frame=($(caller 0));
+    local advice="__$(basename "${frame[2]}" .bash)_after_returning";
+    __aop_add_joinpoint after_returning "${advice}" "$@";
+}
+
+function @After_returning() {
     __aop_add_joinpoint after_returning "$@";
 }
 
@@ -169,11 +209,14 @@ function __aop_dump() {
 #}
 
 function _aop_script_ready() {
-    enter;
-    get_defined_functions \
-	| grep -v '^_'  \
-	| __aop_set_advice
-    leave;
+    local func;
+    local target_funcs="$(get_defined_functions \
+			| grep -v '^_'  \
+			| __aop_pick_target_funcs)";
+    for func in ${target_funcs[@]}; do
+	echo $func;
+	__aop_wrap_func_with_injector "${func}";
+    done
 }
 
 #function _aop_cleanup() {

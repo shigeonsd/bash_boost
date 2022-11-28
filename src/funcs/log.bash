@@ -33,6 +33,10 @@ function die() {
     exit ${exit_status};
 }
 
+function failed_pipe() {
+    die "$(__ failed_pipe "${PIPESTATUS[@]}")";
+}
+
 # __on_die() は die() 実行時に実行されるフック関数。
 # デフォルトでは、デバッグモードの時にスタックトレースをダンプする。
 # (これ以外の動作をさせたいときは、__on_die() をオーバーライドする)

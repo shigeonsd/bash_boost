@@ -18,4 +18,5 @@ declare -g -A __messages=(
             [file_not_found]='File not found.'
  [no_such_file_or_directory]='No such file or directory.'
                     [failed]='Failed function or command.'
+               [failed_pipe]='Failed pipe.'
 );
