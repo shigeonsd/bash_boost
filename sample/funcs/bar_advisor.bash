@@ -3,8 +3,8 @@
 # bar_advice.bash -- 
 #
 #
-@Before __bar_advisor_before '.*func1' 'func3' 
-function __bar_advisor_before() {
+@Before __bar_before1 '.*func1' 'func3' 
+function __bar_before1() {
     enter;
     check_point;
     leave;
@@ -17,23 +17,23 @@ function __bar_before2() {
     leave;
 }
 
-@After __bar_advisor_after 'func1'
-function __bar_advisor_after() {
+@After __bar_after 'func1'
+function __bar_after() {
     enter;
     check_point;
     leave;
 }
 
-@Around __bar_advisor_around 'func2'
-function __bar_advisor_around() {
+@Around __bar_around 'func2'
+function __bar_around() {
     enter;
     check_point;
     aop_around_template $@;
     leave;
 }
 
-@After_returning __bar_advice_returning 'func3'; 
-function __bar_advice_returning() {
+@After_returning __bar_after_returning 'func3'; 
+function __bar_after_returning() {
     enter;
     check_point;
     leave;

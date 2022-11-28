@@ -19,31 +19,8 @@ declare -a -g __aop_around=();
 declare -a -g __aop_after_returning=();
 declare -a -g __aop_pontcuts=();
 
-function __xaop_set_advice() {
-    local _jp_array;
-    local _jp_hash;
-    local pointcut;
-    local advice;
-    local functions=$(get_defined_functions | grep -v '^_');
-#    for func in "${functions[@]}"; do
-    for _jp_array in __aop_before __aop_after __aop_around __aop_after_returning; do
-	declare -n jp_array="${_jp_array}";
-	for _jp_hash in "${jp_array[@]}"; do
-	    declare -n jp_hash="${_jp_hash}";
-	    for pointcut in "${!jp_hash[@]}"; do 
-		advice="${jp_hash["${pointcut}"]}";
-		echo pointcut="${pointcut}";
-		echo advice="${advice}";
-	    done;
-	done;
-    done;
-#    done;
-}
-
 function __aop_do_joinpoint() {
 enter;
-    echo "${1}"
-    declare -p "${1}";
     declare -n  jp_array="${1}";
     local      _jp_hash;
     local      _pointcut;
@@ -52,16 +29,34 @@ enter;
     
     for _jp_hash in "${jp_array[@]}"; do
 	declare -n jp_hash="${_jp_hash}";
-	declare -p "${_jp_hash}";
 	for _pointcut in "${!jp_hash[@]}"; do 
 	    advice="${jp_hash["${_pointcut}"]}";
 	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
-	    echo 
-	    echo "@@@ ${advice} -> ${_pointcut}";
+	    debug "@@@ ${advice} -> ${_pointcut}";
 	    "${advice}" "$@" || die "$(__ failed "${advice} $@")";
 	done;
     done;
 leave;
+}
+
+function __aop_do_joinpoint2() {
+    declare -n  jp_array="${1}";
+    local      _jp_hash;
+    local      _pointcut;
+    local      advice;
+    declare -a advice_array=();
+    shift;
+    
+    for _jp_hash in "${jp_array[@]}"; do
+	declare -n jp_hash="${_jp_hash}";
+	for _pointcut in "${!jp_hash[@]}"; do 
+	    advice="${jp_hash["${_pointcut}"]}";
+	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
+	    debug "@@@ ${advice} -> ${_pointcut}";
+	    advice_array+=( "${advice}" );
+	done;
+    done;
+    "${advice_array[@]}" "$@";
 }
 
 function __aop_do_before() {
@@ -77,7 +72,7 @@ function __aop_do_after_returning() {
 }
 
 function __aop_do_around() {
-    "${__aop_around[@]}" "$@";
+    __aop_do_joinpoint2 __aop_around "$@";
 }
 
 function aop_around_template() {
@@ -89,15 +84,17 @@ function aop_around_template() {
 }
 
 function __aop_injector_tmpl() {
+enter;
     local ___func="${FUNCNAME}";
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
-echo "${___aop_cmd[@]}";
+echo "__aop_cmd=${___aop_cmd[@]}";
     __aop_do_before "${___aop_cmd[@]}";
     __aop_do_around "${___aop_cmd[@]}";
     ___ret="$?";
     __aop_do_after_returning "${___aop_cmd[@]}";
     __aop_do_after "${___aop_cmd[@]}";
+leave;
     return ${___ret};
 }
 
@@ -180,6 +177,7 @@ function @around() {
 }
 
 function @Around() {
+    echo "$@"
     __aop_add_joinpoint around "$@";
 }
 
@@ -214,7 +212,7 @@ function _aop_script_ready() {
 			| grep -v '^_'  \
 			| __aop_pick_target_funcs)";
     for func in ${target_funcs[@]}; do
-	echo $func;
+	debug $func;
 	__aop_wrap_func_with_injector "${func}";
     done
 }

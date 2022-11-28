@@ -92,6 +92,11 @@ function array_length() {
     return 0;
 }
 
+function array_empty() {
+    local len=$(array_length "${1}");
+    [ ${len} -eq 0 ];
+}
+
 function array_map() {
     declare -n __array_ref="${1}"; 
     local func="${2}";
