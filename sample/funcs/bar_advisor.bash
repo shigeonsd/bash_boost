@@ -26,19 +26,15 @@ function __bar_after() {
 
 @Around __bar_around 'func2'
 function __bar_around() {
-    ---
     -enter;
     -check_point;
     aop_around_template $@;
     -leave;
-    ---
 }
 
 @After_returning __bar_after_returning 'func3'; 
 function __bar_after_returning() {
-    ---
     -enter
     -check_point;
     -leave;
-    ---
 }

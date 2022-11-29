@@ -31,7 +31,7 @@ function __aop_do_joinpoint() {
 	for _pointcut in "${!jp_hash[@]}"; do 
 	    advice="${jp_hash["${_pointcut}"]}";
 	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
-	    debug "$(-indent)${advice} -> ${_pointcut}";
+	    debug "${advice} -> ${_pointcut}";
 	    "${advice}" "$@" || die "$(__ failed "${advice} $@")";
 	done;
     done;
@@ -50,7 +50,7 @@ function __aop_do_joinpoint2() {
 	for _pointcut in "${!jp_hash[@]}"; do 
 	    advice="${jp_hash["${_pointcut}"]}";
 	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
-	    debug "$(-indent)${advice} -> ${_pointcut}";
+	    debug "${advice} -> ${_pointcut}";
 	    advice_array+=( "${advice}" );
 	done;
     done;
