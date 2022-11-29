@@ -28,7 +28,7 @@ function __foo_advisor_after() {
 function __foo_advisor_around() {
     -enter;
     -check_point;
-    aop_around_template $@;
+    _aop_around_template $@;
     -leave;
 }
 

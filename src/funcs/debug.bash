@@ -73,3 +73,7 @@ function -leave() {
     -indent--;
     debug "}";
 }
+
+function -echo() {
+    debug "$@";
+}

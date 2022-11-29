@@ -81,7 +81,7 @@ function __aop_do_around() {
     -leave
 }
 
-function aop_around_template() {
+function _aop_around_template() {
     local ret;
     #shift;
     "$@";
@@ -214,6 +214,7 @@ function __aop_dump() {
 #}
 
 function _aop_script_ready() {
+    -enter;
     local func;
     local target_funcs="$(get_defined_functions \
 			| grep -v '^_'  \
@@ -221,9 +222,10 @@ function _aop_script_ready() {
 			| grep -v '^@'  \
 			| __aop_pick_target_funcs)";
     for func in ${target_funcs[@]}; do
-	debug "${func}";
+	-echo "${func}";
 	__aop_wrap_func_with_injector "${func}";
     done
+    -leave;
 }
 
 #function _aop_cleanup() {
