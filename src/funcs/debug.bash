@@ -28,29 +28,29 @@ function stacktrace() {
 
 function -var_dump() {
     if_debug || return 0;
-    debug "$(-indent)var_dump {";
+    debug "var_dump {";
     for var in $@; do
         debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
     done;
-    debug "$(-indent)}";
+    debug "}";
 }
 
 function -check_point() {
     if_debug || return 0;
     local frame=($(caller 0));
-    debug "$(-indent)check_point: ${frame[1]} (${frame[2]}:${frame[0]})";
+    debug "check_point: ${frame[1]} (${frame[2]}:${frame[0]})";
 }
 
 function ---() {
     if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
-    debug "$(-indent)-------------------------";
+    debug "-------------------------";
 }
 
 function -enter() {
     if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
-    debug "$(-indent)>>> ${funcname}() {";
+    debug ">>> ${funcname}() {";
 
     declare -n indent=__bash_boost_debug_indent__;
     indent+="    ";
@@ -60,5 +60,5 @@ function -leave() {
     if_debug || return 0;
     declare -n indent=__bash_boost_debug_indent__;
     indent=$(echo "${indent}" | sed -e 's/^    //');
-    debug "$(-indent)}";
+    debug "}";
 }

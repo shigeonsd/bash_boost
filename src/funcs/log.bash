@@ -22,7 +22,7 @@ function debug() { :; }
 if_debug && {
     # デバッグモードの時のみメッセージを出力する。
     # (debug() をオーバーライドする）
-    function debug() { _msg "DEBUG:" "$@"; }
+    function debug() { _msg "DEBUG:" "$(-indent)$@"; }
 }
 
 function die() {

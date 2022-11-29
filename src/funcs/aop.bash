@@ -220,7 +220,7 @@ function _aop_script_ready() {
 			| grep -v '^@'  \
 			| __aop_pick_target_funcs)";
     for func in ${target_funcs[@]}; do
-	debug $func;
+	debug "${func}";
 	__aop_wrap_func_with_injector "${func}";
     done
 }
