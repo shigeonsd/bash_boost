@@ -6,30 +6,30 @@ set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require aop;
 require foo_advisor;
-require bar_advisor;
+#require bar_advisor;
 
 function func1() {
-    echo "##{"
-    enter;
-    check_point;
-    leave;
-    echo "##}"
+    ---
+    -enter;
+    -check_point;
+    -leave;
+    ---
 }
 
 function func2() {
-    echo "##{"
-    enter;
-    check_point;
-    leave;
-    echo "##}"
+    ---
+    -enter;
+    -check_point;
+    -leave;
+    ---
 }
 
 function func3() {
-    echo "##{"
-    enter;
-    check_point;
-    leave;
-    echo "##}"
+    ---
+    -enter;
+    -check_point;
+    -leave;
+    ---
 }
 
 function main() {

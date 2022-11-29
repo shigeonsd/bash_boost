@@ -4,25 +4,25 @@
 #
 function _msg() {
     shift;
-    echo  $@ >&2; 
+    echo  "$@" >&2; 
 }
 
 if_true BASH_BOOST_LOGGING && {
     # logger.bash の中で動いているときは日時付きでログを出力する。
     # (_msg() をオーバーライドする）
     function _msg() {
-	echo "$(now)" $@; >&2;
+	echo "$(now)" "$@" ; >&2;
     }
 }
 
-function error() { _msg "ERROR:" $@; }
-function warn()  { _msg "WARN:"  $@; }
-function info()  { _msg "INFO:"  $@; }
+function error() { _msg "ERROR:" "$@"; }
+function warn()  { _msg "WARN:"  "$@"; }
+function info()  { _msg "INFO:"  "$@"; }
 function debug() { :; }
 if_debug && {
     # デバッグモードの時のみメッセージを出力する。
     # (debug() をオーバーライドする）
-    function debug() { _msg "DEBUG:" $@; }
+    function debug() { _msg "DEBUG:" "$@"; }
 }
 
 function die() {

@@ -7,6 +7,12 @@
 #    _msg "DEBUG:" $@;
 #}
 
+declare -g __bash_boost_debug_indent__="";
+function -indent() {
+    if_debug || return 0;
+    echo -n "${__bash_boost_debug_indent__}";
+}
+
 function stacktrace() {
     if_debug || return 0;
     local log=${1-info};
@@ -20,56 +26,39 @@ function stacktrace() {
     "${log}" "}"
 }
 
-function var_dump() {
+function -var_dump() {
     if_debug || return 0;
-    debug "var_dump {";
+    debug "$(-indent)var_dump {";
     for var in $@; do
         debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
     done;
-    debug "}";
+    debug "$(-indent)}";
 }
 
-function check_point() {
+function -check_point() {
     if_debug || return 0;
     local frame=($(caller 0));
-    debug "check_point: ${frame[1]} (${frame[2]}:${frame[0]})";
+    debug "$(-indent)check_point: ${frame[1]} (${frame[2]}:${frame[0]})";
 }
 
-function enter() {
+function ---() {
     if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
-    debug "enter ${funcname}() {";
+    debug "$(-indent)-------------------------";
 }
 
-function leave() {
+function -enter() {
     if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
-    debug "leave ${funcname}() }";
+    debug "$(-indent)>>> ${funcname}() {";
+
+    declare -n indent=__bash_boost_debug_indent__;
+    indent+="    ";
 }
 
-function debug_before() {
+function -leave() {
     if_debug || return 0;
-    local funcname=${1-${FUNCNAME[1]}}
-    enter ${funcname};
-}
-
-function debug_after() {
-    if_debug || return 0;
-    local funcname=${1-${FUNCNAME[1]}}
-    leave ${funcname};
-}
-
-function debug_around() {
-    if_debug || {
-	$@;
-	return $?;
-    }
-    aop_around_template debug $@;
-}
-
-function debug_on_around() {
-    local __debug="${DEBUG}";
-    DEBUG="true";
-    aop_around_template debug $@;
-    DEBUG=${__debug};
+    declare -n indent=__bash_boost_debug_indent__;
+    indent=$(echo "${indent}" | sed -e 's/^    //');
+    debug "$(-indent)}";
 }

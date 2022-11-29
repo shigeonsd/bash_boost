@@ -38,10 +38,10 @@ _
 usage_getopt __getopt1 __getopt2
 
 function main() {
-    enter;
+    -enter;
     info "args=$@";
     info "processing main.";
-    leave;
+    -leave;
 }
 
 run main "$@";
