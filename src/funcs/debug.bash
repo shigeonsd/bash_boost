@@ -13,6 +13,18 @@ function -indent() {
     echo -n "${__bash_boost_debug_indent__}";
 }
 
+function -indent++() {
+    if_debug || return 0;
+    declare -n indent=__bash_boost_debug_indent__;
+    indent+="    ";
+}
+
+function -indent--() {
+    if_debug || return 0;
+    declare -n indent=__bash_boost_debug_indent__;
+    indent=$(echo "${indent}" | sed -e 's/^    //');
+}
+
 function stacktrace() {
     if_debug || return 0;
     local log=${1-info};
@@ -29,9 +41,11 @@ function stacktrace() {
 function -var_dump() {
     if_debug || return 0;
     debug "var_dump {";
+    -indent++;
     for var in $@; do
-        debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
+	debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
     done;
+    -indent--;
     debug "}";
 }
 
@@ -51,14 +65,11 @@ function -enter() {
     if_debug || return 0;
     local funcname=${1-${FUNCNAME[1]}}
     debug ">>> ${funcname}() {";
-
-    declare -n indent=__bash_boost_debug_indent__;
-    indent+="    ";
+    -indent++;
 }
 
 function -leave() {
     if_debug || return 0;
-    declare -n indent=__bash_boost_debug_indent__;
-    indent=$(echo "${indent}" | sed -e 's/^    //');
+    -indent--;
     debug "}";
 }

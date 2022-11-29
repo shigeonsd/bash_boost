@@ -95,6 +95,7 @@ function __aop_injector_tmpl() {
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
     debug "__aop_cmd=${___aop_cmd[@]}";
+    -var_dump ___aop_cmd;
     __aop_do_before "${___aop_cmd[@]}";
     __aop_do_around "${___aop_cmd[@]}";
     ___ret="$?";
