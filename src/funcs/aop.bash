@@ -81,7 +81,7 @@ function __aop_do_around() {
     -leave
 }
 
-function __aop_injector_tmpl() {
+function __xaop_injector_tmpl() {
     -enter;
     local ___func="${FUNCNAME}";
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
@@ -98,10 +98,98 @@ function __aop_injector_tmpl() {
     return ${___ret};
 }
 
+
+function __aop_joinpoint() {
+    declare -n  jp_array="${1}";
+    local      _jp_hash;
+    local      _pointcut;
+    local      advices=();
+    shift;
+    
+    for _jp_hash in "${jp_array[@]}"; do
+	declare -n jp_hash="${_jp_hash}";
+	for _pointcut in "${!jp_hash[@]}"; do 
+	    advice="${jp_hash["${_pointcut}"]}";
+	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
+	    -echo "${advice} -> ${_pointcut}";
+	    advices+=( "${advice} \"\${___aop_cmd[@]}\";" );
+	done;
+    done;
+    echo "${advices[@]}";
+}
+
+function __aop_joinpoint2() {
+    declare -n  jp_array="${1}";
+    local      _jp_hash;
+    local      _pointcut;
+    local      advice;
+    declare -a advice_array=();
+    shift;
+    
+    for _jp_hash in "${jp_array[@]}"; do
+	declare -n jp_hash="${_jp_hash}";
+	for _pointcut in "${!jp_hash[@]}"; do 
+	    advice="${jp_hash["${_pointcut}"]}";
+	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
+	    -echo "${advice} -> ${_pointcut}";
+	    advice_array+=( "${advice}" );
+	done;
+    done;
+    echo "${advice_array[@]}" "$@";
+}
+
+function __aop_before() {
+    -enter
+    __aop_joinpoint __aop_before "$@";
+    -leave
+}
+
+function __aop_after() {
+    -enter
+    __aop_joinpoint __aop_after "$@";
+    -leave
+}
+
+function __aop_after_returning() {
+    -enter
+    __aop_joinpoint __aop_after_returning "$@";
+    -leave
+}
+
+function __aop_around() {
+    -enter
+    __aop_joinpoint2 __aop_around "$@";
+    -leave
+}
+
+function __aop_injector_tmpl() {
+    -enter;
+    local ___func="${FUNCNAME}";
+    local ___aop_cmd=("__aop_orig_${___func}" "$@");
+    local ___ret=0;
+    -var_dump ___aop_cmd;
+# "${___aop_cmd[@]}";
+    BEFORE
+    AROUND
+    ___ret="$?";
+    [ ${___ret} -eq 0 ] && {
+	AFTER_RETURNING
+    }
+    AFTER
+    -leave;
+    return ${___ret};
+}
+
 function __aop_wrap_func_with_injector() {
-    local func="${1}";
-    defun "__aop_orig_${func}" "${func}";
-    defun "${func}" __aop_injector_tmpl;
+    local ___func="${1}";
+    defun "__aop_orig_${___func}" "${___func}";
+    #defun "${func}" __aop_injector_tmpl;
+    defun "${func}" __aop_injector_tmpl             \
+	BEFORE           "$(__aop_before)"          \
+	AROUND           "$(__aop_around)"          \
+	AFTER_RETURNING  "$(__aop_after_returning)" \
+	AFTER            "$(__aop_after)";
+    declare -p "${___func}";
 }
 
 function __aop_pick_target_funcs() {
