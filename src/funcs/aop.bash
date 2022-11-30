@@ -117,14 +117,6 @@ function __aop_pick_target_funcs() {
     done;
 }
 
-function __aop_inject_advice() {
-    local func;
-    while read func; do
-	__aop_wrap_func_with_injector "${func}";
-	declare -f "${func}";
-    done;
-}
-
 #
 # @joinpoint advice pointcut ...
 #
@@ -194,7 +186,10 @@ function @After_returning() {
 function __aop_dump() {
     local array;
     local pointcut;
-    for array in __aop_before __aop_after __aop_around __aop_after_returning; do
+    for array in __aop_before \
+		 __aop_after  \
+		 __aop_around \
+		 __aop_after_returning; do
 	for pointcut in "${array[@]}"; do
 	    declare -n hash="${pointcut}";
 	    declare -p "${pointcut}";
@@ -206,10 +201,10 @@ function _aop_script_ready() {
     -enter;
     local func;
     local target_funcs="$(get_defined_functions \
-			| grep -v '^_'  \
-			| grep -v '^-'  \
-			| grep -v '^@'  \
-			| __aop_pick_target_funcs)";
+			    | grep -v '^_'  \
+			    | grep -v '^-'  \
+			    | grep -v '^@'  \
+			    | __aop_pick_target_funcs)";
     for func in ${target_funcs[@]}; do
 	-echo "${func}";
 	__aop_wrap_func_with_injector "${func}";
