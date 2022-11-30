@@ -1,21 +1,25 @@
 #
 # Makefile -- 関数の単体テスト
 #
-TOP_DIR	    = ..
-CURRENT_DIR = .
+TOP_DIR	      = ..
+CURRENT_DIR   = .
+
+FUNCS_DIR     = $(CURRENT_DIR)/funcs
+MODULES_DIR   = $(CURRENT_DIR)/modules     
+CLASS_DIR     = $(CURRENT_DIR)/class      
 
 TARGETS = \
-	funcs \
-	modules \
-	class \
+        ${FUNCS_DIR} \
+        ${MODULES_DIR} \
+        ${CLASS_DIR} \
 #
 
 SHELL          = /bin/bash -o pipefail
 
 all:
-	for d in $(TARGETS); do
-	    (cd $$d; make $@)
-	done;
+	for d in $(TARGETS); do \
+	    (cd $$d; make $@) \
+	done; \
 
 clean:
 	for d in $(TARGETS); do
