@@ -31,7 +31,7 @@ function __aop_do_joinpoint() {
 	for _pointcut in "${!jp_hash[@]}"; do 
 	    advice="${jp_hash["${_pointcut}"]}";
 	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
-	    debug "${advice} -> ${_pointcut}";
+	    -echo "${advice} -> ${_pointcut}";
 	    "${advice}" "$@" || die "$(__ failed "${advice} $@")";
 	done;
     done;
@@ -50,7 +50,7 @@ function __aop_do_joinpoint2() {
 	for _pointcut in "${!jp_hash[@]}"; do 
 	    advice="${jp_hash["${_pointcut}"]}";
 	    [[ "${___func}" =~ ${_pointcut} ]] || continue;
-	    debug "${advice} -> ${_pointcut}";
+	    -echo "${advice} -> ${_pointcut}";
 	    advice_array+=( "${advice}" );
 	done;
     done;
@@ -81,25 +81,18 @@ function __aop_do_around() {
     -leave
 }
 
-function _aop_around_template() {
-    local ret;
-    #shift;
-    "$@";
-    ret=$?;
-    return ${ret};
-}
-
 function __aop_injector_tmpl() {
     -enter;
     local ___func="${FUNCNAME}";
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
-    debug "__aop_cmd=${___aop_cmd[@]}";
     -var_dump ___aop_cmd;
     __aop_do_before "${___aop_cmd[@]}";
     __aop_do_around "${___aop_cmd[@]}";
     ___ret="$?";
-    __aop_do_after_returning "${___aop_cmd[@]}";
+    [ ${___ret} -eq 0 ] && {
+	__aop_do_after_returning "${___aop_cmd[@]}";
+    }
     __aop_do_after "${___aop_cmd[@]}";
     -leave;
     return ${___ret};
@@ -209,10 +202,6 @@ function __aop_dump() {
     done;
 }
 
-#function _aop_init() {
-#    :
-#}
-
 function _aop_script_ready() {
     -enter;
     local func;
@@ -228,6 +217,3 @@ function _aop_script_ready() {
     -leave;
 }
 
-#function _aop_cleanup() {
-#    :
-#}
