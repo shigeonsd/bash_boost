@@ -34,8 +34,11 @@ function func3() {
 
 function main() {
     __aop_dump;
+    declare -f func1
     func1;
+    declare -f func2
     func2;
+    declare -f func3
     func3;
 }
 
