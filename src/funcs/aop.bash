@@ -96,18 +96,16 @@ function __aop_around_funcs() {
 }
 
 function __aop_injector_tmpl() {
-    -enter;
     local ___func="${FUNCNAME}";
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
-    -var_dump ___aop_cmd;
-# "${___aop_cmd[@]}";
+    #-var_dump ___aop_cmd;
+    # "${___aop_cmd[@]}";
     __BEFORE__
     __AROUND__
     ___ret="$?";
     __AFTER_RETURNING__
     __AFTER__
-    -leave;
     return ${___ret};
 }
 

@@ -5,31 +5,20 @@
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require aop;
-require foo_advisor;
-require bar_advisor;
+#require foo_advisor;
+#require bar_advisor;
+require debug_advisor;
 
 function func1() {
-    ---
-    -enter;
-    -check_point;
-    -leave;
-    ---
+    stacktrace;
 }
 
 function func2() {
-    ---
-    -enter;
-    -check_point;
-    -leave;
-    ---
+    stacktrace;
 }
 
 function func3() {
-    ---
-    -enter;
-    -check_point;
-    -leave;
-    ---
+    stacktrace;
 }
 
 function main() {
