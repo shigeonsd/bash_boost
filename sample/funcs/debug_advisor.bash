@@ -5,7 +5,7 @@
 #
 @before 'func1' 'func3' 
 function __debug_advisor_before() {
-    -enter "${___func}";
+    -enter "${FUNCNAME} / ${___func}";
 }
 
 @after 'func1' 'func3'
@@ -15,14 +15,14 @@ function __debug_advisor_after() {
 
 @around 'func2'
 function __debug_advisor_around() {
-    -enter "${___func}";
+    -enter "${FUNCNAME} / ${___func}";
     $@;
     -leave;
 }
 
 @after_returning 'func3'; 
 function __debug_advisor_after_returning() {
-    -enter "${___func}";
+    -enter;
     -echo "___ret=${___ret}";
     -leave;
 }

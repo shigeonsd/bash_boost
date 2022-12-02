@@ -30,23 +30,25 @@ function stacktrace() {
     local log=${1-info};
     local index=0;
     local frame="";
-    "${log}" "stacktrace {"
+    "${log}" "$(-indent)stacktrace {"
+    -indent++;
     while frame=($(caller "${index}")); do
         ((index++))
-        "${log}" "at function ${frame[1]} (${frame[2]}:${frame[0]})";
+        "${log}" "$(-indent)at function ${frame[1]} (${frame[2]}:${frame[0]})";
     done
-    "${log}" "}"
+    -indent--;
+    "${log}" "$(-indent)}"
 }
 
 function -var_dump() {
     if_debug || return 0;
-    debug "var_dump {";
+    -echo "$(-indent)var_dump {";
     -indent++;
     for var in $@; do
-	debug $(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//');
+	-echo "$(-indent)$(declare -p "${var}" | sed -e 's/^declare -[a-zA-Z\-][a-zA-z]*//')";
     done;
     -indent--;
-    debug "}";
+    -echo "$(-indent)}";
 }
 
 function -check_point() {
