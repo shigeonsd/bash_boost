@@ -66,39 +66,31 @@ function __aop_joinpoint2() {
 }
 
 function __aop_before_funcs() {
-    -enter
     __aop_joinpoint __aop_before;
-    -leave
 }
 
 function __aop_after_funcs() {
-    -enter
     __aop_joinpoint __aop_after;
-    -leave
 }
 
 function __aop_after_returning_funcs() {
-    -enter
     local funcs="$(__aop_joinpoint __aop_after_returning)";
     [ "${funcs}" = "#" ] && {
 	echo '#';
-	-leave
 	return;
     }
     echo "[ \${___ret} -eq 0 ] \&\& { "${funcs}"; }";
-    -leave
 }
 
 function __aop_around_funcs() {
-    -enter
     __aop_joinpoint2 __aop_around;
-    -leave
 }
 
-function __aop_injector_tmpl() {
+function __aop_advice_injector_tmpl() {
     local ___func="${FUNCNAME}";
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
+    -enter;
     #-var_dump ___aop_cmd;
     # "${___aop_cmd[@]}";
     __BEFORE__
@@ -106,15 +98,15 @@ function __aop_injector_tmpl() {
     ___ret="$?";
     __AFTER_RETURNING__
     __AFTER__
+    -leave;
     return ${___ret};
 }
 
-function __aop_wrap_func_with_injector() {
+function __aop_wrap_func_with_advice_injector() {
     -enter
     local ___func="${1}";
     defun "__aop_orig_${___func}" "${___func}";
-    #defun "${func}" __aop_injector_tmpl;
-    defun "${___func}" __aop_injector_tmpl                    \
+    defun "${___func}" __aop_advice_injector_tmpl             \
 	__BEFORE__           "$(__aop_before_funcs)"          \
 	__AROUND__           "$(__aop_around_funcs)"          \
 	__AFTER_RETURNING__  "$(__aop_after_returning_funcs)" \
@@ -225,7 +217,7 @@ function _aop_script_ready() {
 			    | __aop_pick_target_funcs)";
     for func in ${target_funcs[@]}; do
 	-echo "${func}";
-	__aop_wrap_func_with_injector "${func}";
+	__aop_wrap_func_with_advice_injector "${func}";
     done
     -leave;
 }
