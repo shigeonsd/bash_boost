@@ -28,7 +28,8 @@ function __bar_after() {
 function __bar_around() {
     -enter;
     -check_point;
-    _aop_around_template $@;
+    $@;
+    #_aop_around_proceed $@;
     -leave;
 }
 
