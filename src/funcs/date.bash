@@ -15,6 +15,11 @@ function now() {
     date "${fmt}";
 }
 
+function now_sec() {
+    local fmt=${1-'+%s'};
+    date "${fmt}";
+}
+
 function n_days() {
     local fmt=$(THIS.fmt);
     local n="$1";

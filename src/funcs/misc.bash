@@ -15,7 +15,13 @@ function nop() {
     return 0;
 }
 
-
 function get_defined_functions() {
     declare -f | grep ' () $' | sed -e 's/ () //g'
+}
+
+function invoked_func() {
+    local sp=${1-0};
+    local frame=($(caller ${sp}));
+    local func="${frame[1]}"
+    echo "${func}";
 }

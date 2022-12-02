@@ -179,7 +179,6 @@ function @around() {
 }
 
 function @Around() {
-    echo "$@"
     __aop_add_joinpoint around "$@";
 }
 

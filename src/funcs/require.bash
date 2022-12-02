@@ -98,7 +98,7 @@ function require() {
     local ___invoke="${FUNCNAME}";
     local ___suffixes=( ".bash" ".sh" "" );
     local ___specified="${BASHBOOST_LIBPATH-""}";
-    local ___default=("${progdir}" "${funcs_dir}");
+    local ___default=("${progdir}" "${funcs_dir}" "${modules_dir}");
 
     __require "$@";
 }
@@ -118,11 +118,11 @@ function __on_exit() {
     declare -a __bash_boost_cleanup_funcs_rev__=();
     local func;
     array_reverse __bash_boost_cleanup_funcs__ __bash_boost_cleanup_funcs_rev__;
-    for cleanup in "${__bash_boost_cleanup_funcs_rev__[@]}"; do
-        "${___info}" "Cleanup $(echo ${cleanup} | sed -e 's/^_//' -e 's/_cleanup//')... ";
+    info "Cleanup ...";
+    for func in "${__bash_boost_cleanup_funcs_rev__[@]}"; do
         "${func}";
-        "${___info}" "done";
     done;
+    info "done";
 }
 
 function __on_script_ready() {

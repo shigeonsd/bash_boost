@@ -5,20 +5,24 @@
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require aop;
+require laptime_advisor;
 require debug_advisor;
 #require foo_advisor;
 #require bar_advisor;
 
 function func1() {
     echo "$(-indent)### ${FUNCNAME} ###";
+    sleep 1;
 }
 
 function func2() {
     echo "$(-indent)### ${FUNCNAME} ###";
+    sleep 1;
 }
 
 function func3() {
     echo "$(-indent)### ${FUNCNAME} ###";
+    sleep 1;
 }
 
 function main() {
