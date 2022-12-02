@@ -27,7 +27,7 @@ function __debug_advisor_around() {
     return ${ret};
 }
 
-@after_returning '^func.*'; 
+@after_returning '^func.*' 
 function __debug_advisor_after_returning() {
     -enter "${FUNCNAME}";
     -echo "Succeed";

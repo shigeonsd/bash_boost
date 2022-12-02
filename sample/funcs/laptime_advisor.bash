@@ -4,4 +4,4 @@
 #
 #
 require laptime;
-@Around __laptime_around 'func1' 'func2' 'func3'
+@Around laptime 'func1' 'func2' 'func3'

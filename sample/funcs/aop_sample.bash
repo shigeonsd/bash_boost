@@ -5,7 +5,7 @@
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require aop;
-#require laptime_advisor;
+require laptime_advisor;
 require debug_advisor;
 #require foo_advisor;
 #require bar_advisor;

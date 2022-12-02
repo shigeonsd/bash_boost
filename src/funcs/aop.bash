@@ -159,7 +159,10 @@ function @before() {
 }
 
 function @Before() {
-    __aop_add_joinpoint before "$@";
+    local advice="__${1}_before";
+    exist_func "${1}" && advice="${1}";
+    shift;
+    __aop_add_joinpoint before "${advice}" "$@";
 }
 
 function @after() {
@@ -169,7 +172,10 @@ function @after() {
 }
 
 function @After() {
-    __aop_add_joinpoint after "$@";
+    local advice="__${1}_after";
+    exist_func "${1}" && advice="${1}";
+    shift;
+    __aop_add_joinpoint after "${advice}" "$@";
 }
 
 function @around() {
@@ -179,7 +185,10 @@ function @around() {
 }
 
 function @Around() {
-    __aop_add_joinpoint around "$@";
+    local advice="__${1}_around";
+    exist_func "${1}" || advice="${1}";
+    shift;
+    __aop_add_joinpoint around "${advice}" "$@";
 }
 
 function @after_returning() {
@@ -189,7 +198,10 @@ function @after_returning() {
 }
 
 function @After_returning() {
-    __aop_add_joinpoint after_returning "$@";
+    local advice="__${1}_after_returning";
+    exist_func "${1}" && advice="${1}";
+    shift;
+    __aop_add_joinpoint after_returning "${advice}" "$@";
 }
 
 function __aop_dump() {
