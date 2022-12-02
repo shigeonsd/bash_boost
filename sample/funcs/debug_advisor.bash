@@ -3,7 +3,7 @@
 # debug_advice.bash -- 
 #
 #
-@before 'func1' 'func2' 'func3' 
+@before 'func1' 'func3' 
 function __debug_advisor_before() {
     ---
     declare -f "${___func}" | sed -e "s/^/$(-indent)/";
@@ -11,8 +11,9 @@ function __debug_advisor_before() {
     -enter "${FUNCNAME}";
 }
 
-@after 'func1' 'func2' 'func3'
+@after 'func1' 'func3'
 function __debug_advisor_after() {
+    -echo "___ret=${___ret}";
     -leave;
 }
 
@@ -20,12 +21,15 @@ function __debug_advisor_after() {
 function __debug_advisor_around() {
     -enter "${FUNCNAME}";
     $@;
+    local ret=$?;
+    -echo "___ret=${___ret}";
     -leave;
+    return ${ret};
 }
 
-@after_returning 'func3'; 
+@after_returning '^func.*'; 
 function __debug_advisor_after_returning() {
     -enter "${FUNCNAME}";
-    -echo "___ret=${___ret}";
+    -echo "Succeed";
     -leave;
 }

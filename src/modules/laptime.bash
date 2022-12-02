@@ -28,8 +28,10 @@ function __laptime_around() {
     -enter "${FUNCNAME}";
     laptime "${___func}";
     $@;
+    local ret=$?;
     laptime "${___func}";
     -leave;
+    return ${ret};
 }
 
 function _laptime_init() {
@@ -46,5 +48,7 @@ function _laptime_init() {
 }
 
 function _laptime_cleanup() {
+    -enter;
     laptime;
+    -leave;
 }
