@@ -5,29 +5,25 @@
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require aop;
+require debug_advisor;
 #require foo_advisor;
 #require bar_advisor;
-require debug_advisor;
 
 function func1() {
-    stacktrace;
+    echo "$(-indent)### ${FUNCNAME} ###";
 }
 
 function func2() {
-    stacktrace;
+    echo "$(-indent)### ${FUNCNAME} ###";
 }
 
 function func3() {
-    stacktrace;
+    echo "$(-indent)### ${FUNCNAME} ###";
 }
 
 function main() {
-    __aop_dump;
-    declare -f func1
     func1;
-    declare -f func2
     func2;
-    declare -f func3
     func3;
 }
 
