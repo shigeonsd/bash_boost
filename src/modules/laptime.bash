@@ -47,8 +47,6 @@ function _laptime_cleanup() {
 function __laptime_around() {
     -enter "${FUNCNAME}";
     laptime "${___func}";
-    echo "$@";
-    stacktrace;
     "$@";
     local ret=$?;
     laptime "${___func}";
