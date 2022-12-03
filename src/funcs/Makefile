@@ -26,7 +26,9 @@ SRC_FILES  = \
 	__.bash \
 	usage.bash \
 	class.bash \
-#	aop.bash \
+	aop.bash \
+	is.bash \
+	string.bash \
 #
 LIB_FILE_IN = libbashboost.in
 LIB_FILE    = $(LIB_FILE_IN:.in=.bash)
