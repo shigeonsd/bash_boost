@@ -91,8 +91,6 @@ function __aop_advice_injector_tmpl() {
     local ___aop_cmd=("__aop_orig_${___func}" "$@");
     local ___ret=0;
     -enter;
-    #-var_dump ___aop_cmd;
-    # "${___aop_cmd[@]}";
     __BEFORE__
     __AROUND__
     ___ret="$?";
@@ -186,7 +184,7 @@ function @around() {
 
 function @Around() {
     local advice="__${1}_around";
-    exist_func "${1}" || advice="${1}";
+    exist_func "${1}" && advice="${1}";
     shift;
     __aop_add_joinpoint around "${advice}" "$@";
 }

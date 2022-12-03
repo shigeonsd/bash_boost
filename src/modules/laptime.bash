@@ -24,16 +24,6 @@ function laptime() {
     laptime_last="${now}";
 }
 
-function __laptime_around() {
-    -enter "${FUNCNAME}";
-    laptime "${___func}";
-    $@;
-    local ret=$?;
-    laptime "${___func}";
-    -leave;
-    return ${ret};
-}
-
 function _laptime_init() {
     declare -n    laptime_last=__bash_boost_laptime_last__;
     declare -n laptime_started=__bash_boost_laptime_started__;
@@ -51,4 +41,17 @@ function _laptime_cleanup() {
     -enter;
     laptime;
     -leave;
+}
+
+# AOP advice
+function __laptime_around() {
+    -enter "${FUNCNAME}";
+    laptime "${___func}";
+    echo "$@";
+    stacktrace;
+    "$@";
+    local ret=$?;
+    laptime "${___func}";
+    -leave;
+    return ${ret};
 }

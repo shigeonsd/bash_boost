@@ -18,12 +18,7 @@ if_true BASH_BOOST_LOGGING && {
 function error() { _msg "ERROR:" "$@"; }
 function warn()  { _msg "WARN:"  "$@"; }
 function info()  { _msg "INFO:"  "$@"; }
-function debug() { :; }
-if_debug && {
-    # デバッグモードの時のみメッセージを出力する。
-    # (debug() をオーバーライドする）
-    function debug() { _msg "DEBUG:" "$(-indent)$@"; }
-}
+function xdebug() { -echo "$@";         }
 
 function die() {
     local msg="$1";
