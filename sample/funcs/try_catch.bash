@@ -6,7 +6,7 @@ set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require preprocessor;
 
-@preprocessor func1
+@preprocess func1
 function func1() {
     try
     {

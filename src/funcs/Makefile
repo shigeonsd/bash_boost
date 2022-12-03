@@ -1,5 +1,5 @@
 #
-# Makefile -- 関数の単体テスト
+# Makefile -- libbashboost ライブラリ作成
 #
 TOP_DIR	        = ../..
 BASH_BOOST_DIR  = $(TOP_DIR)
@@ -29,12 +29,13 @@ SRC_FILES  = \
 	aop.bash \
 	is.bash \
 	string.bash \
+	preprocessor.bash \
 #
 LIB_FILE_IN = libbashboost.in
 LIB_FILE    = $(LIB_FILE_IN:.in=.bash)
 TARGET      = ${LIB_DIR}/$(LIB_FILE)
 
-SHELL          = /bin/bash -o pipefail
+SHELL       = /bin/bash -o pipefail
 
 vpath %.bash ${FUNCS_DIR}
 

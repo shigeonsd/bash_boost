@@ -14,30 +14,48 @@ function is_numeric() {
 
 function is_digit() {
     declare -n __str="${1}";
-    [[ "${__str}" =~ ^[0-9]+$ ]]
+    [[ "${__str}" =~ ^[[:digit:]]+$ ]]
 }
 
 function is_alpha() {
     declare -n __str="${1}";
-    [[ "${__str}" =~ ^[a-zA-Z]+$ ]]
-}
-
-function is_alpha() {
-    declare -n __str="${1}";
-    [[ "${__str}" =~ ^[a-zA-Z]+$ ]]
+    [[ "${__str}" =~ ^[[:alpha:]]+$ ]]
 }
 
 function is_lower() {
     declare -n __str="${1}";
-    [[ "${__str}" =~ ^[a-z-Z]+$ ]]
+    [[ "${__str}" =~ ^[[:lower:]]+$ ]]
+}
+
+function is_upper() {
+    declare -n __str="${1}";
+    [[ "${__str}" =~ ^[[:upper:]]+$ ]]
 }
 
 function is_alnum() {
     declare -n __str="${1}";
-    [[ "${__str}" =~ ^[0-9a-zA-Z]+$ ]]
+    [[ "${__str}" =~ ^[[:alnum:]]+$ ]]
 }
 
-function is_whitespace() {
+function is_blank() {
     declare -n __str="${1}";
-    [[ "${__str}" =~ ^[ \t]*$ ]]
+    [[ "${__str}" =~ ^[[:blank:]]*$ ]]
 }
+
+function is_print() {
+    declare -n __str="${1}";
+    [[ "${__str}" =~ ^[[:print:]]+$ ]]
+}
+
+function is_punct() {
+    declare -n __str="${1}";
+    [[ "${__str}" =~ ^[[:punct:]]+$ ]]
+}
+
+function is_xdigit() {
+    declare -n __str="${1}";
+    [[ "${__str}" =~ ^[[:xdigit:]]+$ ]]
+}
+
+
+
