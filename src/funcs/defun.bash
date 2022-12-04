@@ -52,6 +52,55 @@ function defun() {
     unset "${macroexpand}";
 }
 
+function __lambda() {
+    awk -v ___func="${___func}" \
+	-v ___uuid="${___uuid}" \
+'
+BEGIN {
+    count=0;
+    lambda_count=0;
+}
+function get_lambda_funcname() {
+    return sprintf("%s_lambda_%d%s", ___func, count++, ___uuid);
+}
+function def_lambda(lambda_funcname) {
+    getline;
+    gsub("{ ", "};", $0);
+    lambda_end_line = $0;
+    lambda_prog[lambda_count++] = sprintf("function %s() {", lambda_funcname);
+    while (getline) {
+	lambda_prog[lambda_count++] = $0;
+	if ($0 == lambda_end_line) {
+	    break;
+	}
+    }
+}
+/\<lambda\>/ {
+    lambda_funcname = get_lambda_funcname();
+    gsub("\\<lambda\\>", lambda_funcname, $0);
+    print $0;
+    def_lambda(lambda_funcname);
+    next;
+}
+{
+    print $0;
+}
+END {
+    for (i = 0; i < lambda_count; i++) {
+	printf("%s\n", lambda_prog[i]);
+    }
+}
+'
+}
+
+function lambda() {
+    local ___func="${1}";
+    local ___tmpl_func="${1}";
+    local ___uuid="__$(uuidgen | sed -e 's/-//g')";
+
+    eval "$(__funcname; __tmpl_func | __lambda)";
+}
+
 function copy_function() {
     declare -F "${1}" > /dev/null || return 1;
     eval "$(echo "${2}()"; declare -f "${1}" | tail -n +2)";

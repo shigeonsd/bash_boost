@@ -4,6 +4,7 @@
 #
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
+require defun;
 require preprocessor;
 
 @preprocess func1
