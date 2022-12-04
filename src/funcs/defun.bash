@@ -65,12 +65,15 @@ function get_lambda_funcname() {
 }
 function def_lambda(lambda_funcname) {
     getline;
-    gsub("{ ", "};", $0);
-    lambda_end_line = $0;
+    lambda_end_line1 = $0;
+    lambda_end_line2 = $0;
+    gsub("{ ", "};", lambda_end_line1);
+    gsub("{ ", "}",  lambda_end_line2);
+
     lambda_prog[lambda_count++] = sprintf("function %s() {", lambda_funcname);
     while (getline) {
 	lambda_prog[lambda_count++] = $0;
-	if ($0 == lambda_end_line) {
+	if (($0 == lambda_end_line1) || ($0 == lambda_end_line2)) {
 	    break;
 	}
     }
@@ -98,6 +101,7 @@ function lambda() {
     local ___tmpl_func="${1}";
     local ___uuid="__$(uuidgen | sed -e 's/-//g')";
 
+    #echo "$(__funcname; __tmpl_func | __lambda)";
     eval "$(__funcname; __tmpl_func | __lambda)";
 }
 

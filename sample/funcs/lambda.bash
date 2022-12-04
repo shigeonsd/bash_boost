@@ -20,22 +20,26 @@ function func1() {
 	    try
 	    {
 		echo "$(-indent)[${a2}]=${a1}";
+		exception "no error";
+		throw;
 	    }
 	    catch
 	    {
-		echo catch_block;
+		echo "$(-indent)catch_block";
 	    }
 	    finally
 	    {
-		echo finally_block;
+		echo "$(-indent)finally_block";
 	    }
 	    -leave;
 	    return 0;
 	}
     
     ---
-    local array_s=($(ls -1));
-    array_map array_s lambda
+    try
+    {
+	local array_s=($(ls -1));
+	array_map array_s lambda
 	{
 	    -enter;
 	    local a1="${1}";
@@ -46,6 +50,15 @@ function func1() {
 	    -leave;
 	    return 0;
 	}
+    }
+    catch
+    {
+	echo "$(-indent)### catch_block";
+    }
+    #finally
+    #{
+#	echo "$(-indent)### finally_block";
+#    }
     ---
     -leave;
     return 0;
