@@ -55,10 +55,10 @@ function func1() {
     {
 	echo "$(-indent)### catch_block";
     }
-    #finally
-    #{
-#	echo "$(-indent)### finally_block";
-#    }
+    finally
+    {
+	echo "$(-indent)### finally_block";
+    }
     ---
     -leave;
     return 0;
