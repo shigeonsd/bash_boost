@@ -42,6 +42,7 @@ LOG_FILES   = $(SRC_BASH_FILES:.bash=.log)
 
 LIBBOOST    = ${FUNCS_DIR}/libboost
 
+#SHELL          = /bin/bash -o pipefail
 SHELL          = /bin/bash -o pipefail
 
 vpath %.bash ${FUNCS_DIR}

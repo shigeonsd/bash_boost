@@ -60,10 +60,10 @@ BEGIN {
     count=0;
     lambda_count=0;
 }
-function get_lambda_funcname() {
+function _get_lambda_funcname() {
     return sprintf("%s_lambda_%d%s", ___func, count++, ___uuid);
 }
-function def_lambda(lambda_funcname) {
+function _def_lambda(lambda_funcname) {
     getline;
     lambda_end_line1 = $0;
     lambda_end_line2 = $0;
@@ -79,10 +79,10 @@ function def_lambda(lambda_funcname) {
     }
 }
 /\<lambda\>/ {
-    lambda_funcname = get_lambda_funcname();
+    lambda_funcname = _get_lambda_funcname();
     gsub("\\<lambda\\>", lambda_funcname, $0);
     print $0;
-    def_lambda(lambda_funcname);
+    _def_lambda(lambda_funcname);
     next;
 }
 {

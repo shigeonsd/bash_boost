@@ -18,7 +18,6 @@ if_true BASH_BOOST_LOGGING && {
 function error() { _msg "ERROR:" "$@"; }
 function warn()  { _msg "WARN:"  "$@"; }
 function info()  { _msg "INFO:"  "$@"; }
-function xdebug() { -echo "$@";         }
 
 function die() {
     local msg="$1";
