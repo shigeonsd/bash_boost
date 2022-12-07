@@ -5,8 +5,11 @@
 set -u;
 source "$(cd $(dirname "$0") && pwd)/../../bash-boost.bash";
 require aop;
-require debug_advisor;
-require laptime_advisor;
+for advisor in "$@"; do
+    require "${advisor}";
+done
+#require debug_advisor;
+#require laptime_advisor;
 #require foo_advisor;
 #require bar_advisor;
 
@@ -32,6 +35,7 @@ function main() {
     func1;
     func2;
     func3;
+    return 0;
 }
 
 run main "$@";

@@ -117,6 +117,7 @@ function __required_files() {
 function __on_exit() {
     declare -a __bash_boost_cleanup_funcs_rev__=();
     local func;
+    array_empty __bash_boost_cleanup_funcs__ && return 0;
     array_reverse __bash_boost_cleanup_funcs__ __bash_boost_cleanup_funcs_rev__;
     info "Cleanup ...";
     for func in "${__bash_boost_cleanup_funcs_rev__[@]}"; do
@@ -128,6 +129,7 @@ function __on_exit() {
 function __on_script_ready() {
     local script_ready;
     info "Script ready...";
+    array_empty __bash_boost_script_ready_funcs__ && return 0;
     for func in "${__bash_boost_script_ready_funcs__[@]}"; do
         "${func}";
     done;
