@@ -143,7 +143,7 @@ function copy_props() {
 
 function __undefprop() {
     local props_array="$(__props_name "${___this}")";
-    unset "${props_array}";
+    echo "unset ${props_array}";
 }
 
 function __defmethods() {

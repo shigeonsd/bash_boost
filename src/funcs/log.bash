@@ -7,7 +7,7 @@ function _msg() {
     echo  "$@" >&2; 
 }
 
-if_true BASH_BOOST_LOGGING && {
+ifdef BASH_BOOST_LOGGING && {
     # logger.bash の中で動いているときは日時付きでログを出力する。
     # (_msg() をオーバーライドする）
     function _msg() {

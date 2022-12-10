@@ -9,7 +9,7 @@ function __create_macroexpand_func_0() {
     local sed_opt="";
 
     for e in "${___macro[@]}"; do
-	is_empty mvar && {
+	is_empty "${mvar}" && {
 	    mvar="${e}";
 	    continue;
 	}
@@ -18,7 +18,7 @@ function __create_macroexpand_func_0() {
 	mvar="";
 	mval="";
     done
-    is_empty sed_opt && {
+    is_empty "${sed_opt}" && {
 	echo "cat;";
 	return 0;
     }

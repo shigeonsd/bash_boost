@@ -130,7 +130,7 @@ function __usage_getopt2() {
     local opt2=();
     local optend=false;
     for arg in  "${progargs[@]}"; do
-	if_true optend || {
+	if_true "${optend}" || {
 	    [ ${arg} = "--" ] && {
 		optend=true;
 		continue;

@@ -14,12 +14,12 @@ function __boolean() {
 
 function if_debug() {
     [[ -v DEBUG ]] || return 1;
-    is_boolean DEBUG && {
-	__boolean "${DEBUG}";
+    is_digit "${DEBUG}" && {
+	[ "${DEBUG}" -ne 0 ];
 	return $?;
     }
-    is_digit DEBUG && {
-	[ "${DEBUG}" -ne 0 ];
+    is_boolean "${DEBUG}" && {
+	__boolean "${DEBUG}";
 	return $?;
     }
     die "$(__ invalid_value "${DEBUG}")";
@@ -27,16 +27,7 @@ function if_debug() {
 
 function if_true() {
     local val="${1}";
-    [[ -v "${val}" ]] && {
-	declare -n ref="${1}";
-	is_digit "${val}" && {
-	    [ "${ref}" -ne 0 ];
-	    return $?
-	}
-	__boolean "${ref}";
-	return $?
-    }
-    is_digit val && {
+    is_digit "${val}" && {
 	[ "${val}" -ne 0 ];
 	return $?
     }
@@ -44,3 +35,9 @@ function if_true() {
     return $?
 }
 
+function ifdef() {
+    local var="${1}";
+    [[ -v "${var}" ]] || return 1;
+    declare -n ref="${1}";
+    if_true "${ref}";
+}
