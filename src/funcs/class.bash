@@ -30,6 +30,17 @@ function __prop_tmpl() {
     return 0;
 }
 
+function __set_prop() {
+    declare -n props="$(__props_name "${___this}")";
+    [ $# -ne 2 ] && {
+	die "Invalid argument '$@'.";
+    }
+    local prop="$1";
+    local value=$2;
+    props[${prop}]="${value}";
+    return 0;
+}
+
 function __validate_string() {
     local value="$@";
     : ne
@@ -202,12 +213,16 @@ function __init() {
     shift;
     error_if_noargs "$@";
 
+    # オブジェクトの値を代入。
     eval "${___this} ${operator} \"$@\";";
 }
 
 function _new() {
-    __super;
+#    __super;
+#    public string class;
+#    __set_prop class "${___class}";
     public string class = "${___class}";
+    __super;
     __defthis;
     __defmethods;
     __defdestructor;
