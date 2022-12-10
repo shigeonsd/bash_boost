@@ -68,7 +68,7 @@ function __dump_this() {
 	declare -p ${___this} | sed -e 's/^declare -. //';
 	return 0;
     }
-    echo "${___this}=null";
+    -echo "${___this}=null";
 }
 
 function __dump_props() {
@@ -76,7 +76,7 @@ function __dump_props() {
     local prop;
     local pname;
     for prop in "${!props[@]}"; do
-	echo "${prop@}=${props[${prop}]};";
+	-echo "${prop}=${props[${prop}]};";
     done;
 }
 
@@ -90,18 +90,30 @@ function is_object() {
 }
 
 function obj_dump() {
+    if_debug || return 0;
     local ___this="${1}";
+    -enter;
+    -echo "object: ${___this}";
+    ---;
+    -echo "value:"
     __dump_this;
+    ---;
+    -echo "props:"
     __dump_props;
+    -leave;
 }
 
 function __addprop() {
     local props_array="$(__props_name "${___this}")";
     [ $# -lt 2 ] && die "Invalid arguments '$@'";
-	
+
     local type="$1";
     local prop="$2";
     local value=null;
+
+    # サブクラスで当該プロパティが設定されているときはプロパティの追加・初期化はスキップする。
+    hash_key_exists "${props_array}" "${prop}" && return 0;
+	
     local props="${props_array}[${prop}]";
     shift 2;
 
@@ -239,7 +251,7 @@ function delete() {
 function use() {
     local ___invoke="${FUNCNAME}";
     local ___suffixes=(".class" ".bash");
-    local ___specified="${BASHBOOST_CLASSPATH-""}";
+    local ___specified="${BASH_BOOST_CLASSPATH-""}";
     local ___default=("${progdir}" "${class_dir}");
 
     __require "$@";

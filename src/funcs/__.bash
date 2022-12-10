@@ -14,9 +14,13 @@ function __() {
 
 declare -g -A __messages=(
          [invalid_arguments]='Invalid argument(s).'
+             [invalid_value]='Invalid value.'
             [unknown_option]='Unknown option.'
             [file_not_found]='File not found.'
  [no_such_file_or_directory]='No such file or directory.'
                     [failed]='Failed function or command.'
                [failed_pipe]='Failed pipe.'
+               [not_boolean]='Not boolean.'
+                 [not_digit]='Not digit.'
+           [not_implemented]='Not implemented.'
 );

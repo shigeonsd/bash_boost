@@ -19,7 +19,7 @@ function __preprocessor_try_catch_throw_finally() {
 	'\<throw\>'    'break'                                    \
 	'\<catch\>'    'break; done; array_empty exception || '   \
 	'\<finally\>'  '#finally'                                 \
-	';$'       ''
+	';$'           ''
 }
 function __preprocessor_lambda() {
     lambda "${___func}"

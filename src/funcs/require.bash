@@ -88,7 +88,7 @@ function __require_0() {
 
 function __require() {
     local ___paths=(
-	"$(echo "${___specified[@]}" | sed -e 's/:/ /g')"
+	$(echo "${___specified[@]}" | sed -e 's/:/ /g')
 	"${___default[@]}"
     );
     __require_0 "$@";
@@ -97,7 +97,7 @@ function __require() {
 function require() {
     local ___invoke="${FUNCNAME}";
     local ___suffixes=( ".bash" ".sh" "" );
-    local ___specified="${BASHBOOST_LIBPATH-""}";
+    local ___specified="${BASH_BOOST_LIBPATH-""}";
     local ___default=("${progdir}" "${funcs_dir}" "${modules_dir}");
 
     __require "$@";
@@ -128,12 +128,12 @@ function __on_exit() {
 
 function __on_script_ready() {
     local script_ready;
-    info "Script ready...";
+    -echo "Script ready...";
     array_empty __bash_boost_script_ready_funcs__ && return 0;
     for func in "${__bash_boost_script_ready_funcs__[@]}"; do
         "${func}";
     done;
-    info "done";
+    -echo "done";
 }
 
 function run() {

@@ -11,14 +11,15 @@ LIB_DIR         = $(TOP_DIR)/lib
 UTILS_DIR       = $(TOP_DIR)/utils
 
 SRC_FILES  = \
+	is.bash \
+	if.bash \
+	debug.bash \
 	exists.bash \
 	array.bash \
 	hash.bash \
-	if.bash \
 	log.bash \
 	require.bash \
 	date.bash \
-	debug.bash \
 	defun.bash \
 	required.bash \
 	file.bash \
@@ -27,8 +28,9 @@ SRC_FILES  = \
 	usage.bash \
 	class.bash \
 	aop.bash \
-	is.bash \
 	string.bash \
+#
+SRC2_FILES  = \
 	preprocessor.bash \
 #
 LIB_FILE_IN = libbashboost.in
@@ -41,9 +43,14 @@ vpath %.bash ${FUNCS_DIR}
 
 all: $(TARGET)
 
-$(TARGET) : ${LIB_DIR} ${LIB_FILE_IN} ${SRC_FILES}
+$(TARGET) : ${LIB_DIR} ${LIB_FILE_IN} ${SRC_FILES} ${SRC2_FILES}
 	cat ${LIB_FILE_IN} > $@
-	cat ${SRC_FILES} | grep -v '^#!'>> $@ 
+	cat ${SRC_FILES} | grep -v '^#!' >> $@ 
+	for f in ${SRC2_FILES}; do \
+             echo "require $$f"; \
+        done >> $@ 
+
+	
 
 ${LIB_DIR}:
 	mkdir $@;

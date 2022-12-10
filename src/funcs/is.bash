@@ -57,5 +57,10 @@ function is_xdigit() {
     [[ "${__str}" =~ ^[[:xdigit:]]+$ ]]
 }
 
-
-
+function is_boolean() {
+    declare -n __str="${1}";
+    case  "${__str}" in
+    true|false|TRUE|FALSE) return 0; ;;
+    esac
+    return 1;
+}

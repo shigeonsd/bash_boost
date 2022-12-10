@@ -31,6 +31,12 @@ function failed_pipe() {
     die "$(__ failed_pipe "${PIPESTATUS[@]}")";
 }
 
+function not_implemented() {
+    local frame=($(caller 0));
+    die "$(__ not_implemented "${frame[1]}")";
+}
+
+
 # __on_die() は die() 実行時に実行されるフック関数。
 # デフォルトでは、デバッグモードの時にスタックトレースをダンプする。
 # (これ以外の動作をさせたいときは、__on_die() をオーバーライドする)
