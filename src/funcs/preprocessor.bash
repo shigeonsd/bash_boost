@@ -15,10 +15,10 @@ function @preprocess() {
 
 function __preprocessor_try_catch_throw_finally() {
     defun "${___func}" "${___func}"   \
-	'\<try\>'      'declare -a exception=(); while true; do ' \
-	'\<throw\>'    'break'                                    \
-	'\<catch\>'    'break; done; array_empty exception || '   \
-	'\<finally\>'  '#finally'                                 \
+	'\<try\>'      'declare -a ___exception=(); while true; do ' \
+	'\<throw\>'    'break'                                       \
+	'\<catch\>'    'break; done; array_empty ___exception || '   \
+	'\<finally\>'  '#finally'                                    \
 	';$'           ''
 }
 function __preprocessor_lambda() {
@@ -43,6 +43,6 @@ function _preprocessor_script_ready() {
 }
 
 function exception() {
-    exception=( "$@" );
+    ___exception=( "$@" );
 }
 

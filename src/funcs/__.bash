@@ -23,4 +23,5 @@ declare -g -A __messages=(
                [not_boolean]='Not boolean.'
                  [not_digit]='Not digit.'
            [not_implemented]='Not implemented.'
+          [caught_exception]='Caught exception.'
 );
